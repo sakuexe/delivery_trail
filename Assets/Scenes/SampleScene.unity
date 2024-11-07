@@ -168,21 +168,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRb: {fileID: 23212071}
-  rayPoints:
-  - {fileID: 1147677676}
-  - {fileID: 2004367223}
-  - {fileID: 70684517}
-  - {fileID: 1852301426}
+  frontTires:
+    left: {fileID: 1147677676}
+    right: {fileID: 2004367223}
+    tireGripFactor: 0.5
+    tireMass: 20
+  rearTires:
+    left: {fileID: 70684517}
+    right: {fileID: 1852301426}
+    tireGripFactor: 20
+    tireMass: 20
   driveable:
     serializedVersion: 2
     m_Bits: 64
-  springStiffness: 3000
-  damperStiffness: 3000
+  springStiffness: 5000
+  damperStiffness: 4000
   restLength: 1
   springTravel: 0.5
   wheelRadius: 0.33
-  speed: 100
-  steeringSpeed: 100
+  speed: 20
+  steeringSpeed: 1
 --- !u!54 &23212071
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -304,7 +309,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8d530ffe6c4968843806085897955b9d, type: 2}
+  - {fileID: 2100000, guid: 4084a843b9ef6af45a63b7163f9fbefb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
