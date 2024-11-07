@@ -16,6 +16,9 @@
             dotnetCorePackages.dotnet_8.runtime
             csharp-ls
           ];
+          shellHook = ''
+            zsh
+          '';
         };
       });
 }
