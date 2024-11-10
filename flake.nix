@@ -17,6 +17,7 @@
         pkgs-unstable = import nixpkgs-unstable { 
           inherit system; 
         };
+
       in
       {
         devShell = with pkgs; mkShell {
@@ -26,12 +27,6 @@
             dotnetCorePackages.dotnet_8.runtime
             csharp-ls
             pkgs-unstable.neovim
-            # (neovim.override { 
-            #   configure.customRC = ''
-            #     luafile ~/.config/nvim/init.lua
-            #     lua require("lspconfig").csharp_ls.setup({ capabilities = require("cmp_nvim_lsp").default_capabilities() })
-            #   ''; 
-            # })
           ];
           shellHook = ''
             zsh
