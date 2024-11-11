@@ -6,6 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(CarController))]
 public class Steering : MonoBehaviour
 {
+    [SerializeField]
+    public AnimationCurve steeringCurve = new(new Keyframe(0, 45), new Keyframe(150, 12));
+
     private Powertrain powertrain;
     // references
     private CarController car;
@@ -32,17 +35,19 @@ public class Steering : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
+            float speed = powertrain.GetCurrentSpeed();
             foreach (Tire tire in car.frontTires)
             {
-                Quaternion rotation = Quaternion.Euler(0, -45, 0);
+                Quaternion rotation = Quaternion.Euler(0, -steeringCurve.Evaluate(speed), 0);
                 tire.transform.localRotation = rotation;
             }
         }
         else if (Input.GetKey(KeyCode.D))
         {
+            float speed = powertrain.GetCurrentSpeed();
             foreach (Tire tire in car.frontTires)
             {
-                Quaternion rotation = Quaternion.Euler(0, 45, 0);
+                Quaternion rotation = Quaternion.Euler(0, steeringCurve.Evaluate(speed), 0);
                 tire.transform.localRotation = rotation;
             }
         }
