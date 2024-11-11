@@ -35,40 +35,50 @@ public class Suspension : MonoBehaviour
     {
         foreach (Tire tire in tires)
         {
-            Transform rayPoint = tire.transform;
-            RaycastHit hit;
+            RaycastHit? tireHitGround = IsGrounded(tire);
 
-            float maxLength = restLength + springTravel;
-
-            if (Physics.Raycast(rayPoint.position, -rayPoint.up, out hit, maxLength + tire.radius, car.driveableLayer))
+            if (tireHitGround == null)
             {
-                float currentSpringLength = hit.distance - tire.radius;
-                // how much the spring has compressed from the neutral position
-                float springOffset = restLength - currentSpringLength / springTravel;
-
-                // to calculate the dampening force, we need to know the current velocity of the spring
-                float springVelocity = Vector3.Dot(car.rigidBody.GetPointVelocity(rayPoint.position), rayPoint.up);
-
-                // F_damp = velocity * dampening
-                float dampForce = springVelocity * damperStiffness;
-
-                // F_spring = offset * strength
-                // the offset is the distance form the resting position of the spring
-                // the strength is the firmness of the spring
-                float springForce = springOffset * springStiffness;
-
-                // F_total = (offset * strength) - (velocity * dampening)
-                float totalForce = springForce - dampForce;
-
-                car.rigidBody.AddForceAtPosition(totalForce * rayPoint.up, rayPoint.position);
-
-                // draw lines to visualize the spring force
-                Debug.DrawLine(rayPoint.position, hit.point, Color.red);
+                float maxLength = restLength + springTravel;
+                Debug.DrawLine(tire.transform.position, tire.transform.position + (tire.radius + maxLength) * -tire.transform.up, Color.green);
+                return;
             }
-            else
-            {
-                Debug.DrawLine(rayPoint.position, rayPoint.position + (tire.radius + maxLength) * -rayPoint.up, Color.green);
-            }
+
+            RaycastHit hit = tireHitGround.GetValueOrDefault();
+
+            float currentSpringLength = hit.distance - tire.radius;
+            // how much the spring has compressed from the neutral position
+            float springOffset = restLength - currentSpringLength / springTravel;
+
+            // to calculate the dampening force, we need to know the current velocity of the spring
+            float springVelocity = Vector3.Dot(car.rigidBody.GetPointVelocity(tire.transform.position), tire.transform.up);
+
+            // F_damp = velocity * dampening
+            float dampForce = springVelocity * damperStiffness;
+
+            // F_spring = offset * strength
+            // the offset is the distance form the resting position of the spring
+            // the strength is the firmness of the spring
+            float springForce = springOffset * springStiffness;
+
+            // F_total = (offset * strength) - (velocity * dampening)
+            float totalForce = springForce - dampForce;
+
+            car.rigidBody.AddForceAtPosition(totalForce * tire.transform.up, tire.transform.position);
+
+            // draw lines to visualize the spring force
+            Debug.DrawLine(tire.transform.position, hit.point, Color.red);
         }
+    }
+
+    public RaycastHit? IsGrounded(Tire tire)
+    {
+        RaycastHit hit;
+        float maxLength = restLength + springTravel;
+
+        if (Physics.Raycast(tire.transform.position, -tire.transform.up, out hit, maxLength + tire.radius, car.driveableLayer))
+            return hit;
+
+        return null;
     }
 }
