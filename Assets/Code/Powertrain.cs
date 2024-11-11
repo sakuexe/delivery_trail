@@ -66,8 +66,44 @@ public class Powertrain : MonoBehaviour
     {
         HandleAcceleration();
         HandleRpm();
-        Break();
+        HandleBreaking();
     }
+
+    private void HandleAcceleration()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+            pressingAccelerator = true;
+
+        if (Input.GetKeyUp(KeyCode.W))
+            pressingAccelerator = false;
+
+        if (!Input.GetKey(KeyCode.W))
+            return;
+
+        // split the force across the wheels
+        float force = GetCurrentForce();
+        if (drivetrain == Drivetrain.AllWhellDrive)
+            force = force / 4;
+        else
+            force = force / 2;
+        foreach (Tire tire in powerDeliveryWheels)
+        {
+            // dont accelerate if the wheel is off the ground
+            if (suspension.IsGrounded(tire) == null)
+                continue;
+            car.rigidBody.AddForceAtPosition(tire.transform.forward * GetCurrentForce(), tire.transform.position);
+        }
+    }
+
+    private void HandleBreaking()
+    {
+        if (!Input.GetKey(KeyCode.S))
+            return;
+
+        foreach (Tire tire in car.frontTires)
+            car.rigidBody.AddForceAtPosition(-tire.transform.forward * (breakForce * Time.deltaTime), tire.transform.position);
+    }
+
 
     // Handles rpm and makes sure that it cannot cannot go above or below the max and min values
     private void HandleRpm()
@@ -79,12 +115,10 @@ public class Powertrain : MonoBehaviour
         }
         else
         {
-            rpm = Mathf.Clamp((rpm - changePerSecond * Time.deltaTime), minRpm, maxRpm);
+            rpm = Mathf.Clamp((rpm - (changePerSecond * 2) * Time.deltaTime), minRpm, maxRpm);
         }
         rpmUI.text = $"RPM: {rpm.ToString("0")}";
-        // speed in m/s
-        float speed = car.rigidBody.linearVelocity.magnitude;
-        kphUI.text = $"Speed: {(speed * 3.6f).ToString("0")} km/h";
+        kphUI.text = $"Speed: {(GetCurrentSpeed()).ToString("0")} km/h";
     }
 
     private float GetCurrentForce()
@@ -103,33 +137,14 @@ public class Powertrain : MonoBehaviour
         // and finally, convert it to newtons
         return forceInPounds * 4.44822f;
     }
+    
 
-    private void HandleAcceleration()
+    public float GetCurrentSpeed()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-            pressingAccelerator = true;
-
-        if (Input.GetKeyUp(KeyCode.W))
-            pressingAccelerator = false;
-
-        if (!Input.GetKey(KeyCode.W))
-            return;
-
-        foreach (Tire tire in powerDeliveryWheels)
-        {
-            // dont accelerate if the wheel is off the ground
-            if (suspension.IsGrounded(tire) == null)
-                continue;
-            car.rigidBody.AddForceAtPosition(tire.transform.forward * GetCurrentForce(), tire.transform.position);
-        }
+        // speed in m/s
+        float speed = car.rigidBody.linearVelocity.magnitude;
+        // speed in km/h
+        return speed * 3.6f;
     }
 
-    private void Break()
-    {
-        if (!Input.GetKey(KeyCode.S))
-            return;
-
-        foreach (Tire tire in car.frontTires)
-            car.rigidBody.AddForceAtPosition(-tire.transform.forward * (breakForce * Time.deltaTime), tire.transform.position);
-    }
 }

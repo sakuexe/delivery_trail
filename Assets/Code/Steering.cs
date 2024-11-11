@@ -2,9 +2,11 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Suspension))]
+[RequireComponent(typeof(Powertrain))]
 [RequireComponent(typeof(CarController))]
 public class Steering : MonoBehaviour
 {
+    private Powertrain powertrain;
     // references
     private CarController car;
     private Suspension suspension;
@@ -15,6 +17,7 @@ public class Steering : MonoBehaviour
     {
         car = gameObject.GetComponent<CarController>();
         suspension = gameObject.GetComponent<Suspension>();
+        powertrain = gameObject.GetComponent<Powertrain>();
         tires = car.frontTires.Concat(car.rearTires).ToArray();
     }
 
@@ -73,21 +76,21 @@ public class Steering : MonoBehaviour
             }
 
             Vector3 steeringDirection = rayPoint.right;
-            if (Input.GetKey(KeyCode.A))
-                steeringDirection = -rayPoint.right;
-
             Vector3 tireWorldVelocity = car.rigidBody.GetPointVelocity(rayPoint.position);
-            Debug.DrawLine(rayPoint.position, rayPoint.position + (tireWorldVelocity * 10), Color.magenta);
-            Debug.DrawLine(rayPoint.position, rayPoint.position + (steeringDirection * 10), Color.green);
 
             float steeringVelocity = Vector3.Dot(steeringDirection, tireWorldVelocity);
 
-            float desiredVelocityChange = -steeringVelocity * tire.gripFactor;
+            float desiredVelocityChange = -steeringVelocity * GetCurrentTireGrip(tire);
 
             float desiredAcceleration = desiredVelocityChange / Time.fixedDeltaTime;
 
             Vector3 netForce = steeringDirection * desiredAcceleration * tire.mass;
             car.rigidBody.AddForceAtPosition(netForce, rayPoint.position);
         }
+    }
+
+    private float GetCurrentTireGrip(Tire tire)
+    {
+        return tire.gripCurve.Evaluate(powertrain.GetCurrentSpeed());
     }
 }
