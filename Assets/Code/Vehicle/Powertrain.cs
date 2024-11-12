@@ -20,12 +20,14 @@ public class Powertrain : MonoBehaviour
     [SerializeField]
     public Drivetrain drivetrain = Drivetrain.FrontWheelDrive;
     [SerializeField]
-    // keyframes are (rpm, power)
-    private AnimationCurve powerCurve = new(new Keyframe(500, 0), new Keyframe(5000, 250));
-    [SerializeField]
     private int minRpm = 500;
     [SerializeField]
     private int maxRpm = 5000;
+    [SerializeField]
+    private int maxHorsePower = 250;
+    [SerializeField]
+    // keyframes are (rpm, power)
+    private AnimationCurve powerCurve = new(new Keyframe(0, 0), new Keyframe(1, 1));
     // the breakforce in newtons (1 kgf ~= 9.8067 N)
     [SerializeField]
     private int breakForce = 8000;
@@ -67,6 +69,7 @@ public class Powertrain : MonoBehaviour
         HandleAcceleration();
         HandleRpm();
         HandleBreaking();
+        UpdatePowerTrainUI();
     }
 
     private void HandleAcceleration()
@@ -108,17 +111,20 @@ public class Powertrain : MonoBehaviour
     // Handles rpm and makes sure that it cannot cannot go above or below the max and min values
     private void HandleRpm()
     {
-        float changePerSecond = 1000;
+        float changePerSecond = 800;
+
         if (pressingAccelerator)
         {
-            rpm = Mathf.Clamp((rpm + changePerSecond * Time.deltaTime), minRpm, maxRpm);
+            float desiredRpm = rpm + changePerSecond * Time.deltaTime;
+            // do not exceed min and max rpm values
+            rpm = Mathf.Clamp(desiredRpm, minRpm, maxRpm);
         }
         else
         {
-            rpm = Mathf.Clamp((rpm - (changePerSecond * 2) * Time.deltaTime), minRpm, maxRpm);
+            float desiredRpm = rpm - changePerSecond * Time.deltaTime;
+            // do not exceed min and max rpm values
+            rpm = Mathf.Clamp(desiredRpm, minRpm, maxRpm);
         }
-        rpmUI.text = $"RPM: {rpm.ToString("0")}";
-        kphUI.text = $"Speed: {(GetCurrentSpeed()).ToString("0")} km/h";
     }
 
     private float GetCurrentForce()
@@ -129,13 +135,15 @@ public class Powertrain : MonoBehaviour
         // Torque = (HP * 5252) / rpm
 
         // get the horsepower from the rpm curve
-        float horsePower = powerCurve.Evaluate(rpm);
-        // use the formula above
+        // use normalized rpm (so that max rpm is 1 and min is 0), because the curve is 1 by 1
+        // this way we get a factor that can count the percentage of max HP used
+        float horsePowerFactor = powerCurve.Evaluate(rpm / maxRpm);
+        // and then get the horse power from the rpm
+        float horsePower = maxHorsePower * horsePowerFactor;
+        // use the formula above to get torque
         float torque = (horsePower * 5252) / rpm;
-        // convert it to pounds
-        float forceInPounds = torque / 2;
-        // and finally, convert it to newtons
-        return forceInPounds * 4.44822f;
+        // convert torque to pounds and then to newtons
+        return (torque / 2) * 4.44822f;
     }
     
 
@@ -147,4 +155,9 @@ public class Powertrain : MonoBehaviour
         return speed * 3.6f;
     }
 
+    private void UpdatePowerTrainUI()
+    {
+        rpmUI.text = $"RPM: {rpm.ToString("0")}";
+        kphUI.text = $"Speed: {(GetCurrentSpeed()).ToString("0")} km/h";
+    }
 }

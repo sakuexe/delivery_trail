@@ -66,9 +66,6 @@ public class Steering : MonoBehaviour
         foreach (Tire tire in tires)
         {
             Transform rayPoint = tire.transform;
-            // draw lines to visualize the spring force
-            Debug.DrawLine(rayPoint.position, rayPoint.position + (rayPoint.forward * 10), Color.blue);
-            Debug.DrawLine(rayPoint.position, rayPoint.position + (rayPoint.up * 10), Color.blue);
 
             RaycastHit hit;
             float maxLength = suspension.restLength + suspension.springTravel;
