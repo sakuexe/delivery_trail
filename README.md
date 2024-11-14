@@ -1,7 +1,9 @@
 # Delivery Peli
 
+## Table of contents
 
-# Car Models
-https://assetstore.unity.com/packages/3d/vehicles/land/free-cartoon-car-pack-simple-vehicles-282425
-# Tree Models
-https://assetstore.unity.com/packages/3d/vegetation/trees/low-poly-free-tree-pack-248671
+- [Art and graphics](./Assets/Art/)
+- [Code](./Assets/Code/)
+- [Inputs](./Assets/Inputs/)
+- [Scenes, levels and prefabs](./Assets/Scenes/)
+- [Documents](./Assets/Docs/)
