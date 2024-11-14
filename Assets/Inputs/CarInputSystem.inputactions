@@ -25,12 +25,12 @@
                 },
                 {
                     "name": "Gas",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "fab1ba30-00c8-48a8-9c61-8a0f70e31c85",
                     "expectedControlType": "Analog",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -206,6 +206,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
+                    "action": "Gas",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b38e746c-d14b-48b6-a0ef-9457c187e9c2",
+                    "path": "<Keyboard>/#(W)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Gas",
                     "isComposite": false,
                     "isPartOfComposite": false

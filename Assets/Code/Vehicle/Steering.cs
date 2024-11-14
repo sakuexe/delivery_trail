@@ -49,7 +49,7 @@ public class Steering : MonoBehaviour
         foreach (Tire tire in car.frontTires)
         {
             // get the amount that the tires should be rotating
-            float steeringAmount = steeringCurve.Evaluate(speed) * _steeringAngle.x;
+            float steeringAmount = steeringCurve.Evaluate(speed / 120) * _steeringAngle.x;
             // convert the degrees to a quaternion
             Quaternion rotation = Quaternion.Euler(0, steeringAmount * maxSteeringAngle, 0);
             // and finally add the rotation to the tires
