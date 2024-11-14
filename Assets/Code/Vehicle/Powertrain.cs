@@ -1,6 +1,7 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum Drivetrain
 {
@@ -40,6 +41,7 @@ public class Powertrain : MonoBehaviour
 
     // states
     private bool pressingAccelerator;
+    private float _gasPedalAmount;
     private float rpm;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -66,29 +68,26 @@ public class Powertrain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleAcceleration();
+        HandleSpeed();
         HandleRpm();
         HandleBreaking();
         UpdatePowerTrainUI();
     }
 
-    private void HandleAcceleration()
+    // when the player presses on the gas
+    public void OnGas(InputValue value) => _gasPedalAmount = value.Get<float>();
+
+    private void HandleSpeed()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-            pressingAccelerator = true;
-
-        if (Input.GetKeyUp(KeyCode.W))
-            pressingAccelerator = false;
-
-        if (!Input.GetKey(KeyCode.W))
-            return;
-
+        // if the gas pedal is not pressed
+        if (_gasPedalAmount <= 0) return;
         // split the force across the wheels
         float force = GetCurrentForce();
         if (drivetrain == Drivetrain.AllWhellDrive)
             force = force / 4;
         else
             force = force / 2;
+
         foreach (Tire tire in powerDeliveryWheels)
         {
             // dont accelerate if the wheel is off the ground
@@ -111,20 +110,14 @@ public class Powertrain : MonoBehaviour
     // Handles rpm and makes sure that it cannot cannot go above or below the max and min values
     private void HandleRpm()
     {
-        float changePerSecond = 800;
+        // how much can the rpm change in a second
+        float rpmChangeRate = _gasPedalAmount > 0.2f ? 800 : 1600;
 
-        if (pressingAccelerator)
-        {
-            float desiredRpm = rpm + changePerSecond * Time.deltaTime;
-            // do not exceed min and max rpm values
-            rpm = Mathf.Clamp(desiredRpm, minRpm, maxRpm);
-        }
-        else
-        {
-            float desiredRpm = rpm - changePerSecond * Time.deltaTime;
-            // do not exceed min and max rpm values
-            rpm = Mathf.Clamp(desiredRpm, minRpm, maxRpm);
-        }
+        float desiredRpm = maxRpm * _gasPedalAmount;
+        float currentRpm = Mathf.MoveTowards(rpm, desiredRpm, rpmChangeRate * Time.deltaTime);
+
+        // do not exceed min and max rpm values
+        rpm = Mathf.Clamp(currentRpm, minRpm, maxRpm);
     }
 
     private float GetCurrentForce()
@@ -145,7 +138,7 @@ public class Powertrain : MonoBehaviour
         // convert torque to pounds and then to newtons
         return (torque / 2) * 4.44822f;
     }
-    
+
 
     public float GetCurrentSpeed()
     {

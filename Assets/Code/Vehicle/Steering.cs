@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Suspension))]
 [RequireComponent(typeof(Powertrain))]
@@ -14,6 +15,11 @@ public class Steering : MonoBehaviour
     private CarController car;
     private Suspension suspension;
     private Tire[] tires;
+
+    private float maxSteeringAngle = 45;
+
+    // states
+    private Vector2 _steeringAngle;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,36 +37,27 @@ public class Steering : MonoBehaviour
         HandleGrip();
     }
 
+    // when the player steers the car
+    public void OnSteering(InputValue value)
+    {
+        _steeringAngle = value.Get<Vector2>();
+    }
+
     private void HandleSteering()
     {
-        if (Input.GetKey(KeyCode.A))
+        float speed = powertrain.GetCurrentSpeed();
+        foreach (Tire tire in car.frontTires)
         {
-            float speed = powertrain.GetCurrentSpeed();
-            foreach (Tire tire in car.frontTires)
-            {
-                Quaternion rotation = Quaternion.Euler(0, -steeringCurve.Evaluate(speed), 0);
-                tire.transform.localRotation = rotation;
-            }
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            float speed = powertrain.GetCurrentSpeed();
-            foreach (Tire tire in car.frontTires)
-            {
-                Quaternion rotation = Quaternion.Euler(0, steeringCurve.Evaluate(speed), 0);
-                tire.transform.localRotation = rotation;
-            }
-        }
-        else
-        {
-            foreach (Tire tire in car.frontTires)
-            {
-                Quaternion rotation = Quaternion.Euler(0, 0, 0);
-                tire.transform.localRotation = rotation;
-            }
+            // get the amount that the tires should be rotating
+            float steeringAmount = steeringCurve.Evaluate(speed) * _steeringAngle.x;
+            // convert the degrees to a quaternion
+            Quaternion rotation = Quaternion.Euler(0, steeringAmount * maxSteeringAngle, 0);
+            // and finally add the rotation to the tires
+            tire.transform.localRotation = rotation;
         }
     }
 
+    // handles the tires resistance towards going sideways
     private void HandleGrip()
     {
         foreach (Tire tire in tires)
