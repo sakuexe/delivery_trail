@@ -1,5 +1,4 @@
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,10 +13,6 @@ public enum Drivetrain
 [RequireComponent(typeof(CarController))]
 public class Powertrain : MonoBehaviour
 {
-    [SerializeField]
-    private TMP_Text rpmUI;
-    [SerializeField]
-    private TMP_Text kphUI;
     [SerializeField]
     public Drivetrain drivetrain = Drivetrain.FrontWheelDrive;
     [SerializeField]
@@ -150,7 +145,7 @@ public class Powertrain : MonoBehaviour
 
     private void UpdatePowerTrainUI()
     {
-        rpmUI.text = $"RPM: {rpm.ToString("0")}";
-        kphUI.text = $"Speed: {(GetCurrentSpeed()).ToString("0")} km/h";
+        UIManager.Instance.UpdateRPM(rpm);
+        UIManager.Instance.UpdateSpeed(GetCurrentSpeed());
     }
 }
