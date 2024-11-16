@@ -1557,7 +1557,7 @@ GameObject:
   - component: {fileID: 691848957}
   - component: {fileID: 691848956}
   - component: {fileID: 691848955}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3550,6 +3550,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 642008038490528860, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
+      propertyPath: restLength
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 642008038490528860, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
+      propertyPath: springTravel
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1717470451863752280, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
+      propertyPath: wheelSize
+      value: 0.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616747404724932443, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
+      propertyPath: wheelSize
+      value: 0.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330781720878593114, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.8376303
+      objectReference: {fileID: 0}
+    - target: {fileID: 6359123612900580810, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
+      propertyPath: wheelSize
+      value: 0.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777690007055110923, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
+      propertyPath: wheelSize
+      value: 0.66
+      objectReference: {fileID: 0}
     - target: {fileID: 7126718573871078936, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
       propertyPath: m_Name
       value: PlayerCar

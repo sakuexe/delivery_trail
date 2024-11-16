@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
 using UnityEngine;
 
 [RequireComponent(typeof(CarController))]
@@ -17,18 +19,34 @@ public class Suspension : MonoBehaviour
 
     private CarController car;
     private Tire[] tires;
+    private Transform[] tireModels;
+    private Transform[] initialTireModelPositions;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         car = gameObject.GetComponent<CarController>();
         tires = car.frontTires.Concat(car.rearTires).ToArray();
+
+        Transform tiresContainer = transform.Find("Model/Tires");
+        // throw error if tires transform is not found
+        Assert.IsNotNull(tiresContainer);
+
+        HashSet<Transform> transforms = new(tiresContainer.GetComponentsInChildren<Transform>());
+        transforms.Remove(tiresContainer.transform);
+        tireModels = transforms.ToArray();
+        initialTireModelPositions = tireModels;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         HandleSuspension();
+    }
+
+    void Update()
+    {
+        KeepTiresGrounded();
     }
 
     private void HandleSuspension()
@@ -41,7 +59,7 @@ public class Suspension : MonoBehaviour
             {
                 float maxLength = restLength + springTravel;
                 Debug.DrawLine(tire.transform.position, tire.transform.position + (tire.radius + maxLength) * -tire.transform.up, Color.green);
-                return;
+                continue;
             }
 
             RaycastHit hit = tireHitGround.GetValueOrDefault();
@@ -74,11 +92,40 @@ public class Suspension : MonoBehaviour
     public RaycastHit? IsGrounded(Tire tire)
     {
         RaycastHit hit;
-        float maxLength = restLength + springTravel;
+        float springMaxLength = restLength + springTravel;
 
-        if (Physics.Raycast(tire.transform.position, -tire.transform.up, out hit, maxLength + tire.radius, car.driveableLayer))
+        if (Physics.Raycast(tire.transform.position, -tire.transform.up, out hit, springMaxLength + tire.radius, car.driveableLayer))
             return hit;
 
         return null;
+    }
+
+    /// <summary>
+    /// A function for making the tire models hit the ground.
+    /// This way you can always adjust the springs without worrying about tires floating.
+    /// </summary>
+    private void KeepTiresGrounded()
+    {
+        foreach (var (tireModel, index) in tireModels.Select((v, i) => (v, i)))
+        {
+            RaycastHit hit;
+            Tire currentTire = tires[index];
+            float maxLength = restLength + springTravel + currentTire.radius;
+            float yTransform;
+
+            // if the tire can reach the ground
+            if (Physics.Raycast(currentTire.transform.position, Vector3.down, out hit, maxLength, car.driveableLayer))
+                yTransform = hit.point.y + currentTire.radius;
+            else
+                yTransform = maxLength;
+
+            // only move on the y axis (up and down)
+            Vector3 desiredPosition = new Vector3(
+                    initialTireModelPositions[index].position.x,
+                    yTransform, 
+                    initialTireModelPositions[index].position.z);
+
+            tireModel.position = Vector3.MoveTowards(tireModel.position, desiredPosition, 2f * Time.deltaTime);
+        }
     }
 }

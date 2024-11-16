@@ -50,4 +50,5 @@ public class CarController : MonoBehaviour
 
         mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, targetFov, Time.deltaTime * cameraSmoothness);
     }
+
 }
