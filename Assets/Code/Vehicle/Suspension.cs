@@ -8,26 +8,34 @@ public class Suspension : MonoBehaviour
 {
     [Header("Suspension Settings")]
     [SerializeField]
-    private float springStiffness = 8000;
+    [UnityEngine.Range(2_000, 20_000)]
+    private float springStiffness = 12_000;
     [SerializeField]
-    // the value should be between (2 190 - 10 000)
-    private float damperStiffness = 5000;
+    [UnityEngine.Range(0.2f, 1.5f)]
+    private float damperStiffnessZeta = 0.5f;
     // the length of the spring when it is not moving (in meters)
-    public float restLength = 0.75f;
+    [UnityEngine.Range(0.2f, 4f)]
+    public float restLength = 1.3f;
     // how long much can the spring move back and forth
-    public float springTravel = 0.4f;
+    [UnityEngine.Range(0.1f, 2f)]
+    public float springTravel = 0.7f;
+
+    // this will be calculated using the zeta value
+    private float damperStiffness => CalculateDamperStiffness();
 
     private CarController car;
     private Tire[] tires;
     private Transform[] tireModels;
     private Transform[] initialTireModelPositions;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         car = gameObject.GetComponent<CarController>();
         tires = car.frontTires.Concat(car.rearTires).ToArray();
-
+    }
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
         Transform tiresContainer = transform.Find("Model/Tires");
         // throw error if tires transform is not found
         Assert.IsNotNull(tiresContainer);
@@ -49,6 +57,16 @@ public class Suspension : MonoBehaviour
         KeepTiresGrounded();
     }
 
+    /// <summary>
+    /// Calculates the damperStiffness based on the given zeta value
+    /// </summary>
+    private float CalculateDamperStiffness()
+    {
+        // DamperStiffness = (2 * sqrt(SpringStiffness * CarMass) * Zeta
+        // we give the zeta value, so that we can change the stiffness easily
+        // and keep it still accurate and realistic
+        return (2 * Mathf.Sqrt(springStiffness * car.rigidBody.mass)) * damperStiffnessZeta;
+    }
     private void HandleSuspension()
     {
         foreach (Tire tire in tires)
