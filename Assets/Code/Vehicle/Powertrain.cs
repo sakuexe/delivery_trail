@@ -68,7 +68,6 @@ public class Powertrain : MonoBehaviour
     {
         HandleSpeed();
         HandleRpm();
-        HandleBreaking();
         UpdatePowerTrainUI();
     }
 
@@ -95,16 +94,6 @@ public class Powertrain : MonoBehaviour
         }
     }
 
-    private void HandleBreaking()
-    {
-        if (!Input.GetKey(KeyCode.S))
-            return;
-
-        foreach (Tire tire in car.frontTires)
-            car.rigidBody.AddForceAtPosition(-tire.transform.forward * (breakForce * Time.deltaTime), tire.transform.position);
-    }
-
-
     // Handles _rpm and makes sure that it cannot cannot go above or below the max and min values
     private void HandleRpm()
     {
@@ -118,7 +107,7 @@ public class Powertrain : MonoBehaviour
         _rpm = Mathf.Clamp(currentRpm, minRpm, maxRpm);
     }
 
-    private float GetCurrentForce()
+    public float GetCurrentForce()
     {
         // HP = (T * _rpm) / 5252
         // since we know the horsepower and the _rpm and want to know the torque

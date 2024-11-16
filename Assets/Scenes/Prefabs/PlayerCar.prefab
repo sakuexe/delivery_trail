@@ -974,10 +974,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c7439739a231ebb5b09da38f5b39137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  springStiffness: 8000
+  springStiffness: 12000
+  restLength: 1.3
+  springTravel: 0.7
   damperStiffnessZeta: 0.5
-  restLength: 0.75
-  springTravel: 0.4
 --- !u!114 &7595524197783005222
 MonoBehaviour:
   m_ObjectHideFlags: 0
