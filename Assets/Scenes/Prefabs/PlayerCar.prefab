@@ -821,10 +821,6 @@ MonoBehaviour:
   driveableLayer:
     serializedVersion: 2
     m_Bits: 64
-  mainCamera: {fileID: 0}
-  fovSensitivity: 2
-  cameraSmoothness: 5
-  maxFov: 120
 --- !u!114 &642008038490528860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -837,7 +833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c7439739a231ebb5b09da38f5b39137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  springStiffness: 12000
+  springStiffness: 15000
   restLength: 1.3
   springTravel: 0.7
   damperStiffnessZeta: 0.5
@@ -928,6 +924,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   maxSteeringAngle: 45
+  powertrain: {fileID: 0}
 --- !u!114 &2131229745673096169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,7 +937,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 931d868900aba8ce4ada39f348a738e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breakForce: 5000
+  breakForce: 4000
+  breakBalance: 0.2
 --- !u!1 &7413061863702891493
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,16 +10,17 @@ public class Steering : MonoBehaviour
 {
     [SerializeField]
     public AnimationCurve steeringCurve = new(new Keyframe(0, 45), new Keyframe(150, 12));
-
-    private Powertrain powertrain;
-    // references
-    private CarController car;
-    private Suspension suspension;
-    private Tire[] tires;
-
     [SerializeField]
     [Range(1, 90)]
     private float maxSteeringAngle = 45;
+    [SerializeField]
+
+    // references
+    private Powertrain powertrain;
+    private CarController car;
+    private Suspension suspension;
+    private Tire[] tires;
+    private Transform[] tireModels;
 
     // states
     private Vector2 _steeringAngle;
@@ -30,6 +32,11 @@ public class Steering : MonoBehaviour
         suspension = gameObject.GetComponent<Suspension>();
         powertrain = gameObject.GetComponent<Powertrain>();
         tires = car.frontTires.Concat(car.rearTires).ToArray();
+
+        Transform tiresContainer = transform.Find("Model/Tires");
+        HashSet<Transform> transforms = new(tiresContainer.GetComponentsInChildren<Transform>());
+        transforms.Remove(tiresContainer.transform);
+        tireModels = transforms.ToArray();
     }
 
     // Update is called once per frame
@@ -48,14 +55,18 @@ public class Steering : MonoBehaviour
     private void HandleSteering()
     {
         float speed = powertrain.GetCurrentSpeed();
-        foreach (Tire tire in car.frontTires)
+        foreach (var (tire, index) in car.frontTires.Select((v, i) => (v, i)))
         {
             // get the amount that the tires should be rotating
             float steeringAmount = steeringCurve.Evaluate(speed / 120) * _steeringAngle.x;
             // convert the degrees to a quaternion
-            Quaternion rotation = Quaternion.Euler(0, steeringAmount * maxSteeringAngle, 0);
+            Quaternion targetRotation = Quaternion.Euler(0, steeringAmount * maxSteeringAngle, 0);
+            Quaternion currentRotation = Quaternion.Slerp(tire.transform.localRotation, targetRotation, 4f * Time.fixedDeltaTime);
+
             // and finally add the rotation to the tires
-            tire.transform.localRotation = rotation;
+            tire.transform.localRotation = currentRotation;
+            // also add the rotation to the models
+            tireModels[index].localRotation = currentRotation;
         }
     }
 
