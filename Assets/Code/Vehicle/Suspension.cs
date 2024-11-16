@@ -10,9 +10,6 @@ public class Suspension : MonoBehaviour
     [SerializeField]
     [UnityEngine.Range(2_000, 20_000)]
     private float springStiffness = 12_000;
-    [SerializeField]
-    [UnityEngine.Range(0.2f, 1.5f)]
-    private float damperStiffnessZeta = 0.5f;
     // the length of the spring when it is not moving (in meters)
     [UnityEngine.Range(0.2f, 4f)]
     public float restLength = 1.3f;
@@ -20,9 +17,15 @@ public class Suspension : MonoBehaviour
     [UnityEngine.Range(0.1f, 2f)]
     public float springTravel = 0.7f;
 
+    [Header("Damper Settings")]
+    [SerializeField]
+    [UnityEngine.Range(0.2f, 1.5f)]
+    private float damperStiffnessZeta = 0.5f;
+
     // this will be calculated using the zeta value
     private float damperStiffness => CalculateDamperStiffness();
 
+    // references
     private CarController car;
     private Tire[] tires;
     private Transform[] tireModels;
@@ -132,10 +135,10 @@ public class Suspension : MonoBehaviour
             float yTransform;
 
             // if the tire can reach the ground
-            if (Physics.Raycast(currentTire.transform.position, Vector3.down, out hit, maxLength, car.driveableLayer))
-                yTransform = hit.point.y + currentTire.radius;
-            else
-                yTransform = maxLength;
+            Physics.Raycast(currentTire.transform.position, Vector3.down, out hit, maxLength, car.driveableLayer);
+
+            yTransform = hit.point.y + currentTire.radius;
+            yTransform = Mathf.Clamp(yTransform, 0.2f, maxLength);
 
             // only move on the y axis (up and down)
             Vector3 desiredPosition = new Vector3(
@@ -143,7 +146,7 @@ public class Suspension : MonoBehaviour
                     yTransform, 
                     initialTireModelPositions[index].position.z);
 
-            tireModel.position = Vector3.MoveTowards(tireModel.position, desiredPosition, 2f * Time.deltaTime);
+            tireModel.position = Vector3.MoveTowards(tireModel.position, desiredPosition, 3f * Time.deltaTime);
         }
     }
 }

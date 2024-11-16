@@ -16,6 +16,8 @@ public class Steering : MonoBehaviour
     private Suspension suspension;
     private Tire[] tires;
 
+    [SerializeField]
+    [Range(1, 90)]
     private float maxSteeringAngle = 45;
 
     // states

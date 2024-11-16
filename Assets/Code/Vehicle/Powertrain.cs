@@ -16,11 +16,14 @@ public class Powertrain : MonoBehaviour
     [SerializeField]
     public Drivetrain drivetrain = Drivetrain.FrontWheelDrive;
     [SerializeField]
+    [Range(200, 800)]
     private int minRpm = 500;
     [SerializeField]
-    private int maxRpm = 5000;
+    [Range(3_500, 8_000)]
+    private int maxRpm = 6_000;
     [SerializeField]
-    private int maxHorsePower = 250;
+    [Range(80, 1_000)]
+    private int maxHorsePower = 200;
     [SerializeField]
     // keyframes are (rpm, power)
     private AnimationCurve powerCurve = new(new Keyframe(0, 0), new Keyframe(1, 1));
@@ -35,9 +38,9 @@ public class Powertrain : MonoBehaviour
     private Suspension suspension;
 
     // states
-    private bool pressingAccelerator;
+    private bool _pressingAccelerator;
     private float _gasPedalAmount;
-    private float rpm;
+    private float _rpm;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -102,34 +105,34 @@ public class Powertrain : MonoBehaviour
     }
 
 
-    // Handles rpm and makes sure that it cannot cannot go above or below the max and min values
+    // Handles _rpm and makes sure that it cannot cannot go above or below the max and min values
     private void HandleRpm()
     {
-        // how much can the rpm change in a second
+        // how much can the _rpm change in a second
         float rpmChangeRate = _gasPedalAmount > 0.2f ? 800 : 1600;
 
         float desiredRpm = maxRpm * _gasPedalAmount;
-        float currentRpm = Mathf.MoveTowards(rpm, desiredRpm, rpmChangeRate * Time.deltaTime);
+        float currentRpm = Mathf.MoveTowards(_rpm, desiredRpm, rpmChangeRate * Time.deltaTime);
 
-        // do not exceed min and max rpm values
-        rpm = Mathf.Clamp(currentRpm, minRpm, maxRpm);
+        // do not exceed min and max _rpm values
+        _rpm = Mathf.Clamp(currentRpm, minRpm, maxRpm);
     }
 
     private float GetCurrentForce()
     {
-        // HP = (T * rpm) / 5252
-        // since we know the horsepower and the rpm and want to know the torque
+        // HP = (T * _rpm) / 5252
+        // since we know the horsepower and the _rpm and want to know the torque
         // we can do some math flips and get the formula for torque like this
-        // Torque = (HP * 5252) / rpm
+        // Torque = (HP * 5252) / _rpm
 
-        // get the horsepower from the rpm curve
-        // use normalized rpm (so that max rpm is 1 and min is 0), because the curve is 1 by 1
+        // get the horsepower from the _rpm curve
+        // use normalized _rpm (so that max _rpm is 1 and min is 0), because the curve is 1 by 1
         // this way we get a factor that can count the percentage of max HP used
-        float horsePowerFactor = powerCurve.Evaluate(rpm / maxRpm);
-        // and then get the horse power from the rpm
+        float horsePowerFactor = powerCurve.Evaluate(_rpm / maxRpm);
+        // and then get the horse power from the _rpm
         float horsePower = maxHorsePower * horsePowerFactor;
         // use the formula above to get torque
-        float torque = (horsePower * 5252) / rpm;
+        float torque = (horsePower * 5252) / _rpm;
         // convert torque to pounds and then to newtons
         return (torque / 2) * 4.44822f;
     }
@@ -145,7 +148,7 @@ public class Powertrain : MonoBehaviour
 
     private void UpdatePowerTrainUI()
     {
-        UIManager.Instance.UpdateRPM(rpm);
+        UIManager.Instance.UpdateRPM(_rpm);
         UIManager.Instance.UpdateSpeed(GetCurrentSpeed());
     }
 }

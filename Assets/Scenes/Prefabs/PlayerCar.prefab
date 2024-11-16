@@ -837,7 +837,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2859704, y: 1.7932248, z: 4.398433}
+  m_Size: {x: 2.2859704, y: 1.75, z: 4.398433}
   m_Center: {x: -0.000000834465, y: 1.1168559, z: -0.16744733}
 --- !u!1 &7126718573871078936
 GameObject:
@@ -975,7 +975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   springStiffness: 8000
-  damperStiffness: 5000
+  damperStiffnessZeta: 0.5
   restLength: 0.75
   springTravel: 0.4
 --- !u!114 &7595524197783005222
@@ -1064,6 +1064,7 @@ MonoBehaviour:
     m_PreInfinity: 0
     m_PostInfinity: 2
     m_RotationOrder: 4
+  maxSteeringAngle: 45
 --- !u!1 &7413061863702891493
 GameObject:
   m_ObjectHideFlags: 0
