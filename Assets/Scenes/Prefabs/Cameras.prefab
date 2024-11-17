@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1535362011034901833}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.04362842, y: 0.011078355, z: -0.00048382155, w: 0.9989863}
-  m_LocalPosition: {x: -0.3117482, y: 1.9568286, z: -10.975739}
+  m_LocalRotation: {x: -0.011465857, y: 0.011496778, z: 0.00006244135, w: 0.9998682}
+  m_LocalPosition: {x: -0.31023428, y: 1.2313442, z: -11.191103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -485,7 +485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetOffset: {x: 0, y: 3, z: 0.32}
+  TargetOffset: {x: 0, y: 1, z: 0.32}
   TrackerSettings:
     BindingMode: 2
     PositionDamping: {x: 0, y: 1, z: 0.5}
@@ -558,7 +558,7 @@ MonoBehaviour:
       Size: {x: 0.8, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: 0.21, y: 3.76, z: -0.07}
+  TargetOffset: {x: 0, y: 1.86, z: 0}
   Damping: {x: 0.1, y: 1}
   Lookahead:
     Enabled: 0

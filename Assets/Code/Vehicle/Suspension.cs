@@ -29,7 +29,6 @@ public class Suspension : MonoBehaviour
     private CarController car;
     private Tire[] tires;
     private Transform[] tireModels;
-    private Transform[] initialTireModelPositions;
 
     void Awake()
     {
@@ -46,7 +45,6 @@ public class Suspension : MonoBehaviour
         HashSet<Transform> transforms = new(tiresContainer.GetComponentsInChildren<Transform>());
         transforms.Remove(tiresContainer.transform);
         tireModels = transforms.ToArray();
-        initialTireModelPositions = tireModels;
     }
 
     // Update is called once per frame
@@ -142,9 +140,9 @@ public class Suspension : MonoBehaviour
 
             // only move on the y axis (up and down)
             Vector3 desiredPosition = new Vector3(
-                    initialTireModelPositions[index].position.x,
+                    tires[index].transform.position.x,
                     yTransform, 
-                    initialTireModelPositions[index].position.z);
+                    tires[index].transform.position.z);
 
             tireModel.position = Vector3.MoveTowards(tireModel.position, desiredPosition, 3f * Time.deltaTime);
         }
