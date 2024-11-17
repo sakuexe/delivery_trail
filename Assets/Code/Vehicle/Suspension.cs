@@ -8,7 +8,7 @@ public class Suspension : MonoBehaviour
 {
     [Header("Suspension Settings")]
     [SerializeField]
-    [UnityEngine.Range(2_000, 30_000)]
+    [UnityEngine.Range(2_000, 75_000)]
     private float springStiffness = 15_000;
     // the length of the spring when it is not moving (in meters)
     [UnityEngine.Range(0.2f, 4f)]
@@ -145,6 +145,10 @@ public class Suspension : MonoBehaviour
                     tires[index].transform.position.z);
 
             tireModel.position = Vector3.MoveTowards(tireModel.position, desiredPosition, 3f * Time.deltaTime);
+
+            // handle tire rotation - don't rotate the tires as much as the body
+            Quaternion carRotation = car.transform.rotation;
+            tireModel.localRotation = Quaternion.Euler(carRotation.x, carRotation.y, carRotation.z / 4);
         }
     }
 }
