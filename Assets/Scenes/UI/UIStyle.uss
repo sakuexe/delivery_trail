@@ -3,17 +3,11 @@
     color: rgb(255, 255, 255);
 }
 
-.container {
-    margin-top: 52px;
-    margin-right: 52px;
-    margin-bottom: 52px;
-    margin-left: 52px;
-}
-
 .key {
     font-size: 32px;
     -unity-text-align: middle-left;
     -unity-font-style: normal;
+    padding-right: 20px;
 }
 
 .value {
@@ -24,4 +18,22 @@
     font-size: 24px;
     -unity-text-align: middle-left;
     -unity-font-style: italic;
+}
+
+.header {
+    font-size: 64px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.container {
+    margin-top: 52px;
+    margin-right: 52px;
+    margin-bottom: 52px;
+    margin-left: 52px;
+}
+
+.hidden {
+    bottom: -10%;
+    opacity: 0;
 }
