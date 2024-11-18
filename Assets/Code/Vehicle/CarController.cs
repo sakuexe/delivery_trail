@@ -1,31 +1,49 @@
 using UnityEngine;
-using UnityEngine.Assertions;
 
-
+[RequireComponent(typeof(Braking))]
 [RequireComponent(typeof(Steering))]
 [RequireComponent(typeof(Suspension))]
 [RequireComponent(typeof(Powertrain))]
+[RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
+    [Header("Visualization")]
+    [SerializeField]
+    private bool showRpmUI = true;
+    [SerializeField]
+    private bool showSpeedUI = true;
+
     [Header("References")]
-    public Rigidbody rigidBody;
+    public Rigidbody rigidBody { get; private set; }
     public Tire[] frontTires;
     public Tire[] rearTires;
-    private Powertrain powertrain;
+
+    // references to other components
+    // doesn't show in the editor
+    public Braking braking { get; private set; }
+    public Steering steering { get; private set; }
+    public Suspension suspension { get; private set; }
+    public Powertrain powertrain { get; private set; }
 
     [Header("Layer mask")]
     public LayerMask driveableLayer;
 
-    // states
-    private float baseFov;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        if (rigidBody == null)
-            rigidBody = GetComponent<Rigidbody>();
-        // check that the rigidbody is not null, throw error if it is
-        Assert.IsNotNull(rigidBody);
+        rigidBody = GetComponent<Rigidbody>();
         powertrain = GetComponent<Powertrain>();
+    }
+
+    void FixedUpdate()
+    {
+        UpdatePowerTrainUI();
+    }
+
+    private void UpdatePowerTrainUI()
+    {
+        if (showRpmUI)
+            UIManager.Instance.UpdateRPM(powertrain.GetCurrentRpm());
+        if (showSpeedUI)
+            UIManager.Instance.UpdateSpeed(powertrain.GetCurrentSpeed());
     }
 }

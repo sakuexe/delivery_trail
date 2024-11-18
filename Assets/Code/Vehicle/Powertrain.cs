@@ -9,7 +9,6 @@ public enum Drivetrain
     RearWheelDrive
 }
 
-[RequireComponent(typeof(Suspension))]
 [RequireComponent(typeof(CarController))]
 public class Powertrain : MonoBehaviour
 {
@@ -27,13 +26,9 @@ public class Powertrain : MonoBehaviour
     [SerializeField]
     // keyframes are (rpm, power)
     private AnimationCurve powerCurve = new(new Keyframe(0, 0), new Keyframe(1, 1));
-    // the breakforce in newtons (1 kgf ~= 9.8067 N)
-    [SerializeField]
-    private int breakForce = 8000;
-
-    private Tire[] powerDeliveryWheels;
 
     // references
+    private Tire[] powerDeliveryWheels;
     private CarController car;
     private Suspension suspension;
 
@@ -68,16 +63,19 @@ public class Powertrain : MonoBehaviour
     {
         HandleSpeed();
         HandleRpm();
-        UpdatePowerTrainUI();
     }
 
     // when the player presses on the gas
     public void OnGas(InputValue value) => _gasPedalAmount = value.Get<float>();
 
+    /// <summary>
+    /// Handles the force that the powertrain is giving the car
+    /// </summary>
     private void HandleSpeed()
     {
         // if the gas pedal is not pressed
         if (_gasPedalAmount <= 0) return;
+
         // split the force across the wheels
         float force = GetCurrentForce();
         if (drivetrain == Drivetrain.AllWhellDrive)
@@ -94,7 +92,9 @@ public class Powertrain : MonoBehaviour
         }
     }
 
-    // Handles _rpm and makes sure that it cannot cannot go above or below the max and min values
+    /// <summary>
+    /// Handles counting the _rpm and makes sure that it cannot cannot go above or below the max and min values.
+    /// </summary>
     private void HandleRpm()
     {
         // how much can the _rpm change in a second
@@ -107,6 +107,9 @@ public class Powertrain : MonoBehaviour
         _rpm = Mathf.Clamp(currentRpm, minRpm, maxRpm);
     }
 
+    /// <summary>
+    /// Get the current force of the powertain in Newtons.
+    /// </summary>
     public float GetCurrentForce()
     {
         // HP = (T * _rpm) / 5252
@@ -126,7 +129,10 @@ public class Powertrain : MonoBehaviour
         return (torque / 2) * 4.44822f;
     }
 
-
+    /// <summary>
+    /// Get the current speed of the vehicle with this powertrain attached.
+    /// The speed is given in km/h.
+    /// </summary>
     public float GetCurrentSpeed()
     {
         // speed in m/s
@@ -135,9 +141,8 @@ public class Powertrain : MonoBehaviour
         return speed * 3.6f;
     }
 
-    private void UpdatePowerTrainUI()
-    {
-        UIManager.Instance.UpdateRPM(_rpm);
-        UIManager.Instance.UpdateSpeed(GetCurrentSpeed());
-    }
+    /// <summary>
+    /// Get the current rpm of the powertrain.
+    /// </summary>
+    public float GetCurrentRpm() => _rpm;
 }

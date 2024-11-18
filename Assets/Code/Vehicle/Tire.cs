@@ -16,4 +16,10 @@ public class Tire : MonoBehaviour
     public float wheelSize = 0.66f;
     // the calculated radius in meters
     public float radius => wheelSize / 2;
+
+    /// <summary>
+    /// Get the current grip of the tire based on the grip curve.
+    /// </summary>
+    /// <param name="speed">The speed of the vehicle in km/h</param>
+    public float GetCurrentTireGrip(float speed) => gripCurve.Evaluate(speed);
 }

@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Suspension))]
 [RequireComponent(typeof(Powertrain))]
-[RequireComponent(typeof(CarController))]
 public class Steering : MonoBehaviour
 {
     [SerializeField]
@@ -13,7 +12,6 @@ public class Steering : MonoBehaviour
     [SerializeField]
     [Range(1, 90)]
     private float maxSteeringAngle = 45;
-    [SerializeField]
 
     // references
     private Powertrain powertrain;
@@ -80,29 +78,21 @@ public class Steering : MonoBehaviour
             RaycastHit hit;
             float maxLength = suspension.restLength + suspension.springTravel;
 
-            // check if the car is not on the ground
+            // don't apply if the wheel is not on the ground
             if (!Physics.Raycast(rayPoint.position, -rayPoint.up, out hit, maxLength + tire.radius, car.driveableLayer))
-            {
-                Debug.Log("car is not on the ground");
-                return;
-            }
+                continue;
 
             Vector3 steeringDirection = rayPoint.right;
             Vector3 tireWorldVelocity = car.rigidBody.GetPointVelocity(rayPoint.position);
 
             float steeringVelocity = Vector3.Dot(steeringDirection, tireWorldVelocity);
 
-            float desiredVelocityChange = -steeringVelocity * GetCurrentTireGrip(tire);
+            float desiredVelocityChange = -steeringVelocity * tire.GetCurrentTireGrip(powertrain.GetCurrentSpeed());
 
             float desiredAcceleration = desiredVelocityChange / Time.fixedDeltaTime;
 
             Vector3 netForce = steeringDirection * desiredAcceleration * tire.mass;
             car.rigidBody.AddForceAtPosition(netForce, rayPoint.position);
         }
-    }
-
-    private float GetCurrentTireGrip(Tire tire)
-    {
-        return tire.gripCurve.Evaluate(powertrain.GetCurrentSpeed());
     }
 }
