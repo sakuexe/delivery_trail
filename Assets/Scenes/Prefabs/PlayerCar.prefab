@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 254435775544435635}
-  pizzaBoxPrefab: {fileID: 0}
+  pizzaBoxPrefab: {fileID: 1319986728506628295, guid: 0456b2f7c7828d99db8ebc25a58087f5, type: 3}
   numberOfBoxes: 3
   movementSensitivity: 2
   maxMovementSideways: 0.1

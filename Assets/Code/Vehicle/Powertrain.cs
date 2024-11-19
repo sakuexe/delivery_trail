@@ -59,7 +59,7 @@ public class Powertrain : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         HandleSpeed();
         HandleRpm();
@@ -69,26 +69,28 @@ public class Powertrain : MonoBehaviour
     public void OnGas(InputValue value) => _gasPedalAmount = value.Get<float>();
 
     /// <summary>
-    /// Handles the force that the powertrain is giving the car
+    /// Handles the torque that the powertrain is giving the car
     /// </summary>
     private void HandleSpeed()
     {
         // if the gas pedal is not pressed
         if (_gasPedalAmount <= 0) return;
 
-        // split the force across the wheels
-        float force = GetCurrentForce();
+        // split the torque across the wheels
+        // TODO: add a better multiplier
+        float torque = GetCurrentTorque() * 10f;
         if (drivetrain == Drivetrain.AllWhellDrive)
-            force = force / 4;
+            torque = torque / 4;
         else
-            force = force / 2;
+            torque = torque / 2;
 
         foreach (Tire tire in powerDeliveryWheels)
         {
             // dont accelerate if the wheel is off the ground
             if (suspension.IsGrounded(tire) == null)
                 continue;
-            car.rigidBody.AddForceAtPosition(tire.transform.forward * GetCurrentForce(), tire.transform.position);
+            float force = torque / tire.radius;
+            car.rigidBody.AddForceAtPosition(tire.transform.forward * force, tire.transform.position);
         }
     }
 
@@ -108,9 +110,9 @@ public class Powertrain : MonoBehaviour
     }
 
     /// <summary>
-    /// Get the current force of the powertain in Newtons.
+    /// Get the current torque of the powertain.
     /// </summary>
-    public float GetCurrentForce()
+    public float GetCurrentTorque()
     {
         // HP = (T * _rpm) / 5252
         // since we know the horsepower and the _rpm and want to know the torque
@@ -124,9 +126,8 @@ public class Powertrain : MonoBehaviour
         // and then get the horse power from the _rpm
         float horsePower = maxHorsePower * horsePowerFactor;
         // use the formula above to get torque
-        float torque = (horsePower * 5252) / _rpm;
-        // convert torque to pounds and then to newtons
-        return (torque / 2) * 4.44822f;
+        float torque = (horsePower * 5252) / Mathf.Max(_rpm, minRpm);
+        return torque;
     }
 
     /// <summary>
