@@ -12,6 +12,9 @@ public class Steering : MonoBehaviour
     [SerializeField]
     [Range(1, 90)]
     private float maxSteeringAngle = 45;
+    [SerializeField]
+    [Range(1, 30)]
+    private float sidewaysGripMultiplier = 10f;
 
     // references
     private Powertrain powertrain;
@@ -38,7 +41,7 @@ public class Steering : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         HandleSteering();
         HandleGrip();
@@ -92,7 +95,8 @@ public class Steering : MonoBehaviour
             float desiredAcceleration = desiredVelocityChange / Time.fixedDeltaTime;
 
             Vector3 netForce = steeringDirection * desiredAcceleration * tire.mass;
-            car.rigidBody.AddForceAtPosition(netForce, rayPoint.position);
+            Debug.DrawLine(tire.transform.position, tire.transform.position + netForce, Color.red);
+            car.rigidBody.AddForceAtPosition(netForce * sidewaysGripMultiplier, rayPoint.position);
         }
     }
 }
