@@ -2729,7 +2729,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2129711074}
   m_SourcePrefab: {fileID: 100100000, guid: 1dc65752cd9dcda4681361e198c6a13c, type: 3}
---- !u!43 &1134033968
+--- !u!43 &1139388369
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4245,7 +4245,7 @@ MonoBehaviour:
       m_Value: 6.53
   m_Spline: {fileID: 1954993308}
   m_SegmentsPerMeter: 1
-  m_Mesh: {fileID: 1134033968}
+  m_Mesh: {fileID: 1139388369}
   m_TextureScale: 1
 --- !u!33 &1954993311
 MeshFilter:
@@ -4254,7 +4254,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1954993303}
-  m_Mesh: {fileID: 1134033968}
+  m_Mesh: {fileID: 1139388369}
 --- !u!23 &1954993312
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4989,7 +4989,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7595524197783005222, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
       propertyPath: drivetrain
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7595524197783005222, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
+      propertyPath: powerCurve.m_Curve.Array.data[3].time
+      value: 0.98339844
+      objectReference: {fileID: 0}
+    - target: {fileID: 7595524197783005222, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
+      propertyPath: powerCurve.m_Curve.Array.data[2].value
+      value: 0.900405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7595524197783005222, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
+      propertyPath: powerCurve.m_Curve.Array.data[3].value
+      value: 0.8619728
       objectReference: {fileID: 0}
     - target: {fileID: 7751329039884111462, guid: 9377aae2344b6ac2291b7abc2b8cd54a, type: 3}
       propertyPath: m_LocalPosition.x

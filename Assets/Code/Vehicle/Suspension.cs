@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
 using UnityEngine;
 
 [RequireComponent(typeof(CarController))]
@@ -39,8 +38,6 @@ public class Suspension : MonoBehaviour
     void Start()
     {
         Transform tiresContainer = transform.Find("Model/Tires");
-        // throw error if tires transform is not found
-        Assert.IsNotNull(tiresContainer);
 
         HashSet<Transform> transforms = new(tiresContainer.GetComponentsInChildren<Transform>());
         transforms.Remove(tiresContainer.transform);
@@ -141,7 +138,7 @@ public class Suspension : MonoBehaviour
             // only move on the y axis (up and down)
             Vector3 desiredPosition = new Vector3(
                     tires[index].transform.position.x,
-                    yTransform, 
+                    yTransform,
                     tires[index].transform.position.z);
 
             tireModel.position = Vector3.MoveTowards(tireModel.position, desiredPosition, 3f * Time.deltaTime);

@@ -516,8 +516,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 254435775544435635}
-  pizzaBoxPrefab: {fileID: 1319986728506628295, guid: 0456b2f7c7828d99db8ebc25a58087f5, type: 3}
-  numberOfBoxes: 8
+  pizzaBoxPrefab: {fileID: 0}
+  numberOfBoxes: 3
   movementSensitivity: 2
   maxMovementSideways: 0.1
   heightMultiplier: 1
@@ -918,8 +918,26 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 1
+      time: 0.7046818
+      value: 0.90715176
+      inSlope: 1.3485951
+      outSlope: 1.3485951
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.93520474
+      value: 0.8816977
+      inSlope: -2.0155203
+      outSlope: -2.0155203
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9874878
+      value: 0.7193413
       inSlope: 0
       outSlope: 0
       tangentMode: 0
