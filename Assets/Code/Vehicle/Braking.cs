@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 public class Braking : MonoBehaviour
 {
     [SerializeField]
-    [Range(500, 7_500)]
-    private float breakForce = 4_000;
+    [Range(2_000, 12_500)]
+    private float breakForce = 6_000;
     [SerializeField]
     [Range(0.1f, 1f)]
     // how much wheel bias does the front wheels have
@@ -45,6 +45,8 @@ public class Braking : MonoBehaviour
     /// </summary>
     private void HandleBraking()
     {
+        if (_brakePressed <= 0) return;
+
         Vector3 worldVelocity = car.rigidBody.GetPointVelocity(car.transform.position);
         float forwardVelocity = Vector3.Dot(car.transform.forward, worldVelocity);
 
@@ -68,7 +70,7 @@ public class Braking : MonoBehaviour
                 continue;
 
             float tireBrakeForce = (frontBrakeForce / (totalAmountOfTires - car.rearTires.Length));
-            car.rigidBody.AddForceAtPosition(decelerationDirection * decelarationForce, tire.transform.position);
+            car.rigidBody.AddForceAtPosition(decelerationDirection * frontBrakeForce, tire.transform.position);
         }
 
         foreach (Tire tire in car.rearTires)
@@ -77,7 +79,7 @@ public class Braking : MonoBehaviour
                 continue;
 
             float tireBrakeForce = ((rearBrakeForce) / (totalAmountOfTires - car.frontTires.Length));
-            car.rigidBody.AddForceAtPosition(decelerationDirection * decelarationForce, tire.transform.position);
+            car.rigidBody.AddForceAtPosition(decelerationDirection * rearBrakeForce, tire.transform.position);
         }
     }
 }

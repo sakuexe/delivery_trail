@@ -26,6 +26,9 @@ public class Powertrain : MonoBehaviour
     [SerializeField]
     // keyframes are (rpm, power)
     private AnimationCurve powerCurve = new(new Keyframe(0, 0), new Keyframe(1, 1));
+    [SerializeField]
+    [Range(0.1f, 5)]
+    private float engineBraking = 1.75f;
 
     // references
     private Tire[] powerDeliveryWheels;
@@ -62,6 +65,7 @@ public class Powertrain : MonoBehaviour
     void FixedUpdate()
     {
         HandleSpeed();
+        HandleEngineBrake();
         HandleRpm();
     }
 
@@ -91,6 +95,33 @@ public class Powertrain : MonoBehaviour
                 continue;
             float force = torque / tire.radius;
             car.rigidBody.AddForceAtPosition(tire.transform.forward * force, tire.transform.position);
+        }
+    }
+
+    /// <summary>
+    /// Handles the engine braking amount when the player is not pressing the accelerator
+    /// </summary>
+    private void HandleEngineBrake()
+    {
+        if (_gasPedalAmount >= 0.05f) return;
+
+        // if going backward, add force forward and viceversa
+        Vector3 worldVelocity = car.rigidBody.GetPointVelocity(car.transform.position);
+        float forwardVelocity = Vector3.Dot(car.transform.forward, worldVelocity);
+        Vector3 decelerationDirection = forwardVelocity < 0 ? car.transform.forward : -car.transform.forward;
+
+        // Force = mass * acceleration
+        float decelarationForce = (car.rigidBody.mass * engineBraking); 
+        // apply a bit extra engine brake based on the rpm (more brake on high rpm)
+        decelarationForce += decelarationForce * (powerCurve.Evaluate(_rpm / maxRpm) * 3);
+
+        // apply the braking to each tire
+        foreach (Tire tire in powerDeliveryWheels)
+        {
+            float tireBrakeForce = (decelarationForce / (powerDeliveryWheels.Length));
+            car.rigidBody.AddForceAtPosition(decelerationDirection * tireBrakeForce, tire.transform.position);
+            // for debugging
+            Debug.DrawLine(tire.transform.position, tire.transform.position + (-tire.transform.forward * (tireBrakeForce / 2000)), Color.green);
         }
     }
 
