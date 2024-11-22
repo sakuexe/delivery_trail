@@ -42,13 +42,21 @@ public class PizzaBoxPhysics : MonoBehaviour
 
         for (int i = 0; i < numberOfBoxes; i++)
         {
+            // spawn the box and make it a child of the object that this script is attached to
             GameObject newPizzaBox = Instantiate(pizzaBoxPrefab);
             newPizzaBox.transform.SetParent(transform);
-            newPizzaBox.transform.position = new Vector3(newPizzaBox.transform.position.x, newPizzaBox.transform.position.y + (0.2f * i), newPizzaBox.transform.position.z);
+            // position the pizza boxes on top of one another
+            newPizzaBox.transform.localPosition = new Vector3(0, newPizzaBox.transform.localPosition.y + (0.2f * i), 0);
+            // random rotation, so the tower will look more natural
+            int randomRotation = UnityEngine.Random.Range(-8, 8);
+            // make the boxes face forward (for some reason they start at -45 deg)
+            newPizzaBox.transform.localRotation = Quaternion.Euler(new Vector3(0, randomRotation ,0));
+            // add the box to the list
             pizzaBoxesList.Add(newPizzaBox);
         }
 
         pizzaBoxes = pizzaBoxesList.ToArray();
+
     }
 
     // Update is called once per frame
