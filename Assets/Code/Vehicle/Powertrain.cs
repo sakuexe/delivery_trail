@@ -9,6 +9,7 @@ public enum Drivetrain
     RearWheelDrive
 }
 
+[RequireComponent(typeof(Braking))]
 [RequireComponent(typeof(CarController))]
 public class Powertrain : MonoBehaviour
 {
@@ -31,9 +32,10 @@ public class Powertrain : MonoBehaviour
     private float engineBraking = 1.75f;
 
     // references
-    private Tire[] powerDeliveryWheels;
+    public Tire[] powerDeliveryWheels { get; private set; }
     private CarController car;
     private Suspension suspension;
+    private Braking braking;
 
     // states
     private bool _pressingAccelerator;
@@ -45,6 +47,7 @@ public class Powertrain : MonoBehaviour
     {
         car = gameObject.GetComponent<CarController>();
         suspension = gameObject.GetComponent<Suspension>();
+        braking = gameObject.GetComponent<Braking>();
 
         // get the wheels that are doing the driving
         switch (drivetrain)
@@ -104,6 +107,7 @@ public class Powertrain : MonoBehaviour
     private void HandleEngineBrake()
     {
         if (_gasPedalAmount >= 0.05f) return;
+        if (braking.brakePressed > 0 && braking.isReversing) return;
 
         // if going backward, add force forward and viceversa
         Vector3 worldVelocity = car.rigidBody.GetPointVelocity(car.transform.position);

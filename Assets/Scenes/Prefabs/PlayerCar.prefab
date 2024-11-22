@@ -741,6 +741,7 @@ GameObject:
   - component: {fileID: 7595524197783005222}
   - component: {fileID: 1543875024318202474}
   - component: {fileID: 2131229745673096169}
+  - component: {fileID: 4068846216948917692}
   m_Layer: 0
   m_Name: PlayerCar
   m_TagString: Player
@@ -982,6 +983,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breakForce: 6000
   breakBalance: 0.2
+--- !u!114 &4068846216948917692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7126718573871078936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93ca31d81e94f05cc9586a7497fc0c4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7413061863702891493
 GameObject:
   m_ObjectHideFlags: 0
