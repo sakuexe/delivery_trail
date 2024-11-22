@@ -95,7 +95,6 @@ public class Steering : MonoBehaviour
             float desiredAcceleration = desiredVelocityChange / Time.fixedDeltaTime;
 
             Vector3 netForce = steeringDirection * desiredAcceleration * tire.mass;
-            Debug.DrawLine(tire.transform.position, tire.transform.position + netForce, Color.red);
             car.rigidBody.AddForceAtPosition(netForce * sidewaysGripMultiplier, rayPoint.position);
         }
     }
