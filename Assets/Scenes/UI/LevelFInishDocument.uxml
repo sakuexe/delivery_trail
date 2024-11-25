@@ -17,7 +17,7 @@
                     <engine:Label text="00:00:00" name="GoldTime_value" class="text value" />
                 </engine:VisualElement>
                 <engine:VisualElement name="SilverTime" style="flex-grow: 1; flex-direction: row; justify-content: space-around;">
-                    <engine:Label text="Silver TIme:" name="SilverTime_key" class="text key" style="-unity-font-style: normal;" />
+                    <engine:Label text="Silver Time:" name="SilverTime_key" class="text key" style="-unity-font-style: normal;" />
                     <engine:Label text="00:00:00" name="SilverTime_value" class="text value" />
                 </engine:VisualElement>
                 <engine:VisualElement name="BronzeTIme" style="flex-grow: 1; flex-direction: row; justify-content: space-around;">

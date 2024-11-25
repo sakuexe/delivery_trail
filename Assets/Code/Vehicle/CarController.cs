@@ -34,6 +34,18 @@ public class CarController : MonoBehaviour
         powertrain = GetComponent<Powertrain>();
     }
 
+    void Start()
+    {
+        // turn off the motor when the start countdown has not started
+        powertrain.enabled = false;
+        GameManager.Instance.onLevelStarted += () => powertrain.enabled = true;
+    }
+
+    void OnDisable()
+    {
+        GameManager.Instance.onLevelStarted -= () => powertrain.enabled = true;
+    }
+
     void FixedUpdate()
     {
         UpdatePowerTrainUI();

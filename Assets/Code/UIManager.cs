@@ -6,7 +6,7 @@ public class UIManager : MonoBehaviour
     // the UIManager is a singleton, since we don't want multiple of them
     // you can call it with UIManager.Instance.<so-on> from wherever you want
     public static UIManager Instance { get; private set; }
-    private UIDocument document;
+    private UIDocument hudDocument;
     private Label rpmValue;
     private Label speedValue;
 
@@ -19,10 +19,11 @@ public class UIManager : MonoBehaviour
         else
             Destroy(Instance);
 
+        hudDocument = gameObject.GetComponent<UIDocument>();
+
         // fetch the ui elements
-        document = GetComponent<UIDocument>();
-        rpmValue = document.rootVisualElement.Q("RPM_value") as Label;
-        speedValue = document.rootVisualElement.Q("Speed_value") as Label;
+        rpmValue = hudDocument.rootVisualElement.Q("RPM_value") as Label;
+        speedValue = hudDocument.rootVisualElement.Q("Speed_value") as Label;
     }
 
     public void UpdateSpeed(float speed)

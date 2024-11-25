@@ -5,7 +5,9 @@ public class GoalController : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField]
-    private UIDocument document;
+    private UIDocument resultDocument;
+    [SerializeField]
+    private UIDocument countdownDocument;
 
     [Header("Functionality")]
     [SerializeField]
@@ -24,6 +26,7 @@ public class GoalController : MonoBehaviour
     private GroupBox levelDetails;
     private GroupBox medalDetails;
     private Label timeTakenLabel;
+    private Label countdownValue;
 
     // states
     private float _startTime;
@@ -32,21 +35,35 @@ public class GoalController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (!document)
-            Debug.LogError("No UIDocument given to the Goal Controller (in Goal -object)");
+        if (!resultDocument)
+            Debug.LogError("No hudDocument given to the Goal Controller (in Goal -object)");
+        if (!countdownDocument)
+            Debug.LogError("No countdownDocument given to the Goal Controller (in Goal -object)");
         _startTime = Time.time;
 
         // fetch the ui elements
-        timeTakenLabel = document.rootVisualElement.Q("Time_value") as Label;
-        mainContainer = document.rootVisualElement.Q("Background") as VisualElement;
-        levelDetails = document.rootVisualElement.Q("LevelDetails") as GroupBox;
-        medalDetails = document.rootVisualElement.Q("MedalTimes") as GroupBox;
+        timeTakenLabel = resultDocument.rootVisualElement.Q("Time_value") as Label;
+        mainContainer = resultDocument.rootVisualElement.Q("Background") as VisualElement;
+        levelDetails = resultDocument.rootVisualElement.Q("LevelDetails") as GroupBox;
+        medalDetails = resultDocument.rootVisualElement.Q("MedalTimes") as GroupBox;
 
-        mainContainer.AddToClassList("hidden");
+        countdownValue = countdownDocument.rootVisualElement.Q("Countdown") as Label;
+
+        mainContainer.style.opacity = 0;
         levelDetails.AddToClassList("hidden");
         medalDetails.AddToClassList("hidden");
 
         SetupMedalTimes();
+
+        // set up the countdown timer
+        GameManager.Instance.onStartCountdownChanged += UpdateStartCountdown;
+        GameManager.Instance.onLevelStarted += HideStartCountdown;
+        UpdateStartCountdown(GameManager.Instance.startCountdownTime);
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.onStartCountdownChanged -= UpdateStartCountdown;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -77,9 +94,9 @@ public class GoalController : MonoBehaviour
     // this could be a coroutine
     private void SetupMedalTimes()
     {
-        Label bronzeTimeLabel = document.rootVisualElement.Q("BronzeTime_value") as Label;
-        Label silverTimeLabel = document.rootVisualElement.Q("SilverTime_value") as Label;
-        Label goldTimeLabel = document.rootVisualElement.Q("GoldTime_value") as Label;
+        Label bronzeTimeLabel = resultDocument.rootVisualElement.Q("BronzeTime_value") as Label;
+        Label silverTimeLabel = resultDocument.rootVisualElement.Q("SilverTime_value") as Label;
+        Label goldTimeLabel = resultDocument.rootVisualElement.Q("GoldTime_value") as Label;
 
         bronzeTimeLabel.text = FormatTime(bronzeTime);
         silverTimeLabel.text = FormatTime(silverTime);
@@ -90,8 +107,23 @@ public class GoalController : MonoBehaviour
     {
         float timeTaken = Time.time - _startTime;
         timeTakenLabel.text = FormatTime(timeTaken);
-        mainContainer.RemoveFromClassList("hidden");
+        mainContainer.style.opacity = 1f;
         levelDetails.RemoveFromClassList("hidden");
         medalDetails.RemoveFromClassList("hidden");
+    }
+
+    private void UpdateStartCountdown(int value)
+    {
+        if (value <= 0)
+        {
+            countdownValue.text = $"GO!";
+            return;
+        }
+        countdownValue.text = $"{value}";
+    }
+
+    private void HideStartCountdown()
+    {
+        countdownValue.AddToClassList("hidden");
     }
 }
