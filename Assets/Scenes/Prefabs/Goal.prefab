@@ -185,8 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b56e087890abdf5c9edfdd61318cca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resultDocument: {fileID: 0}
-  countdownDocument: {fileID: 0}
+  resultDocument: {fileID: 6397627923069813577}
+  countdownDocument: {fileID: 5240032946487382517}
   playerTag: Player
   goldTime: 0
   silverTime: 0

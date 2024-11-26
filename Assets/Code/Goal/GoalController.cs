@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -36,9 +37,13 @@ public class GoalController : MonoBehaviour
     void Start()
     {
         if (!resultDocument)
-            Debug.LogError("No hudDocument given to the Goal Controller (in Goal -object)");
+            throw new ArgumentNullException("No hudDocument given to the Goal Controller (in Goal -object)");
         if (!countdownDocument)
-            Debug.LogError("No countdownDocument given to the Goal Controller (in Goal -object)");
+            throw new ArgumentNullException("No countdownDocument given to the Goal Controller (in Goal -object)");
+        if (!GameManager.Instance)
+            throw new ArgumentNullException(String.Join(
+                "No game manager found in scene. Please add an empty gameObject to the scene",
+                "and add the GameManager-script to it (Assets/Code/GameManager.cs)"));
         _startTime = Time.time;
 
         // fetch the ui elements
