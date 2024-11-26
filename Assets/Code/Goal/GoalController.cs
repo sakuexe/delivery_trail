@@ -30,20 +30,29 @@ public class GoalController : MonoBehaviour
     private Label countdownValue;
 
     // states
-    private float _startTime;
+    public float _startTime { get; private set; }
     private bool _levelFinished = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if (!resultDocument)
-            throw new ArgumentNullException("No hudDocument given to the Goal Controller (in Goal -object)");
+        {
+            Debug.LogError("No hudDocument given to the Goal Controller (in Goal -object)");
+            throw new ArgumentNullException("hudDocument");
+        }
         if (!countdownDocument)
-            throw new ArgumentNullException("No countdownDocument given to the Goal Controller (in Goal -object)");
+        {
+            Debug.LogError("No countdownDocument given to the Goal Controller (in Goal -object)");
+            throw new ArgumentNullException("countdownDocument");
+        }
         if (!GameManager.Instance)
-            throw new ArgumentNullException(String.Join(
+        {
+            Debug.LogError(String.Join(
                 "No game manager found in scene. Please add an empty gameObject to the scene",
                 "and add the GameManager-script to it (Assets/Code/GameManager.cs)"));
+            throw new Exception("GameManager not found");
+        }
         _startTime = Time.time;
 
         // fetch the ui elements
@@ -86,16 +95,6 @@ public class GoalController : MonoBehaviour
         ShowGoalScreen();
     }
 
-    private string FormatTime(float time)
-    {
-        int minutes = Mathf.FloorToInt(time / 60); // Get minutes
-        int seconds = Mathf.FloorToInt(time % 60); // Get remaining seconds
-        int milliseconds = Mathf.FloorToInt((time * 100) % 100); // Get milliseconds (hundredths of a second)
-
-        // Format the time as MM:SS:ss
-        return string.Format("{0:D2}:{1:D2}:{2:D2}", minutes, seconds, milliseconds);
-    }
-
     // this could be a coroutine
     private void SetupMedalTimes()
     {
@@ -103,15 +102,15 @@ public class GoalController : MonoBehaviour
         Label silverTimeLabel = resultDocument.rootVisualElement.Q("SilverTime_value") as Label;
         Label goldTimeLabel = resultDocument.rootVisualElement.Q("GoldTime_value") as Label;
 
-        bronzeTimeLabel.text = FormatTime(bronzeTime);
-        silverTimeLabel.text = FormatTime(silverTime);
-        goldTimeLabel.text = FormatTime(goldTime);
+        bronzeTimeLabel.text = GameManager.Instance.FormatTime(bronzeTime);
+        silverTimeLabel.text = GameManager.Instance.FormatTime(silverTime);
+        goldTimeLabel.text = GameManager.Instance.FormatTime(goldTime);
     }
 
     private void ShowGoalScreen()
     {
         float timeTaken = Time.time - _startTime;
-        timeTakenLabel.text = FormatTime(timeTaken);
+        timeTakenLabel.text = GameManager.Instance.GetLevelTime();
         mainContainer.style.opacity = 1f;
         levelDetails.RemoveFromClassList("hidden");
         medalDetails.RemoveFromClassList("hidden");

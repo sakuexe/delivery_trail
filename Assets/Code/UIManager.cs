@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,6 +10,8 @@ public class UIManager : MonoBehaviour
     private UIDocument hudDocument;
     private Label rpmValue;
     private Label speedValue;
+    private Label levelTimer;
+
 
     // gets run before the start function
     void Awake()
@@ -24,6 +27,21 @@ public class UIManager : MonoBehaviour
         // fetch the ui elements
         rpmValue = hudDocument.rootVisualElement.Q("RPM_value") as Label;
         speedValue = hudDocument.rootVisualElement.Q("Speed_value") as Label;
+        levelTimer = hudDocument.rootVisualElement.Q("LevelTime") as Label;
+    }
+
+    private void Start() => StartCoroutine(UpdateTimer(0.1f));
+
+    /// <summary>
+    /// Coroutine for updating the timer every n seconds
+    /// </summary>
+    private IEnumerator UpdateTimer(float delay)
+    {
+        while (true)
+        {
+            levelTimer.text = $"{GameManager.Instance.GetLevelTime()}";
+            yield return new WaitForSeconds(delay);
+        }
     }
 
     public void UpdateSpeed(float speed)

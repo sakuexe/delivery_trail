@@ -12,7 +12,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     public int startCountdownTime { get; private set; } = 3;
+
     private int _startCountdown;
+    private float _startTime;
 
     void Awake()
     {
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(StartCountdown());
+        onLevelStarted += StartLevelTimer;
     }
 
     /// <summary>
@@ -36,8 +39,9 @@ public class GameManager : MonoBehaviour
         _startCountdown = startCountdownTime;
 
         // wait for n amount of seconds
-        while (_startCountdown > 0) {
-            yield return new WaitForSeconds (1);
+        while (_startCountdown > 0)
+        {
+            yield return new WaitForSeconds(1);
             _startCountdown--;
             onStartCountdownChanged?.Invoke(_startCountdown);
         }
@@ -46,4 +50,30 @@ public class GameManager : MonoBehaviour
         // invoke the event of game starting
         onLevelStarted?.Invoke();
     }
+
+    private void StartLevelTimer() => _startTime = Time.time;
+
+    /// <summary>
+    /// Returns the time spent on a level after the start countdown
+    /// </summary>
+    public string GetLevelTime()
+    {
+        if (_startTime == 0) return "00:00:00";
+        return FormatTime(Time.time - _startTime);
+    }
+
+    /// <summary>
+    /// Converts time in seconds to 00:00:00 format
+    /// </summary>
+    /// <param name="time">Time in seconds</param>
+    public string FormatTime(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60); // Get minutes
+        int seconds = Mathf.FloorToInt(time % 60); // Get remaining seconds
+        int milliseconds = Mathf.FloorToInt((time * 100) % 100); // Get milliseconds (hundredths of a second)
+
+        // Format the time as MM:SS:ss
+        return string.Format("{0:D2}:{1:D2}:{2:D2}", minutes, seconds, milliseconds);
+    }
+
 }

@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/Scenes/UI/UIStyle.uss?fileID=7433441132597879392&amp;guid=f9ffdf9af0c324d1cb3ae1950edfa078&amp;type=3#UIStyle" />
     <engine:VisualElement name="Base" class="container" style="flex-grow: 1; align-content: auto; justify-content: flex-end;">
         <engine:VisualElement name="Bottom" style="flex-grow: 1; justify-content: space-between; align-content: auto; flex-direction: row; align-items: flex-end;">
-            <engine:VisualElement name="Dashboard" style="flex-grow: 0; justify-content: flex-start; align-items: flex-start; align-self: auto; align-content: auto; width: 20%;">
+            <engine:VisualElement name="Left" style="flex-grow: 0; justify-content: flex-start; align-items: flex-start; align-self: auto; align-content: auto; width: 20%;">
                 <engine:VisualElement name="RPM" style="flex-grow: 1; flex-direction: row;">
                     <engine:Label text="RPM" name="RPM_key" class="text key" />
                     <engine:Label text="00" name="RPM_value" class="text value" />
@@ -13,10 +13,10 @@
                     <engine:Label text="km/h" name="Speed_unit" class="text value unit" />
                 </engine:VisualElement>
             </engine:VisualElement>
-            <engine:VisualElement name="StageTime" style="flex-grow: 0;">
+            <engine:VisualElement name="Center" style="flex-grow: 0;">
                 <engine:Label text="00:00.00" class="text" style="-unity-font-style: bold; -unity-text-align: upper-center;" />
             </engine:VisualElement>
-            <engine:VisualElement style="flex-grow: 0; width: 20%;" />
+            <engine:VisualElement name="Right" style="flex-grow: 0; width: 20%;" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
