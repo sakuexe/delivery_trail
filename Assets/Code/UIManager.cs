@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.onLevelFinished += () => HideHud();
     }
 
-    void OnDisable() => GameManager.Instance.onLevelFinished -= () => _hasLevelEnded = true;
+    void OnDisable() => GameManager.Instance.onLevelFinished -= () => HideHud();
 
     /// <summary>
     /// Coroutine for updating the timer every n seconds
