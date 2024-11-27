@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Suspension))]
 [RequireComponent(typeof(Powertrain))]
@@ -23,9 +22,6 @@ public class Steering : MonoBehaviour
     private Tire[] tires;
     private Transform[] tireModels;
 
-    // states
-    private Vector2 _steeringAngle;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -43,35 +39,12 @@ public class Steering : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        HandleSteering();
         HandleGrip();
     }
 
-    // when the player steers the car
-    public void OnSteering(InputValue value)
-    {
-        _steeringAngle = value.Get<Vector2>();
-    }
-
-    private void HandleSteering()
-    {
-        float speed = powertrain.GetCurrentSpeed();
-        foreach (var (tire, index) in car.frontTires.Select((v, i) => (v, i)))
-        {
-            // get the amount that the tires should be rotating
-            float steeringAmount = steeringCurve.Evaluate(speed / 120) * _steeringAngle.x;
-            // convert the degrees to a quaternion
-            Quaternion targetRotation = Quaternion.Euler(0, steeringAmount * maxSteeringAngle, 0);
-            Quaternion currentRotation = Quaternion.Slerp(tire.transform.localRotation, targetRotation, 4f * Time.fixedDeltaTime);
-
-            // and finally add the rotation to the tires
-            tire.transform.localRotation = currentRotation;
-            // also add the rotation to the models
-            tireModels[index].localRotation = currentRotation;
-        }
-    }
-
-    // handles the tires resistance towards going sideways
+    /// <summary> 
+    /// Handles the tires resistance towards going sideways.
+    /// </summary>
     private void HandleGrip()
     {
         foreach (Tire tire in tires)
@@ -96,6 +69,28 @@ public class Steering : MonoBehaviour
 
             Vector3 netForce = steeringDirection * desiredAcceleration * tire.mass;
             car.rigidBody.AddForceAtPosition(netForce * sidewaysGripMultiplier, rayPoint.position);
+        }
+    }
+
+    /// <summary>
+    /// Rotates the front tires sideways depending on the steering amount and steering curve
+    /// </summary>
+    /// <param name="rawSteeringAmount">Raw steering input from the Input Manager</param>
+    public void SteerTires(Vector2 rawSteeringAmount)
+    {
+        float speed = powertrain.GetCurrentSpeed();
+        foreach (var (tire, index) in car.frontTires.Select((v, i) => (v, i)))
+        {
+            // get the amount that the tires should be rotating
+            float steeringAmount = steeringCurve.Evaluate(speed / 120) * rawSteeringAmount.x;
+            // convert the degrees to a quaternion
+            Quaternion targetRotation = Quaternion.Euler(0, steeringAmount * maxSteeringAngle, 0);
+            Quaternion currentRotation = Quaternion.Slerp(tire.transform.localRotation, targetRotation, 4f * Time.fixedDeltaTime);
+
+            // and finally add the rotation to the tires
+            tire.transform.localRotation = currentRotation;
+            // also add the rotation to the models
+            tireModels[index].localRotation = currentRotation;
         }
     }
 }

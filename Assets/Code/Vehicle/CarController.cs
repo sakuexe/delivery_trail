@@ -1,8 +1,8 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Braking))]
 [RequireComponent(typeof(Steering))]
-[RequireComponent(typeof(Suspension))]
 [RequireComponent(typeof(Powertrain))]
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
@@ -18,20 +18,31 @@ public class CarController : MonoBehaviour
     public Tire[] frontTires;
     public Tire[] rearTires;
 
-    // references to other components
-    // doesn't show in the editor
-    public Braking braking { get; private set; }
-    public Steering steering { get; private set; }
-    public Suspension suspension { get; private set; }
-    public Powertrain powertrain { get; private set; }
-
     [Header("Layer mask")]
     public LayerMask driveableLayer;
+
+    // references to other components
+    // doesn't show in the editor
+    public Powertrain powertrain { get; private set; }
+    public Braking braking { get; private set; }
+    public Steering steering { get; private set; }
+
+    // states
+    // powertrain
+    private float _gasPedalAmount;
+    // steering
+    private Vector2 _steeringAmount;
+    // braking
+    private float _brakePedalAmount;
+    // reversing
+    public bool isReversing { get; private set; }
 
     void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
         powertrain = GetComponent<Powertrain>();
+        steering = GetComponent<Steering>();
+        braking = GetComponent<Braking>();
     }
 
     void Start()
@@ -41,14 +52,45 @@ public class CarController : MonoBehaviour
         GameManager.Instance.onLevelStarted += () => powertrain.enabled = true;
     }
 
-    void OnDisable()
-    {
-        GameManager.Instance.onLevelStarted -= () => powertrain.enabled = true;
-    }
+    void OnDisable() => GameManager.Instance.onLevelStarted -= () => powertrain.enabled = true;
 
+    // use fixed update, because these things are tied to the physics
     void FixedUpdate()
     {
+        // control powertrain
+        if (powertrain.enabled)
+            powertrain.HandleRpm(_gasPedalAmount);
+
+        if (_gasPedalAmount > 0 && powertrain.enabled)
+            powertrain.Accelerate(_gasPedalAmount);
+
+        // control steering
+        steering.SteerTires(_steeringAmount);
+
+        // control braking
+        if (_brakePedalAmount > 0 && !isReversing)
+            braking.Brake(_brakePedalAmount);
+
+        // control reversing
+        if (_brakePedalAmount > 0 && CanReverse())
+            braking.Reverse();
+
+        // HUD
         UpdatePowerTrainUI();
+    }
+
+    private bool CanReverse()
+    {
+        if (_brakePedalAmount <= 0) return false;
+        if (powertrain.GetCurrentSpeed() > braking.maxReversingSpeed) return false;
+
+        Vector3 worldVelocity = rigidBody.GetPointVelocity(transform.position);
+        float forwardVelocity = Vector3.Dot(transform.forward, worldVelocity);
+
+        if (forwardVelocity > 0) return false;
+
+        isReversing = true;
+        return true;
     }
 
     private void UpdatePowerTrainUI()
@@ -58,4 +100,21 @@ public class CarController : MonoBehaviour
         if (showSpeedUI)
             UIManager.Instance.UpdateSpeed(powertrain.GetCurrentSpeed());
     }
+
+    // when the player presses on the gas
+    public void OnGas(InputValue value)
+    {
+        isReversing = false;
+        _gasPedalAmount = value.Get<float>();
+    }
+
+    // when the player pressed on the brake
+    public void OnBrake(InputValue value)
+    {
+        _brakePedalAmount = value.Get<float>();
+        isReversing = _brakePedalAmount > 0 && CanReverse();
+    }
+
+    // when the player steers the car
+    public void OnSteering(InputValue value) => _steeringAmount = value.Get<Vector2>();
 }

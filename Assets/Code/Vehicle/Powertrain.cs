@@ -1,6 +1,5 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public enum Drivetrain
 {
@@ -39,7 +38,6 @@ public class Powertrain : MonoBehaviour
 
     // states
     private bool _pressingAccelerator;
-    private float _gasPedalAmount;
     private float _rpm;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -67,38 +65,7 @@ public class Powertrain : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        HandleSpeed();
         HandleEngineBrake();
-        HandleRpm();
-    }
-
-    // when the player presses on the gas
-    public void OnGas(InputValue value) => _gasPedalAmount = value.Get<float>();
-
-    /// <summary>
-    /// Handles the torque that the powertrain is giving the car
-    /// </summary>
-    private void HandleSpeed()
-    {
-        // if the gas pedal is not pressed
-        if (_gasPedalAmount <= 0) return;
-
-        // split the torque across the wheels
-        // TODO: add a better multiplier
-        float torque = GetCurrentTorque() * 10f;
-        if (drivetrain == Drivetrain.AllWhellDrive)
-            torque = torque / 4;
-        else
-            torque = torque / 2;
-
-        foreach (Tire tire in powerDeliveryWheels)
-        {
-            // dont accelerate if the wheel is off the ground
-            if (suspension.IsGrounded(tire) == null)
-                continue;
-            float force = torque / tire.radius;
-            car.rigidBody.AddForceAtPosition(tire.transform.forward * force, tire.transform.position);
-        }
     }
 
     /// <summary>
@@ -106,8 +73,8 @@ public class Powertrain : MonoBehaviour
     /// </summary>
     private void HandleEngineBrake()
     {
-        if (_gasPedalAmount >= 0.05f) return;
-        if (braking.brakePressed > 0 && braking.isReversing) return;
+        if (_pressingAccelerator) return;
+        if (car.isReversing) return;
 
         // if going backward, add force forward and viceversa
         Vector3 worldVelocity = car.rigidBody.GetPointVelocity(car.transform.position);
@@ -130,14 +97,46 @@ public class Powertrain : MonoBehaviour
     }
 
     /// <summary>
+    /// Accelerates the car by adding torque from the powertrain to the wheels
+    /// </summary>
+    /// <param name="gasPedalAmount">
+    /// The amount of gas pressed. The value gets clamped between 0 and 1
+    /// </param>
+    public void Accelerate(float gasPedalAmount)
+    {
+        _pressingAccelerator = true;
+        // make sure that the value is between 0 and 1
+        gasPedalAmount = Mathf.Clamp(gasPedalAmount, 0, 1);
+
+        // split the torque across the wheels
+        // TODO: add a better multiplier
+        float torque = GetCurrentTorque() * 10f;
+        if (drivetrain == Drivetrain.AllWhellDrive)
+            torque = torque / 4;
+        else
+            torque = torque / 2;
+
+        foreach (Tire tire in powerDeliveryWheels)
+        {
+            // dont accelerate if the wheel is off the ground
+            if (suspension.IsGrounded(tire) == null)
+                continue;
+            float force = torque / tire.radius;
+            car.rigidBody.AddForceAtPosition(tire.transform.forward * force, tire.transform.position);
+        }
+    }
+
+    /// <summary>
     /// Handles counting the _rpm and makes sure that it cannot cannot go above or below the max and min values.
     /// </summary>
-    private void HandleRpm()
+    public void HandleRpm(float gasPedalAmount)
     {
+        if (gasPedalAmount <= 0) 
+            _pressingAccelerator = false;
         // how much can the _rpm change in a second
-        float rpmChangeRate = _gasPedalAmount > 0.2f ? 800 : 1600;
+        float rpmChangeRate = gasPedalAmount > 0.2f ? 800 : 1600;
 
-        float desiredRpm = maxRpm * _gasPedalAmount;
+        float desiredRpm = maxRpm * gasPedalAmount;
         float currentRpm = Mathf.MoveTowards(_rpm, desiredRpm, rpmChangeRate * Time.deltaTime);
 
         // do not exceed min and max _rpm values

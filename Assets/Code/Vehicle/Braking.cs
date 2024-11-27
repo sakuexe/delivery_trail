@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Powertrain))]
 [RequireComponent(typeof(Suspension))]
@@ -16,15 +15,11 @@ public class Braking : MonoBehaviour
     private float breakBalance = 0.75f;
 
     [Header("Reversing")]
-    private float maxReversingSpeed = 20;
+    public float maxReversingSpeed = 20;
 
     private CarController car;
     private Powertrain powertrain;
     private Suspension suspension;
-
-    // states
-    public float brakePressed { get; private set; }
-    public bool isReversing { get; private set; } = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,24 +29,11 @@ public class Braking : MonoBehaviour
         suspension = gameObject.GetComponent<Suspension>();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        HandleBraking();
-        HandleReverse();
-    }
-
-    public void OnBrake(InputValue value) => brakePressed = value.Get<float>();
-    public void OnGas(InputValue value) => isReversing = false;
-
     /// <summary>
     /// Applies braking forces to the car based on the amount of brake pedal used.
     /// </summary>
-    private void HandleBraking()
+    public void Brake(float brakePedalAmount)
     {
-        if (brakePressed <= 0) return;
-        if (isReversing) return;
-
         Vector3 worldVelocity = car.rigidBody.GetPointVelocity(car.transform.position);
         float forwardVelocity = Vector3.Dot(car.transform.forward, worldVelocity);
 
@@ -59,7 +41,7 @@ public class Braking : MonoBehaviour
         Vector3 decelerationDirection = forwardVelocity < 0 ? car.transform.forward : -car.transform.forward;
 
         // Acceleration = F_break / mass
-        float deceleration = (breakForce * brakePressed) / car.rigidBody.mass;
+        float deceleration = (breakForce * brakePedalAmount) / car.rigidBody.mass;
         // Force = mass * acceleration
         float decelarationForce = car.rigidBody.mass * deceleration;
 
@@ -91,18 +73,8 @@ public class Braking : MonoBehaviour
     /// <summary>
     /// Reverses the car when the brake button is pressed and the car is still.
     /// </summary>
-    private void HandleReverse()
+    public void Reverse()
     {
-        if (brakePressed <= 0) return;
-        if (powertrain.GetCurrentSpeed() > maxReversingSpeed) return;
-
-        Vector3 worldVelocity = car.rigidBody.GetPointVelocity(car.transform.position);
-        float forwardVelocity = Vector3.Dot(car.transform.forward, worldVelocity);
-
-        if (forwardVelocity > 0) return;
-
-        isReversing = true;
-
         float torque = car.powertrain.GetCurrentTorque() * 10f;
         if (powertrain.drivetrain == Drivetrain.AllWhellDrive)
             torque = torque / 4;
