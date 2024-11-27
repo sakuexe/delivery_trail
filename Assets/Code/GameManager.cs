@@ -31,8 +31,8 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(StartCountdown());
         onLevelStarted += StartLevelTimer;
-        Transform spawnPoint = GameObject.FindWithTag("Player").transform;
-        Checkpoint initialCheckpoint = new (spawnPoint.position, spawnPoint.rotation);
+        CarController player = GameObject.FindWithTag("Player").GetComponent<CarController>();
+        Checkpoint initialCheckpoint = new (player.rigidBody);
         checkpoints.Add(initialCheckpoint);
     }
 

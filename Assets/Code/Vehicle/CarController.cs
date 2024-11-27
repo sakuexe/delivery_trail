@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -116,11 +117,7 @@ public class CarController : MonoBehaviour
 
         Checkpoint lastCheckpoint = GameManager.Instance.checkpoints.LastOrDefault();
 
-        rigidBody.MovePosition(lastCheckpoint.position);
-        rigidBody.MoveRotation(lastCheckpoint.rotation);
-        rigidBody.linearVelocity = lastCheckpoint.linearVelocity;
-        rigidBody.angularVelocity = lastCheckpoint.angularVelocity;
-        powertrain.SetCurrentRpm(lastCheckpoint.rpm);
+        StartCoroutine(lastCheckpoint.ApplyToRigidbody(rigidBody));
     }
 
     // when the player presses on the gas

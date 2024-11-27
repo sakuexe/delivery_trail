@@ -84,10 +84,10 @@ public class Suspension : MonoBehaviour
             // how much the spring has compressed from the neutral position
             float springOffset = restLength - currentSpringLength / springTravel;
 
-            // to calculate the dampening force, we need to know the current velocity of the spring
+            // to calculate the dampening force, we need to know the current linearVelocity of the spring
             float springVelocity = Vector3.Dot(car.rigidBody.GetPointVelocity(tire.transform.position), tire.transform.up);
 
-            // F_damp = velocity * dampening
+            // F_damp = linearVelocity * dampening
             float dampForce = springVelocity * damperStiffness;
 
             // F_spring = offset * strength
@@ -95,7 +95,7 @@ public class Suspension : MonoBehaviour
             // the strength is the firmness of the spring
             float springForce = springOffset * springStiffness;
 
-            // F_total = (offset * strength) - (velocity * dampening)
+            // F_total = (offset * strength) - (linearVelocity * dampening)
             float totalForce = springForce - dampForce;
 
             car.rigidBody.AddForceAtPosition(totalForce * tire.transform.up, tire.transform.position);
