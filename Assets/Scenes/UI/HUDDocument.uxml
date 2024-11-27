@@ -14,7 +14,7 @@
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement name="Center" style="flex-grow: 0;">
-                <engine:Label text="00:00.00" class="text" style="-unity-font-style: bold; -unity-text-align: upper-center;" />
+                <engine:Label text="00:00.00" name="LevelTime" class="text" style="-unity-font-style: bold; -unity-text-align: upper-center;" />
             </engine:VisualElement>
             <engine:VisualElement name="Right" style="flex-grow: 0; width: 20%;" />
         </engine:VisualElement>

@@ -36,21 +36,9 @@ public class GoalController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (!resultDocument)
-        {
-            Debug.LogError("No hudDocument given to the Goal Controller (in Goal -object)");
-            throw new ArgumentNullException("hudDocument");
-        }
-        if (!countdownDocument)
-        {
-            Debug.LogError("No countdownDocument given to the Goal Controller (in Goal -object)");
-            throw new ArgumentNullException("countdownDocument");
-        }
         if (!GameManager.Instance)
         {
-            Debug.LogError(String.Join(
-                "No game manager found in scene. Please add an empty gameObject to the scene",
-                "and add the GameManager-script to it (Assets/Code/GameManager.cs)"));
+            Debug.Log("Please add an empty gameObject to the scene and add the GameManager-script to it (Assets/Code/GameManager.cs)");
             throw new Exception("GameManager not found");
         }
         _startTime = Time.time;
@@ -78,6 +66,7 @@ public class GoalController : MonoBehaviour
     private void OnDisable()
     {
         GameManager.Instance.onStartCountdownChanged -= UpdateStartCountdown;
+        GameManager.Instance.onLevelStarted -= () => resultDocument.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -110,7 +99,7 @@ public class GoalController : MonoBehaviour
     private void ShowGoalScreen()
     {
         float timeTaken = Time.time - _startTime;
-        timeTakenLabel.text = GameManager.Instance.GetLevelTime();
+        timeTakenLabel.text = GameManager.Instance.FormatTime(Time.time - GameManager.Instance.startTime); 
         mainContainer.style.opacity = 1f;
         levelDetails.RemoveFromClassList("hidden");
         medalDetails.RemoveFromClassList("hidden");

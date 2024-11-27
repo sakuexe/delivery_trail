@@ -10,11 +10,10 @@ public class GameManager : MonoBehaviour
     public Action onLevelStarted;
     public Action<int> onStartCountdownChanged;
 
-    [SerializeField]
     public int startCountdownTime { get; private set; } = 3;
+    public float startTime { get; private set; }
 
     private int _startCountdown;
-    private float _startTime;
 
     void Awake()
     {
@@ -51,16 +50,7 @@ public class GameManager : MonoBehaviour
         onLevelStarted?.Invoke();
     }
 
-    private void StartLevelTimer() => _startTime = Time.time;
-
-    /// <summary>
-    /// Returns the time spent on a level after the start countdown
-    /// </summary>
-    public string GetLevelTime()
-    {
-        if (_startTime == 0) return "00:00:00";
-        return FormatTime(Time.time - _startTime);
-    }
+    private void StartLevelTimer() => startTime = Time.time;
 
     /// <summary>
     /// Converts time in seconds to 00:00:00 format

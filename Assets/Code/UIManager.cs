@@ -39,7 +39,8 @@ public class UIManager : MonoBehaviour
     {
         while (true)
         {
-            levelTimer.text = $"{GameManager.Instance.GetLevelTime()}";
+            if (GameManager.Instance.startTime != 0)
+                levelTimer.text = $"{GameManager.Instance.FormatTime(Time.time - GameManager.Instance.startTime)}";
             yield return new WaitForSeconds(delay);
         }
     }
