@@ -8,10 +8,15 @@ public class UIManager : MonoBehaviour
     // you can call it with UIManager.Instance.<so-on> from wherever you want
     public static UIManager Instance { get; private set; }
     private UIDocument hudDocument;
+    private VisualElement baseContainer;
     private Label rpmValue;
     private Label speedValue;
     private Label levelTimer;
 
+    [SerializeField]
+    [Range(0.01f, 2)]
+    private float timerUpdateDelaySeconds = 0.1f;
+    private bool _hasLevelEnded;
 
     // gets run before the start function
     void Awake()
@@ -25,24 +30,41 @@ public class UIManager : MonoBehaviour
         hudDocument = gameObject.GetComponent<UIDocument>();
 
         // fetch the ui elements
+        baseContainer = hudDocument.rootVisualElement.Q("Base") as VisualElement;
         rpmValue = hudDocument.rootVisualElement.Q("RPM_value") as Label;
         speedValue = hudDocument.rootVisualElement.Q("Speed_value") as Label;
         levelTimer = hudDocument.rootVisualElement.Q("LevelTime") as Label;
     }
 
-    private void Start() => StartCoroutine(UpdateTimer(0.1f));
+    void Start()
+    {
+        StartCoroutine(UpdateTimer());
+        // stop the timer once the level finishes
+        GameManager.Instance.onLevelFinished += () => HideHud();
+    }
+
+    void OnDisable() => GameManager.Instance.onLevelFinished -= () => _hasLevelEnded = true;
 
     /// <summary>
     /// Coroutine for updating the timer every n seconds
     /// </summary>
-    private IEnumerator UpdateTimer(float delay)
+    private IEnumerator UpdateTimer()
     {
-        while (true)
+        while (!_hasLevelEnded)
         {
             if (GameManager.Instance.startTime != 0)
                 levelTimer.text = $"{GameManager.Instance.FormatTime(Time.time - GameManager.Instance.startTime)}";
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(timerUpdateDelaySeconds);
         }
+    }
+
+    /// <summary>
+    /// Hides the hud, this can be used when the player finishes the level for example.
+    /// Other use case could be when using cinematic camera modes.
+    /// </summary>
+    private void HideHud()
+    {
+        baseContainer.style.opacity = 0;
     }
 
     public void UpdateSpeed(float speed)

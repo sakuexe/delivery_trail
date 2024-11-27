@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     // events for game state, that other components can listen for
     // usage: GameManager.Instance.onLevelStarted += YourCustomFunction;
     public Action onLevelStarted;
+    public Action onLevelFinished;
     public Action<int> onStartCountdownChanged;
 
     public int startCountdownTime { get; private set; } = 3;

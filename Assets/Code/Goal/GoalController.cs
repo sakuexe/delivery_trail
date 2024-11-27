@@ -30,7 +30,6 @@ public class GoalController : MonoBehaviour
     private Label countdownValue;
 
     // states
-    public float _startTime { get; private set; }
     private bool _levelFinished = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -41,7 +40,6 @@ public class GoalController : MonoBehaviour
             Debug.Log("Please add an empty gameObject to the scene and add the GameManager-script to it (Assets/Code/GameManager.cs)");
             throw new Exception("GameManager not found");
         }
-        _startTime = Time.time;
 
         // fetch the ui elements
         timeTakenLabel = resultDocument.rootVisualElement.Q("Time_value") as Label;
@@ -81,6 +79,7 @@ public class GoalController : MonoBehaviour
             return;
 
         _levelFinished = true;
+        GameManager.Instance.onLevelFinished.Invoke();
         ShowGoalScreen();
     }
 
@@ -98,8 +97,8 @@ public class GoalController : MonoBehaviour
 
     private void ShowGoalScreen()
     {
-        float timeTaken = Time.time - _startTime;
-        timeTakenLabel.text = GameManager.Instance.FormatTime(Time.time - GameManager.Instance.startTime); 
+        float timeTaken = Time.time - GameManager.Instance.startTime;
+        timeTakenLabel.text = GameManager.Instance.FormatTime(timeTaken); 
         mainContainer.style.opacity = 1f;
         levelDetails.RemoveFromClassList("hidden");
         medalDetails.RemoveFromClassList("hidden");
