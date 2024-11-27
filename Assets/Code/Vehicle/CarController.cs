@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -101,6 +102,27 @@ public class CarController : MonoBehaviour
             UIManager.Instance.UpdateSpeed(powertrain.GetCurrentSpeed());
     }
 
+    private void Respawn()
+    {
+        if (GameManager.Instance.checkpoints.Count == 0) {
+            Debug.LogError("No checkpoints found in GameManager.checkpoints (length is 0)");
+            return;
+        }
+
+        // if the there is only one checkpoint, also restart the level timer
+        // this way it is easy to restart runs
+        if (GameManager.Instance.checkpoints.Count == 1)
+            GameManager.Instance.onLevelStarted.Invoke();
+
+        Checkpoint lastCheckpoint = GameManager.Instance.checkpoints.LastOrDefault();
+
+        rigidBody.MovePosition(lastCheckpoint.position);
+        rigidBody.MoveRotation(lastCheckpoint.rotation);
+        rigidBody.linearVelocity = lastCheckpoint.linearVelocity;
+        rigidBody.angularVelocity = lastCheckpoint.angularVelocity;
+        powertrain.SetCurrentRpm(lastCheckpoint.rpm);
+    }
+
     // when the player presses on the gas
     public void OnGas(InputValue value)
     {
@@ -117,4 +139,6 @@ public class CarController : MonoBehaviour
 
     // when the player steers the car
     public void OnSteering(InputValue value) => _steeringAmount = value.Get<Vector2>();
+
+    public void OnRespawn(InputValue value) => Respawn();
 }

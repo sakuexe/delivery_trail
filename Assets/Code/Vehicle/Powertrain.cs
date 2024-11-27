@@ -180,4 +180,6 @@ public class Powertrain : MonoBehaviour
     /// Get the current rpm of the powertrain.
     /// </summary>
     public float GetCurrentRpm() => _rpm;
+
+    public void SetCurrentRpm(float rpm) => _rpm = rpm;
 }

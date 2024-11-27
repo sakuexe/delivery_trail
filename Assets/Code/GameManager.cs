@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public int startCountdownTime { get; private set; } = 3;
     public float startTime { get; private set; }
+    public List<Checkpoint> checkpoints = new();
 
     private int _startCountdown;
 
@@ -29,6 +31,9 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(StartCountdown());
         onLevelStarted += StartLevelTimer;
+        Transform spawnPoint = GameObject.FindWithTag("Player").transform;
+        Checkpoint initialCheckpoint = new (spawnPoint.position, spawnPoint.rotation);
+        checkpoints.Add(initialCheckpoint);
     }
 
     /// <summary>
