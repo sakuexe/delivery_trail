@@ -44,6 +44,30 @@ public struct Checkpoint
         rigidbody.angularDamping = angularDamping;
 
         yield return new WaitForFixedUpdate();
+
+        // redo the application a second time, because for some reason that
+        // makes the checkpoint respawn work way better
+        // it is a weird solution, but it works, so shush
+
+        rigidbody.position = position;
+        rigidbody.rotation = rotation;
+
+        yield return new WaitForFixedUpdate();
+
+        rigidbody.linearVelocity = linearVelocity;
+        rigidbody.angularVelocity = angularVelocity;
+
+        yield return new WaitForFixedUpdate();
+
+        rigidbody.inertiaTensor = inertiaTensor;
+        rigidbody.inertiaTensorRotation = inertiaTensorRotation;
+
+        yield return new WaitForFixedUpdate();
+
+        rigidbody.linearDamping = linearDamping;
+        rigidbody.angularDamping = angularDamping;
+
+        yield return new WaitForFixedUpdate();
     }
 
     public Checkpoint(Rigidbody rigidbody, float rpm = 0)

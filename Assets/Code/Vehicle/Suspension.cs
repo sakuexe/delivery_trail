@@ -34,7 +34,7 @@ public class Suspension : MonoBehaviour
         car = gameObject.GetComponent<CarController>();
         tires = car.frontTires.Concat(car.rearTires).ToArray();
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         Transform tiresContainer = transform.Find("Model/Tires");
@@ -44,7 +44,6 @@ public class Suspension : MonoBehaviour
         tireModels = transforms.ToArray();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         HandleSuspension();

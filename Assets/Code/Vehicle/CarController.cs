@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,6 +22,11 @@ public class CarController : MonoBehaviour
     [Header("Layer mask")]
     public LayerMask driveableLayer;
 
+    [Header("Respawn")]
+    [SerializeField]
+    [Range(0.1f, 5)]
+    private float respawnCooldown = 0.5f;
+
     // references to other components
     // doesn't show in the editor
     public Powertrain powertrain { get; private set; }
@@ -38,6 +42,9 @@ public class CarController : MonoBehaviour
     private float _brakePedalAmount;
     // reversing
     public bool isReversing { get; private set; }
+    // respawn cooldown
+    private float lastRespawnPress;
+    private bool canRespawn => Time.time - lastRespawnPress > respawnCooldown; 
 
     void Awake()
     {
@@ -105,6 +112,10 @@ public class CarController : MonoBehaviour
 
     private void Respawn()
     {
+        // add a cooldown for respawning
+        if (!canRespawn) return;
+        lastRespawnPress = Time.time;
+
         if (GameManager.Instance.checkpoints.Count == 0) {
             Debug.LogError("No checkpoints found in GameManager.checkpoints (length is 0)");
             return;
