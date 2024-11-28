@@ -129,6 +129,7 @@ public class CarController : MonoBehaviour
         Checkpoint lastCheckpoint = GameManager.Instance.checkpoints.LastOrDefault();
 
         StartCoroutine(lastCheckpoint.ApplyToRigidbody(rigidBody));
+        powertrain.SetCurrentRpm(lastCheckpoint.rpm);
     }
 
     // when the player presses on the gas
