@@ -170,6 +170,7 @@ public class Powertrain : MonoBehaviour
     /// </summary>
     public float GetCurrentSpeed()
     {
+        if (car == null) return 0;
         // speed in m/s
         float speed = car.rigidBody.linearVelocity.magnitude;
         // speed in km/h

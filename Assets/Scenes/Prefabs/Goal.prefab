@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 2496984967929035647}
   - component: {fileID: 1087549877189315625}
   - component: {fileID: 8343613501809543363}
+  - component: {fileID: 760429140910624294}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -169,8 +170,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7132938333988671955}
-  - {fileID: 4301107622515233259}
   - {fileID: 5496097361387456889}
+  - {fileID: 4301107622515233259}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1087549877189315625
@@ -212,6 +213,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.216721, y: 1.5200251, z: 9.237999}
   m_Center: {x: -0.11187744, y: 0.26001257, z: -0.36610794}
+--- !u!114 &760429140910624294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6170920437983000525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50cde7c9253974218a0661e6396c3bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8931181674803434950
 GameObject:
   m_ObjectHideFlags: 0

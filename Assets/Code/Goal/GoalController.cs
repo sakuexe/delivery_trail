@@ -5,8 +5,7 @@ using UnityEngine.UIElements;
 public class GoalController : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField]
-    private UIDocument resultDocument;
+    public UIDocument resultDocument;
     [SerializeField]
     private UIDocument countdownDocument;
 

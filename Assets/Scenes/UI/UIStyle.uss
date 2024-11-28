@@ -37,3 +37,7 @@
     opacity: 0;
     translate: 0 10%;
 }
+
+.margin-top-s {
+    margin-top: 10px;
+}
