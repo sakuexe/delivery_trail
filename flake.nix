@@ -1,4 +1,5 @@
 {
+  # using zsh, enter the shell using: nix develop --command zsh
   description = "Development flake for Unity and Neovim";
 
   inputs = {
@@ -29,7 +30,9 @@
             pkgs-unstable.neovim
           ];
           shellHook = ''
-            zsh
+            VIOLET='\033[0;35m'
+            CLEAR='\033[0m'
+            echo -e "💽$VIOLET Unity development shell $CLEAR"
           '';
         };
       });
