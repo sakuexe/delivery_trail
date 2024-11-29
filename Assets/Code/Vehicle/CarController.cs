@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,7 +16,6 @@ public class CarController : MonoBehaviour
     private bool showSpeedUI = true;
 
     [Header("References")]
-    public Rigidbody rigidBody { get; private set; }
     public Tire[] frontTires;
     public Tire[] rearTires;
 
@@ -29,9 +29,10 @@ public class CarController : MonoBehaviour
 
     // references to other components
     // doesn't show in the editor
-    public Powertrain powertrain { get; private set; }
     public Braking braking { get; private set; }
     public Steering steering { get; private set; }
+    public Powertrain powertrain { get; private set; }
+    public Rigidbody rigidBody { get; private set; }
 
     // states
     // powertrain
@@ -44,7 +45,7 @@ public class CarController : MonoBehaviour
     public bool isReversing { get; private set; }
     // respawn cooldown
     private float lastRespawnPress;
-    private bool canRespawn => Time.time - lastRespawnPress > respawnCooldown; 
+    private bool canRespawn => Time.time - lastRespawnPress > respawnCooldown;
 
     void Awake()
     {
@@ -85,9 +86,13 @@ public class CarController : MonoBehaviour
             braking.Reverse();
 
         // HUD
-        UpdatePowerTrainUI();
+        UpdatePowertrainHUD();
     }
 
+    /// <summary>
+    /// Check if the car can use the reverse gear
+    /// </summary>
+    /// <returns>true or false</returns>
     private bool CanReverse()
     {
         if (_brakePedalAmount <= 0) return false;
@@ -102,7 +107,10 @@ public class CarController : MonoBehaviour
         return true;
     }
 
-    private void UpdatePowerTrainUI()
+    /// <summary>
+    /// Updates the RPM and Speed values in the HUD to match the values of the powertrain.
+    /// </summary>
+    private void UpdatePowertrainHUD()
     {
         if (showRpmUI)
             HUDManager.Instance.UpdateRPM(powertrain.GetCurrentRpm());
@@ -110,13 +118,18 @@ public class CarController : MonoBehaviour
             HUDManager.Instance.UpdateSpeed(powertrain.GetCurrentSpeed());
     }
 
+    /// <summary>
+    /// Handle respawning ot the latest checkpont and applying the rigidbody state of
+    /// when the player first acitvated the checkpoint.
+    /// </summary>
     private void Respawn()
     {
         // add a cooldown for respawning
         if (!canRespawn) return;
         lastRespawnPress = Time.time;
 
-        if (GameManager.Instance.checkpoints.Count == 0) {
+        if (GameManager.Instance.checkpoints.Count == 0)
+        {
             Debug.LogError("No checkpoints found in GameManager.checkpoints (length is 0)");
             return;
         }
@@ -152,4 +165,19 @@ public class CarController : MonoBehaviour
     public void OnSteering(InputValue value) => _steeringAmount = value.Get<Vector2>();
 
     public void OnRespawn(InputValue value) => Respawn();
+
+    public void OnControlsChanged(PlayerInput playerInput) => StartCoroutine(WaitForGameManager(playerInput));
+
+    /// <summary>
+    /// Waits for the <paramref name="GameManager"/> to not be null before calling
+    /// the <paramref name="GameManager.Instance.onControlSchemeChanged"/> event.
+    /// </summary>
+    private IEnumerator WaitForGameManager(PlayerInput playerInput)
+    {
+        while (GameManager.Instance == null)
+            yield return new WaitForFixedUpdate();
+
+        // call the onControlSchemeChanged event
+        GameManager.Instance.onControlSchemeChanged?.Invoke(playerInput.currentControlScheme);
+    }
 }

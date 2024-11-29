@@ -2,9 +2,10 @@
     <Style src="project://database/Assets/Scenes/UI/UIStyle.uss?fileID=7433441132597879392&amp;guid=f9ffdf9af0c324d1cb3ae1950edfa078&amp;type=3#UIStyle" />
     <engine:VisualElement style="flex-grow: 1;">
         <engine:VisualElement name="HelperPopups" class="container" style="flex-grow: 1; background-image: none; justify-content: center; align-items: center;">
-            <engine:VisualElement name="RespawnHelper" class="hidden helper" style="flex-grow: 1; max-width: 600px; max-height: 400px; min-width: 400px; min-height: 300px; flex-direction: row; align-items: center; justify-content: center;">
-                <engine:VisualElement class="helper-icon" style="background-image: url(&quot;project://database/Assets/Art/Icons/top_button_pressed.png?fileID=2800000&amp;guid=75e1a4ae39eb66cb2b160f85371f3d44&amp;type=3#top_button_pressed&quot;);" />
-                <engine:Label text="Respawn" class="text" style="-unity-font-style: bold; margin-left: 24px;" />
+            <engine:VisualElement name="RespawnHelper" class="helper hidden" style="flex-grow: 1; max-width: 600px; max-height: 400px; min-width: 400px; min-height: 300px; flex-direction: row; align-items: center; justify-content: center;">
+                <engine:VisualElement class="helper-icon controller-icon controller" style="background-image: url(&quot;project://database/Assets/Art/Icons/top_button_pressed.png?fileID=2800000&amp;guid=75e1a4ae39eb66cb2b160f85371f3d44&amp;type=3#top_button_pressed&quot;);" />
+                <engine:VisualElement class="helper-icon keyboard" style="background-image: url(&quot;project://database/Assets/Art/Icons/r_key.png?fileID=2800000&amp;guid=586dc39a4310f8d2db0460442778ca4e&amp;type=3#r_key&quot;);" />
+                <engine:Label text="Respawn" class="text" style="-unity-font-style: bold; margin-left: 4px;" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>

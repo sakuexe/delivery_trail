@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public Action onLevelFinished;
     public Action onPlayerRespawn;
     public Action<int> onStartCountdownChanged;
+    public Action<string> onControlSchemeChanged;
 
     public int startCountdownTime { get; private set; } = 3;
     public float startTime { get; private set; }
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
     /// Converts time in seconds to 00:00:00 format
     /// </summary>
     /// <param name="time">Time in seconds</param>
+    /// <returns>a formatted string, eg. "00:02:50"</returns>
     public string FormatTime(float time)
     {
         int minutes = Mathf.FloorToInt(time / 60); // Get minutes

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,8 +13,12 @@ public class HelperUI : MonoBehaviour
 {
     [SerializeField]
     private bool showHelpers = true;
+    // how long it takes after the condition is matched to show helper
     [SerializeField]
     private float helperThreshold = 5f;
+    // how often do we check if there are helpers needed
+    [SerializeField]
+    private float checkHelpCooldown = 1f;
 
     // UI elements
     private UIDocument helperDocument;
@@ -38,14 +43,45 @@ public class HelperUI : MonoBehaviour
             return;
         GameManager.Instance.onLevelStarted += StartHelpCheck;
         GameManager.Instance.onPlayerRespawn += Respawn;
+        GameManager.Instance.onControlSchemeChanged += ChangeControlIcons;
     }
 
     void OnDisable()
     {
         GameManager.Instance.onLevelStarted -= StartHelpCheck;
         GameManager.Instance.onPlayerRespawn -= Respawn;
+        GameManager.Instance.onControlSchemeChanged -= ChangeControlIcons;
     }
 
+    /// <summary>
+    /// Change the icons of all of the helper popups to match with the control scheme.
+    /// <summary>
+    /// <param name="controlScheme">
+    /// <paramref name="PlayerInput.currentControlScheme"/> value
+    /// </param>
+    /// <see>https://docs.unity3d.com/Packages/com.unity.inputsystem@1.1/api/UnityEngine.InputSystem.PlayerInput.html#UnityEngine_InputSystem_PlayerInput_currentControlScheme</see>
+    private void ChangeControlIcons(string controlScheme)
+    {
+        // set the icon class that we want to use
+        string wantedIconClass = controlScheme == "Keyboard&Mouse" ? "keyboard" : "controller";
+
+        // get every icon wit the class "helper_icon"
+        List<VisualElement> helperIcons = helperDocument.rootVisualElement.Query<VisualElement>(null, "helper-icon").ToList();
+
+        foreach (VisualElement icon in helperIcons)
+        {
+            // show the ones matching the control scheme
+            if (icon.ClassListContains(wantedIconClass))
+                icon.style.display = DisplayStyle.Flex;
+            // hide all others
+            else
+                icon.style.display = DisplayStyle.None;
+        }
+    }
+
+    /// <summary>
+    /// Starts checking for available helpers to be shown.
+    /// <summary>
     private void StartHelpCheck()
     {
         if (_levelHasStarted)
@@ -54,9 +90,12 @@ public class HelperUI : MonoBehaviour
         StartCoroutine(CheckForHelp());
     }
 
+    /// <summary>
+    /// Coroutine that checks every <paramref name="checkHelpCooldown"/> if any helpers can be shown.
+    /// </summary>
     private IEnumerator CheckForHelp()
     {
-        while (true)
+        for(;;)
         {
             if (CanShowRespawnHelper())
                 ShowHelper(respawnHelper);
@@ -64,10 +103,13 @@ public class HelperUI : MonoBehaviour
                 HideHelper(respawnHelper);
 
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(checkHelpCooldown);
         }
     }
 
+    /// <summary>
+    /// A function for validating if a respawn helper can be shown.
+    /// </summary>
     private bool CanShowRespawnHelper()
     {
         float playerSpeed = GameManager.Instance.player.powertrain.GetCurrentSpeed();
