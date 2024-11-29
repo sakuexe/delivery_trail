@@ -6,10 +6,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public CarController player { get; private set; }
     // events for game state, that other components can listen for
     // usage: GameManager.Instance.onLevelStarted += YourCustomFunction;
     public Action onLevelStarted;
     public Action onLevelFinished;
+    public Action onPlayerRespawn;
     public Action<int> onStartCountdownChanged;
 
     public int startCountdownTime { get; private set; } = 3;
@@ -25,13 +27,14 @@ public class GameManager : MonoBehaviour
             Instance = this;
         else
             Destroy(Instance);
+
+        player = GameObject.FindWithTag("Player").GetComponent<CarController>();
     }
 
     void Start()
     {
         StartCoroutine(StartCountdown());
         onLevelStarted += StartLevelTimer;
-        CarController player = GameObject.FindWithTag("Player").GetComponent<CarController>();
         Checkpoint initialCheckpoint = new (player.rigidBody);
         checkpoints.Add(initialCheckpoint);
     }

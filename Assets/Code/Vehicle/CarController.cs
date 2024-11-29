@@ -126,6 +126,8 @@ public class CarController : MonoBehaviour
         if (GameManager.Instance.checkpoints.Count == 1)
             GameManager.Instance.onLevelStarted.Invoke();
 
+        GameManager.Instance.onPlayerRespawn.Invoke();
+
         Checkpoint lastCheckpoint = GameManager.Instance.checkpoints.LastOrDefault();
 
         StartCoroutine(lastCheckpoint.ApplyToRigidbody(rigidBody));

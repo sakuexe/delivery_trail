@@ -47,3 +47,8 @@
     margin-bottom: 52px;
     margin-left: 52px;
 }
+
+.helper {
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.5s;
+}

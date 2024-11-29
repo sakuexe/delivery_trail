@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,10 +8,11 @@ public class HUDManager : MonoBehaviour
     // the HUDManager is a singleton, since we don't want multiple of them
     // you can call it with HUDManager.Instance.<so-on> from wherever you want
     public static HUDManager Instance { get; private set; }
+
     [SerializeField]
     private UIDocument basicsDocument;
-    [SerializeField]
-    private HelperUI helperUI;
+    public HelperUI helperUI { get; private set; }
+
     private VisualElement baseContainer;
     private Label rpmValue;
     private Label speedValue;
@@ -29,6 +31,8 @@ public class HUDManager : MonoBehaviour
             Instance = this;
         else
             Destroy(Instance);
+
+        helperUI = GetComponentInChildren<HelperUI>();
 
         // fetch the ui elements
         baseContainer = basicsDocument.rootVisualElement.Q("Base") as VisualElement;

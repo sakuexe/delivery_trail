@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2663568516269361052}
-  - component: {fileID: 4367992797630470616}
   - component: {fileID: 7636549384385427947}
+  - component: {fileID: 3825230363636196271}
   m_Layer: 0
   m_Name: Helper
   m_TagString: Untagged
@@ -33,18 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6826895891205928537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4367992797630470616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3571620200130372376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37c63e1769e08df5c84719b507b276d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7636549384385427947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,6 +52,20 @@ MonoBehaviour:
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+--- !u!114 &3825230363636196271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3571620200130372376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c63e1769e08df5c84719b507b276d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showHelpers: 1
+  helperThreshold: 5
 --- !u!1 &4993799040628249852
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicsDocument: {fileID: 3800637616552450941}
-  helperUI: {fileID: 4367992797630470616}
   timerUpdateDelaySeconds: 0.1
 --- !u!1 &6450126360645464717
 GameObject:
