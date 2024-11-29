@@ -2,11 +2,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UIManager : MonoBehaviour
+public class HUDManager : MonoBehaviour
 {
-    // the UIManager is a singleton, since we don't want multiple of them
-    // you can call it with UIManager.Instance.<so-on> from wherever you want
-    public static UIManager Instance { get; private set; }
+    // the HUDManager is a singleton, since we don't want multiple of them
+    // you can call it with HUDManager.Instance.<so-on> from wherever you want
+    public static HUDManager Instance { get; private set; }
     private UIDocument hudDocument;
     private VisualElement baseContainer;
     private Label rpmValue;

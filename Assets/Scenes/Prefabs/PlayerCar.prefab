@@ -723,7 +723,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2859704, y: 1.75, z: 4.398433}
+  m_Size: {x: 1.55, y: 1.56, z: 4}
   m_Center: {x: -0.000000834465, y: 1.1168559, z: -0.16744733}
 --- !u!1 &7126718573871078936
 GameObject:
@@ -741,7 +741,6 @@ GameObject:
   - component: {fileID: 7595524197783005222}
   - component: {fileID: 1543875024318202474}
   - component: {fileID: 2131229745673096169}
-  - component: {fileID: 4068846216948917692}
   m_Layer: 0
   m_Name: PlayerCar
   m_TagString: Player
@@ -847,6 +846,7 @@ MonoBehaviour:
   driveableLayer:
     serializedVersion: 2
     m_Bits: 64
+  respawnCooldown: 0.5
 --- !u!114 &642008038490528860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -983,18 +983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breakForce: 6000
   breakBalance: 0.2
---- !u!114 &4068846216948917692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7126718573871078936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ca31d81e94f05cc9586a7497fc0c4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  maxReversingSpeed: 20
 --- !u!1 &7413061863702891493
 GameObject:
   m_ObjectHideFlags: 0

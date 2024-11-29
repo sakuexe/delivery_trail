@@ -105,9 +105,9 @@ public class CarController : MonoBehaviour
     private void UpdatePowerTrainUI()
     {
         if (showRpmUI)
-            UIManager.Instance.UpdateRPM(powertrain.GetCurrentRpm());
+            HUDManager.Instance.UpdateRPM(powertrain.GetCurrentRpm());
         if (showSpeedUI)
-            UIManager.Instance.UpdateSpeed(powertrain.GetCurrentSpeed());
+            HUDManager.Instance.UpdateSpeed(powertrain.GetCurrentSpeed());
     }
 
     private void Respawn()
