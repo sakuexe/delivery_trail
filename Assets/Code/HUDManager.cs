@@ -7,7 +7,10 @@ public class HUDManager : MonoBehaviour
     // the HUDManager is a singleton, since we don't want multiple of them
     // you can call it with HUDManager.Instance.<so-on> from wherever you want
     public static HUDManager Instance { get; private set; }
-    private UIDocument hudDocument;
+    [SerializeField]
+    private UIDocument basicsDocument;
+    [SerializeField]
+    private HelperUI helperUI;
     private VisualElement baseContainer;
     private Label rpmValue;
     private Label speedValue;
@@ -27,13 +30,11 @@ public class HUDManager : MonoBehaviour
         else
             Destroy(Instance);
 
-        hudDocument = gameObject.GetComponent<UIDocument>();
-
         // fetch the ui elements
-        baseContainer = hudDocument.rootVisualElement.Q("Base") as VisualElement;
-        rpmValue = hudDocument.rootVisualElement.Q("RPM_value") as Label;
-        speedValue = hudDocument.rootVisualElement.Q("Speed_value") as Label;
-        levelTimer = hudDocument.rootVisualElement.Q("LevelTime") as Label;
+        baseContainer = basicsDocument.rootVisualElement.Q("Base") as VisualElement;
+        rpmValue = basicsDocument.rootVisualElement.Q("RPM_value") as Label;
+        speedValue = basicsDocument.rootVisualElement.Q("Speed_value") as Label;
+        levelTimer = basicsDocument.rootVisualElement.Q("LevelTime") as Label;
     }
 
     void Start()

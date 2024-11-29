@@ -26,13 +26,6 @@
     color: rgb(255, 255, 255);
 }
 
-.container {
-    margin-top: 52px;
-    margin-right: 52px;
-    margin-bottom: 52px;
-    margin-left: 52px;
-}
-
 .hidden {
     opacity: 0;
     translate: 0 10%;
@@ -40,4 +33,17 @@
 
 .margin-top-s {
     margin-top: 10px;
+}
+
+.helper-icon {
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+}
+
+.container {
+    margin-top: 52px;
+    margin-right: 52px;
+    margin-bottom: 52px;
+    margin-left: 52px;
 }
