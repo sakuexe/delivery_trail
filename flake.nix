@@ -33,6 +33,8 @@
             VIOLET='\033[0;35m'
             CLEAR='\033[0m'
             echo -e "💽$VIOLET Unity development shell $CLEAR"
+            echo "starting UnityHub in the background..."
+            unityhub > /dev/null 2>&1 &
           '';
         };
       });
