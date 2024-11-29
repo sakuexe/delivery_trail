@@ -212,7 +212,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 8.216721, y: 1.5200251, z: 9.237999}
-  m_Center: {x: -0.11187744, y: 0.26001257, z: -0.36610794}
+  m_Center: {x: -0.11187744, y: 0.26001257, z: -0.06}
 --- !u!114 &760429140910624294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50cde7c9253974218a0661e6396c3bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextLevelSceneName: SampleScene
 --- !u!1 &8931181674803434950
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +273,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: b01923ebaa56fbf1ebf9cf81d5ad12b6, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 2b67c6664563faaf7919ea2a8c2cd748, type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
