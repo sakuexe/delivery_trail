@@ -40,6 +40,11 @@ public class GameManager : MonoBehaviour
         checkpoints.Add(initialCheckpoint);
     }
 
+    private void OnDisable()
+    {
+        onLevelStarted -= StartLevelTimer;
+    }
+
     /// <summary>
     /// Coroutine for counting down the level start.
     /// </summary>
@@ -76,5 +81,4 @@ public class GameManager : MonoBehaviour
         // Format the time as MM:SS:ss
         return string.Format("{0:D2}:{1:D2}:{2:D2}", minutes, seconds, milliseconds);
     }
-
 }

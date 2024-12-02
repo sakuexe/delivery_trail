@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
+[RequireComponent(typeof(PlayerInput))]
 public class HUDManager : MonoBehaviour
 {
     // the HUDManager is a singleton, since we don't want multiple of them
@@ -11,9 +13,14 @@ public class HUDManager : MonoBehaviour
 
     [SerializeField]
     private UIDocument basicsDocument;
+    [SerializeField]
+    private UIDocument menuDocument;
+    private PlayerInput playerInput;
     public HelperUI helperUI { get; private set; }
 
+    // HUD
     private VisualElement baseContainer;
+    private VisualElement menuContainer;
     private Label rpmValue;
     private Label speedValue;
     private Label levelTimer;
@@ -33,12 +40,14 @@ public class HUDManager : MonoBehaviour
             Destroy(Instance);
 
         helperUI = GetComponentInChildren<HelperUI>();
+        playerInput = GetComponent<PlayerInput>();
 
         // fetch the ui elements
         baseContainer = basicsDocument.rootVisualElement.Q("Base") as VisualElement;
         rpmValue = basicsDocument.rootVisualElement.Q("RPM_value") as Label;
         speedValue = basicsDocument.rootVisualElement.Q("Speed_value") as Label;
         levelTimer = basicsDocument.rootVisualElement.Q("LevelTime") as Label;
+        menuContainer = menuDocument.rootVisualElement.Q<VisualElement>("EscapeMenuContainer");
     }
 
     void Start()
@@ -46,6 +55,7 @@ public class HUDManager : MonoBehaviour
         StartCoroutine(UpdateTimer());
         // stop the timer once the level finishes
         GameManager.Instance.onLevelFinished += () => HideHud();
+        menuContainer.SetEnabled(false);
     }
 
     void OnDisable() => GameManager.Instance.onLevelFinished -= () => HideHud();
@@ -80,5 +90,22 @@ public class HUDManager : MonoBehaviour
     public void UpdateRPM(float rpm)
     {
         rpmValue.text = $"{rpm.ToString("0")}";
+    }
+
+    /// <summary>
+    /// Toggle the visibility of the "escape" menu.
+    /// </summary>
+    public void OnCancel()
+    {
+        Debug.Log("cancel is pressed");
+        if (menuContainer.enabledSelf)
+        {
+            menuContainer.SetEnabled(false);
+            menuContainer.style.opacity = 0f;
+        }
+        else {
+            menuContainer.style.opacity = 1f;
+            menuContainer.SetEnabled(true);
+        }
     }
 }

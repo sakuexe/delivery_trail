@@ -42,10 +42,14 @@
 }
 
 .container {
-    margin-top: 52px;
-    margin-right: 52px;
-    margin-bottom: 52px;
-    margin-left: 52px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 52px;
+    padding-right: 52px;
+    padding-bottom: 52px;
+    padding-left: 52px;
 }
 
 .helper {
@@ -57,4 +61,16 @@
 }
 
 .keyboard {
+}
+
+.primary-button {
+    background-color: rgb(48, 48, 48);
+    -unity-text-outline-color: rgba(0, 0, 0, 0);
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+}
+
+.text {
+    font-size: 42px;
+    color: rgb(255, 255, 255);
 }

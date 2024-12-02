@@ -147,6 +147,19 @@ public class CarController : MonoBehaviour
         powertrain.SetCurrentRpm(lastCheckpoint.rpm);
     }
 
+    /// <summary>
+    /// Waits for the <paramref name="GameManager"/> to not be null before calling
+    /// the <paramref name="GameManager.Instance.onControlSchemeChanged"/> event.
+    /// </summary>
+    private IEnumerator WaitForGameManager(PlayerInput playerInput)
+    {
+        while (GameManager.Instance == null)
+            yield return new WaitForFixedUpdate();
+
+        // call the onControlSchemeChanged event
+        GameManager.Instance.onControlSchemeChanged?.Invoke(playerInput.currentControlScheme);
+    }
+
     // when the player presses on the gas
     public void OnGas(InputValue value)
     {
@@ -167,17 +180,4 @@ public class CarController : MonoBehaviour
     public void OnRespawn(InputValue value) => Respawn();
 
     public void OnControlsChanged(PlayerInput playerInput) => StartCoroutine(WaitForGameManager(playerInput));
-
-    /// <summary>
-    /// Waits for the <paramref name="GameManager"/> to not be null before calling
-    /// the <paramref name="GameManager.Instance.onControlSchemeChanged"/> event.
-    /// </summary>
-    private IEnumerator WaitForGameManager(PlayerInput playerInput)
-    {
-        while (GameManager.Instance == null)
-            yield return new WaitForFixedUpdate();
-
-        // call the onControlSchemeChanged event
-        GameManager.Instance.onControlSchemeChanged?.Invoke(playerInput.currentControlScheme);
-    }
 }

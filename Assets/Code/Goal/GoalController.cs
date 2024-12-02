@@ -51,6 +51,7 @@ public class GoalController : MonoBehaviour
         mainContainer.style.opacity = 0;
         levelDetails.AddToClassList("hidden");
         medalDetails.AddToClassList("hidden");
+        mainContainer.SetEnabled(false);
 
         SetupMedalTimes();
 
@@ -96,6 +97,7 @@ public class GoalController : MonoBehaviour
 
     private void ShowGoalScreen()
     {
+        mainContainer.SetEnabled(true);
         float timeTaken = Time.time - GameManager.Instance.startTime;
         timeTakenLabel.text = GameManager.Instance.FormatTime(timeTaken); 
         mainContainer.style.opacity = 1f;
