@@ -32,5 +32,6 @@ public class LevelFinishEvents : MonoBehaviour
 
         nextLevelButton.clicked += GameManager.Instance.StartNextLevel;
         retryButton.clicked += GameManager.Instance.RestartLevel;
+        exitButton.clicked += Application.Quit;
     }
 }
