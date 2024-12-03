@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Braking))]
 [RequireComponent(typeof(Steering))]
@@ -60,9 +58,20 @@ public class CarController : MonoBehaviour
         // turn off the motor when the start countdown has not started
         powertrain.enabled = false;
         GameManager.Instance.onLevelStarted += () => powertrain.enabled = true;
+        InputManager.Instance.onAccelerator += Accelerate;
+        InputManager.Instance.onBrake += Brake;
+        InputManager.Instance.onSteering += Steer;
+        InputManager.Instance.onRespawn += Respawn;
     }
 
-    void OnDisable() => GameManager.Instance.onLevelStarted -= () => powertrain.enabled = true;
+    void OnDisable()
+    {
+        GameManager.Instance.onLevelStarted -= () => powertrain.enabled = true;
+        InputManager.Instance.onAccelerator -= Accelerate;
+        InputManager.Instance.onBrake -= Brake;
+        InputManager.Instance.onSteering -= Steer;
+        InputManager.Instance.onRespawn -= Respawn;
+    }
 
     // use fixed update, because these things are tied to the physics
     void FixedUpdate()
@@ -107,16 +116,22 @@ public class CarController : MonoBehaviour
         return true;
     }
 
-    /// <summary>
-    /// Updates the RPM and Speed values in the HUD to match the values of the powertrain.
-    /// </summary>
-    private void UpdatePowertrainHUD()
+    // when the player presses on the gas
+    private void Accelerate(float value)
     {
-        if (showRpmUI)
-            HUDManager.Instance.UpdateRPM(powertrain.GetCurrentRpm());
-        if (showSpeedUI)
-            HUDManager.Instance.UpdateSpeed(powertrain.GetCurrentSpeed());
+        isReversing = false;
+        _gasPedalAmount = value;
     }
+
+    // when the player pressed on the brake
+    private void Brake(float value)
+    {
+        _brakePedalAmount = value;
+        isReversing = _brakePedalAmount > 0 && CanReverse();
+    }
+
+    // when the player steers the car
+    private void Steer(Vector2 value) => _steeringAmount = value;
 
     /// <summary>
     /// Handle respawning ot the latest checkpont and applying the rigidbody state of
@@ -148,36 +163,13 @@ public class CarController : MonoBehaviour
     }
 
     /// <summary>
-    /// Waits for the <paramref name="GameManager"/> to not be null before calling
-    /// the <paramref name="GameManager.Instance.onControlSchemeChanged"/> event.
+    /// Updates the RPM and Speed values in the HUD to match the values of the powertrain.
     /// </summary>
-    private IEnumerator WaitForGameManager(PlayerInput playerInput)
+    private void UpdatePowertrainHUD()
     {
-        while (GameManager.Instance == null)
-            yield return new WaitForFixedUpdate();
-
-        // call the onControlSchemeChanged event
-        GameManager.Instance.onControlSchemeChanged?.Invoke(playerInput.currentControlScheme);
+        if (showRpmUI)
+            HUDManager.Instance.UpdateRPM(powertrain.GetCurrentRpm());
+        if (showSpeedUI)
+            HUDManager.Instance.UpdateSpeed(powertrain.GetCurrentSpeed());
     }
-
-    // when the player presses on the gas
-    public void OnGas(InputValue value)
-    {
-        isReversing = false;
-        _gasPedalAmount = value.Get<float>();
-    }
-
-    // when the player pressed on the brake
-    public void OnBrake(InputValue value)
-    {
-        _brakePedalAmount = value.Get<float>();
-        isReversing = _brakePedalAmount > 0 && CanReverse();
-    }
-
-    // when the player steers the car
-    public void OnSteering(InputValue value) => _steeringAmount = value.Get<Vector2>();
-
-    public void OnRespawn(InputValue value) => Respawn();
-
-    public void OnControlsChanged(PlayerInput playerInput) => StartCoroutine(WaitForGameManager(playerInput));
 }
