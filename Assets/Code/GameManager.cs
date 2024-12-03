@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public CarController player { get; private set; }
+    [SerializeField]
+    private string nextLevelScene = "SampleScene";
     // events for game state, that other components can listen for
     // usage: GameManager.Instance.onLevelStarted += YourCustomFunction;
     public Action onLevelStarted;
@@ -80,5 +83,13 @@ public class GameManager : MonoBehaviour
 
         // Format the time as MM:SS:ss
         return string.Format("{0:D2}:{1:D2}:{2:D2}", minutes, seconds, milliseconds);
+    }
+
+    public void StartNextLevel() => SceneManager.LoadSceneAsync(nextLevelScene);
+
+    public void RestartLevel()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadSceneAsync(currentScene.name);
     }
 }

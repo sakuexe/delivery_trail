@@ -10,11 +10,14 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
 
+    // player inputs
     public Action<float> onAccelerator;
-    public Action<Vector2> onSteering;
     public Action<float> onBrake;
-    public Action onRespawn;
+    public Action<Vector2> onSteering;
     public Action<string> onControlSchemeChanged;
+    public Action onRespawn;
+    public Action onPause;
+    // UI inputs
 
     void Awake()
     {
@@ -32,6 +35,8 @@ public class InputManager : MonoBehaviour
     public void OnSteering(InputValue value) => onSteering?.Invoke(value.Get<Vector2>());
 
     public void OnRespawn(InputValue value) => onRespawn?.Invoke();
+
+    public void OnPause(InputValue value) => onPause?.Invoke();
 
     public void OnControlsChanged(PlayerInput playerInput) => onControlSchemeChanged?.Invoke(playerInput.currentControlScheme);
 }
