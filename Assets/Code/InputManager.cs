@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,7 @@ using UnityEngine.InputSystem;
 /// Class <c>InputManager</c> handles all the player interaction with the game
 /// and fires corresponding c# events and input values when those happen.
 /// </summary>
+[RequireComponent(typeof(PlayerInput))]
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
@@ -28,7 +30,16 @@ public class InputManager : MonoBehaviour
             Destroy(Instance);
     }
 
-    public void OnGas(InputValue value) =>  onAccelerator?.Invoke(value.Get<float>());
+    private IEnumerator InvokeControlSchemeChange(PlayerInput playerInput)
+    {
+        // make sure that the HUDManager is ready (if not, the controller icon is not set at start)
+        while (HUDManager.Instance == null)
+            yield return new WaitForFixedUpdate();
+
+        onControlSchemeChanged?.Invoke(playerInput.currentControlScheme);
+    }
+
+    public void OnGas(InputValue value) => onAccelerator?.Invoke(value.Get<float>());
 
     public void OnBrake(InputValue value) => onBrake?.Invoke(value.Get<float>());
 
@@ -38,5 +49,5 @@ public class InputManager : MonoBehaviour
 
     public void OnPause(InputValue value) => onPause?.Invoke();
 
-    public void OnControlsChanged(PlayerInput playerInput) => onControlSchemeChanged?.Invoke(playerInput.currentControlScheme);
+    public void OnControlsChanged(PlayerInput playerInput) => StartCoroutine(InvokeControlSchemeChange(playerInput));
 }

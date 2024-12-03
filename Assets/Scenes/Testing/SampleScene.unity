@@ -1097,7 +1097,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 277391301}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!43 &290001821
+--- !u!43 &321040475
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4412,7 +4412,7 @@ MonoBehaviour:
       m_Value: 6.53
   m_Spline: {fileID: 1954993308}
   m_SegmentsPerMeter: 1
-  m_Mesh: {fileID: 290001821}
+  m_Mesh: {fileID: 321040475}
   m_TextureScale: 1
 --- !u!33 &1954993311
 MeshFilter:
@@ -4421,7 +4421,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1954993303}
-  m_Mesh: {fileID: 290001821}
+  m_Mesh: {fileID: 321040475}
 --- !u!23 &1954993312
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5102,6 +5102,10 @@ PrefabInstance:
     - target: {fileID: 4082562641010217831, guid: 9e6a55ce6d5aaafc4965beb97d864741, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4601137184697912230, guid: 9e6a55ce6d5aaafc4965beb97d864741, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4796742982088842438, guid: 9e6a55ce6d5aaafc4965beb97d864741, type: 3}
       propertyPath: m_Name

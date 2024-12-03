@@ -62,6 +62,7 @@ public class HelperUI : MonoBehaviour
     /// <see>https://docs.unity3d.com/Packages/com.unity.inputsystem@1.1/api/UnityEngine.InputSystem.PlayerInput.html#UnityEngine_InputSystem_PlayerInput_currentControlScheme</see>
     private void ChangeControlIcons(string controlScheme)
     {
+        Debug.Log($"controls changed: {controlScheme}");
         // set the icon class that we want to use
         string wantedIconClass = controlScheme == "Keyboard&Mouse" ? "keyboard" : "controller";
 
