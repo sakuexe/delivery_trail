@@ -85,8 +85,15 @@ public class GameManager : MonoBehaviour
         return string.Format("{0:D2}:{1:D2}:{2:D2}", minutes, seconds, milliseconds);
     }
 
+    /// <summary>
+    /// Change the current level to the next scene that is defined
+    /// in the nextLevelScene variable.
+    /// </summary>
     public void StartNextLevel() => SceneManager.LoadSceneAsync(nextLevelScene);
 
+    /// <summary>
+    /// Restart the current scene.
+    /// </summary>
     public void RestartLevel()
     {
         Scene currentScene = SceneManager.GetActiveScene();

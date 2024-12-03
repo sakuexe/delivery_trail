@@ -72,6 +72,11 @@ public class HUDManager : MonoBehaviour
         nextLevelButton.clicked -= GameManager.Instance.StartNextLevel;
     }
 
+    /// <summary>
+    /// Coroutine for enabling the pause menu.
+    /// This is done so that we can make sure that the GameManager instance
+    /// is ready to use.
+    /// </summary>
     private IEnumerator EnablePauseMenu()
     {
         while (GameManager.Instance == null || InputManager.Instance == null)
@@ -117,11 +122,15 @@ public class HUDManager : MonoBehaviour
         {
             menuContainer.SetEnabled(false);
             menuContainer.style.opacity = 0f;
+            InputManager.Instance.playerInput.actions.FindActionMap("Player").Enable();
         }
         else
         {
             menuContainer.style.opacity = 1f;
             menuContainer.SetEnabled(true);
+            // change the action map to use UI instead
+            // this way the player inputs are disabled
+            InputManager.Instance.playerInput.actions.FindActionMap("Player").Disable();
         }
     }
 }

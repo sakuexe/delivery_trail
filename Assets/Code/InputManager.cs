@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
+    public PlayerInput playerInput { get; private set; }
 
     // player inputs
     public Action<float> onAccelerator;
@@ -19,7 +20,6 @@ public class InputManager : MonoBehaviour
     public Action<string> onControlSchemeChanged;
     public Action onRespawn;
     public Action onPause;
-    // UI inputs
 
     void Awake()
     {
@@ -28,8 +28,16 @@ public class InputManager : MonoBehaviour
             Instance = this;
         else
             Destroy(Instance);
+
+        playerInput = GetComponent<PlayerInput>();
     }
 
+    /// <summary>
+    /// Coroutine for invoking the controlSchemeChange function
+    /// at the start of the game.
+    /// This is done to make sure that the helper icons are using the right
+    /// control scheme's icons.
+    /// </summary>
     private IEnumerator InvokeControlSchemeChange(PlayerInput playerInput)
     {
         // make sure that the HUDManager is ready (if not, the controller icon is not set at start)
@@ -39,6 +47,7 @@ public class InputManager : MonoBehaviour
         onControlSchemeChanged?.Invoke(playerInput.currentControlScheme);
     }
 
+    // Player inputs
     public void OnGas(InputValue value) => onAccelerator?.Invoke(value.Get<float>());
 
     public void OnBrake(InputValue value) => onBrake?.Invoke(value.Get<float>());
@@ -50,4 +59,7 @@ public class InputManager : MonoBehaviour
     public void OnPause(InputValue value) => onPause?.Invoke();
 
     public void OnControlsChanged(PlayerInput playerInput) => StartCoroutine(InvokeControlSchemeChange(playerInput));
+
+    // UI inputs
+    public void OnCancel(InputValue value) => onPause?.Invoke();
 }
