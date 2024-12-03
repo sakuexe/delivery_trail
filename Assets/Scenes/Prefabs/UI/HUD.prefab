@@ -128,7 +128,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6826895891205928537}
   - component: {fileID: 5794839515587439368}
-  - component: {fileID: 7490818159472484633}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -169,36 +168,6 @@ MonoBehaviour:
   basicsDocument: {fileID: 3800637616552450941}
   menuDocument: {fileID: 1232142633110754485}
   timerUpdateDelaySeconds: 0.1
---- !u!114 &7490818159472484633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4993799040628249852}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: UI
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &6450126360645464717
 GameObject:
   m_ObjectHideFlags: 0

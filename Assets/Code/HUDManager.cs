@@ -81,6 +81,7 @@ public class HUDManager : MonoBehaviour
         InputManager.Instance.onPause += ToggleMenu;
         retryButton.clicked += GameManager.Instance.RestartLevel;
         nextLevelButton.clicked += GameManager.Instance.StartNextLevel;
+        exitButton.clicked += () => Application.Quit();
     }
 
     /// <summary>
