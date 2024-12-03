@@ -2,8 +2,8 @@
     <Style src="project://database/Assets/UI%20Toolkit/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=47488b58d8d244d41bd6019262462cf9&amp;type=3#MainMenuStyle" />
     <engine:VisualElement name="Container" style="flex-grow: 1;">
         <engine:Label text="Delivery Trail" name="Header" enable-rich-text="true" class="header" style="-unity-text-align: upper-center; font-size: 100px; height: 143px; -unity-font-definition: resource(&apos;FlatSkin/Font/Roboto-Regular&apos;); bottom: -94px; background-color: rgba(255, 255, 255, 0); align-items: flex-start; align-self: center; white-space: nowrap; background-position-x: center 0; flex-direction: column; flex-wrap: nowrap; visibility: visible;" />
-        <engine:Button text="START" class="button" style="align-self: center; align-content: auto; bottom: -250px; border-top-width: -110px; justify-content: flex-start; align-items: auto; background-color: rgb(123, 255, 85);" />
-        <engine:Button text="SETTINGS" class="button" style="align-self: center; align-content: auto; -unity-text-align: middle-center; bottom: -300px; left: 0; background-color: rgb(255, 248, 54);" />
-        <engine:Button text="EXIT" class="button" style="align-self: center; align-content: auto; bottom: -350px; background-color: rgb(255, 82, 76);" />
+        <engine:Button text="START" name="startbutton" class="button" style="align-self: center; align-content: auto; bottom: -250px; border-top-width: -110px; justify-content: flex-start; align-items: auto; background-color: rgb(123, 255, 85);" />
+        <engine:Button text="SETTINGS" name="settingsbutton" class="button" style="align-self: center; align-content: auto; -unity-text-align: middle-center; bottom: -300px; left: 0; background-color: rgb(255, 248, 54);" />
+        <engine:Button text="EXIT" name="exitbutton" class="button" style="align-self: center; align-content: auto; bottom: -350px; background-color: rgb(255, 82, 76);" />
     </engine:VisualElement>
 </engine:UXML>

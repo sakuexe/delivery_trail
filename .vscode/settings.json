@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "delivery_trail.sln"
+    "dotnet.defaultSolution": "delivery_trail.sln",
+    "dotnet.preferCSharpExtension": true
 }
