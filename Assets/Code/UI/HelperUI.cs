@@ -43,14 +43,14 @@ public class HelperUI : MonoBehaviour
             return;
         GameManager.Instance.onLevelStarted += StartHelpCheck;
         GameManager.Instance.onPlayerRespawn += Respawn;
-        GameManager.Instance.onControlSchemeChanged += ChangeControlIcons;
+        InputManager.Instance.onControlSchemeChanged += ChangeControlIcons;
     }
 
     void OnDisable()
     {
         GameManager.Instance.onLevelStarted -= StartHelpCheck;
         GameManager.Instance.onPlayerRespawn -= Respawn;
-        GameManager.Instance.onControlSchemeChanged -= ChangeControlIcons;
+        InputManager.Instance.onControlSchemeChanged -= ChangeControlIcons;
     }
 
     /// <summary>

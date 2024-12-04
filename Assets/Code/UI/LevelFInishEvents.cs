@@ -1,11 +1,9 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class LevelFinishEvents : MonoBehaviour
 {
-    [SerializeField]
-    private string nextLevelSceneName = "SampleScene";
     private UIDocument resultDocument;
     private Button nextLevelButton;
     private Button retryButton;
@@ -19,20 +17,21 @@ public class LevelFinishEvents : MonoBehaviour
         exitButton = resultDocument.rootVisualElement.Q("ExitButton") as Button;
     }
 
-    private void OnEnable()
+    private void OnEnable() => StartCoroutine(EnableButtons());
+
+    private void OnDisable()
     {
-        nextLevelButton.RegisterCallbackOnce<ClickEvent>(OnNextClick);
-        retryButton.RegisterCallbackOnce<ClickEvent>(OnRetryClick);
+        nextLevelButton.clicked -= GameManager.Instance.StartNextLevel;
+        retryButton.clicked -= GameManager.Instance.RestartLevel;
     }
 
-    private void OnNextClick(ClickEvent evt)
+    private IEnumerator EnableButtons()
     {
-        SceneManager.LoadSceneAsync(nextLevelSceneName);
-    }
+        while (GameManager.Instance == null || InputManager.Instance == null)
+            yield return new WaitForFixedUpdate();
 
-    private void OnRetryClick(ClickEvent evt)
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadSceneAsync(currentScene.name);
+        nextLevelButton.clicked += GameManager.Instance.StartNextLevel;
+        retryButton.clicked += GameManager.Instance.RestartLevel;
+        exitButton.clicked += Application.Quit;
     }
 }

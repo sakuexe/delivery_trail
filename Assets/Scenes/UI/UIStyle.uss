@@ -74,3 +74,22 @@
     font-size: 42px;
     color: rgb(255, 255, 255);
 }
+
+.primary-button {
+    background-color: rgb(48, 48, 48);
+    -unity-text-outline-color: rgba(0, 0, 0, 0);
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-in-out;
+}
+
+.primary-button:hover {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+}
+
+.primary-button:focus {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+}

@@ -4,6 +4,7 @@
 }
 
 .button {
+    --button-color: rgb(255, 255, 255);
     font-size: 20px;
     width: 220px;
     height: 60px;
@@ -11,4 +12,17 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
+    margin-bottom: 16px;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-in-out-cubic;
+    background-color: var(--button-color);
+}
+
+.button:hover {
+    background-color: rgba(123, 255, 85, 0);
+    scale: 1.1 1.1;
+}
+
+.button:focus {
+    scale: 1.1 1;
 }
