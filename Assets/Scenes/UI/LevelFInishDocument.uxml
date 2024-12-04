@@ -26,9 +26,9 @@
                 </engine:VisualElement>
             </engine:GroupBox>
             <engine:GroupBox name="Buttons" style="max-width: 800px; min-width: 400px; align-items: stretch; align-self: center; margin-top: 40px; transition-duration: 0.5s; transition-timing-function: ease-in-out; transition-delay: 2s; align-content: auto; justify-content: center; flex-direction: column;">
-                <engine:Button text="Next Level" name="NextButton" class="margin-top-s" />
-                <engine:Button text="Retry" name="RetryButton" class="margin-top-s" />
-                <engine:Button text="Exit" name="ExitButton" class="margin-top-s" />
+                <engine:Button text="Next Level" name="NextButton" class="margin-top-s primary-button" />
+                <engine:Button text="Retry" name="RetryButton" class="margin-top-s primary-button" />
+                <engine:Button text="Exit" name="ExitButton" class="margin-top-s primary-button" />
             </engine:GroupBox>
         </engine:VisualElement>
     </engine:VisualElement>
