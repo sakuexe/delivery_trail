@@ -16,10 +16,10 @@ public class Powertrain : MonoBehaviour
     public Drivetrain drivetrain = Drivetrain.FrontWheelDrive;
     [SerializeField]
     [Range(200, 800)]
-    private int minRpm = 500;
+    public int minRpm = 500;
     [SerializeField]
     [Range(3_500, 8_000)]
-    private int maxRpm = 6_000;
+    public int maxRpm = 6_000;
     [SerializeField]
     [Range(80, 1_000)]
     private int maxHorsePower = 200;
