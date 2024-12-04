@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 79a92db4ffb20fd449e669effcfbde63
-timeCreated: 1509636402
+guid: 94b52e8ed9b0c664faa840982749c0b0
+timeCreated: 1509615218
 licenseType: Store
 AudioImporter:
   serializedVersion: 6
@@ -20,10 +20,3 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 106037
-  packageName: i6 German - Free Engine Sound Pack
-  packageVersion: 2.0.0
-  assetPath: Assets/Car Engine Sound - i6 German Free/Assets/Audio/i6_german_free/Interior/int_idle.wav
-  uploadId: 530903

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 1a28469b66ddc3f4394165b2634f368d
-timeCreated: 1509634952
+guid: 1775e36789171644fbbd1156abc31fbb
+timeCreated: 1509634911
 licenseType: Store
 AudioImporter:
   serializedVersion: 6
@@ -20,10 +20,3 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 106037
-  packageName: i6 German - Free Engine Sound Pack
-  packageVersion: 2.0.0
-  assetPath: Assets/Car Engine Sound - i6 German Free/Assets/Audio/i6_german_free/Interior/int_high_off.wav
-  uploadId: 530903

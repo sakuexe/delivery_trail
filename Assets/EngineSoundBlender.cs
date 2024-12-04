@@ -9,9 +9,11 @@ public class EngineSoundBlender : MonoBehaviour
     public AudioSource med_on;  // AudioSource for mid-range sound
     public AudioSource high_on; // AudioSource for high RPM sound
 
-    [Header("RPM Settings")]
-    public float minRPM = 500f;    // Minimum RPM (idle)
-    public float maxRPM = 5000f;   // Maximum RPM
+    [Header("Pitches")]
+    [Range(0.1f, 1f)]
+    public float minPitch = 1f;
+    [Range(1f, 3f)]
+    public float maxPitch = 2.5f;
 
     void Update()
     {
@@ -21,7 +23,7 @@ public class EngineSoundBlender : MonoBehaviour
         float rpm = powertrain.GetCurrentRpm();
 
         // Normalize RPM to a 0-1 range
-        float normalizedRPM = Mathf.InverseLerp(minRPM, maxRPM, rpm);
+        float normalizedRPM = Mathf.InverseLerp(powertrain.minRpm, powertrain.maxRpm, rpm);
 
         // Clear overlap and ensure hard muting
         if (normalizedRPM <= 0.5f)
@@ -40,15 +42,17 @@ public class EngineSoundBlender : MonoBehaviour
         }
 
         // Adjust pitch based on normalized RPM for realism
-        float pitch = Mathf.Lerp(1f, 2.5f, normalizedRPM);
+        float pitch = Mathf.Lerp(minPitch, maxPitch, normalizedRPM);
         idle.pitch = pitch;
         med_on.pitch = pitch;
         high_on.pitch = pitch;
 
+        Debug.Log($"Idle: {idle.volume}, Med: {med_on.volume}, High: {high_on.volume}");
+
         // Ensure correct sounds are playing
-        if (idle.volume > 0 && !idle.isPlaying) idle.Play();
-        if (med_on.volume > 0 && !med_on.isPlaying) med_on.Play();
-        if (high_on.volume > 0 && !high_on.isPlaying) high_on.Play();
+        if (idle.volume > 0.0 && !idle.isPlaying) idle.Play();
+        if (med_on.volume > 0.0 && !med_on.isPlaying) med_on.Play();
+        if (high_on.volume > 0.0 && !high_on.isPlaying) high_on.Play();
 
         // Stop irrelevant sounds
         if (idle.volume == 0 && idle.isPlaying) idle.Stop();

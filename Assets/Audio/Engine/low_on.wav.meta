@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 56c7ad2bedbbf3a4cbb0173ec0e9d740
-timeCreated: 1511963068
+guid: 32f491c0195b2d142bb1125ef485146a
+timeCreated: 1509631986
 licenseType: Store
 AudioImporter:
   serializedVersion: 6
@@ -20,10 +20,3 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 106037
-  packageName: i6 German - Free Engine Sound Pack
-  packageVersion: 2.0.0
-  assetPath: Assets/Car Engine Sound - i6 German Free/Assets/Audio/i6_german_free/startup.wav
-  uploadId: 530903
