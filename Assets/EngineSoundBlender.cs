@@ -47,7 +47,7 @@ public class EngineSoundBlender : MonoBehaviour
         med_on.pitch = pitch;
         high_on.pitch = pitch;
 
-        Debug.Log($"Idle: {idle.volume}, Med: {med_on.volume}, High: {high_on.volume}");
+        /*Debug.Log($"Idle: {idle.volume}, Med: {med_on.volume}, High: {high_on.volume}");*/
 
         // Ensure correct sounds are playing
         if (idle.volume > 0.0 && !idle.isPlaying) idle.Play();

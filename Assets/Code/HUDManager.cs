@@ -124,7 +124,7 @@ public class HUDManager : MonoBehaviour
         {
             menuContainer.SetEnabled(false);
             menuContainer.style.opacity = 0f;
-            InputManager.Instance.playerInput.actions.FindActionMap("Player").Enable();
+            InputManager.Instance.playerInput.actions.FindActionMap("UI").Disable();
         }
         else
         {
@@ -132,7 +132,7 @@ public class HUDManager : MonoBehaviour
             menuContainer.SetEnabled(true);
             // change the action map to use UI instead
             // this way the player inputs are disabled
-            InputManager.Instance.playerInput.actions.FindActionMap("Player").Disable();
+            InputManager.Instance.playerInput.actions.FindActionMap("UI").Enable();
         }
     }
 }
