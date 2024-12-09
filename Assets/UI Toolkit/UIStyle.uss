@@ -4,7 +4,7 @@
 }
 
 .key {
-    font-size: 32px;
+    font-size: 18px;
     -unity-text-align: middle-left;
     -unity-font-style: normal;
     padding-right: 20px;
@@ -63,25 +63,16 @@
 .keyboard {
 }
 
-.primary-button {
-    background-color: rgb(48, 48, 48);
-    -unity-text-outline-color: rgba(0, 0, 0, 0);
-    color: rgb(255, 255, 255);
-    font-size: 24px;
-}
-
 .text {
     font-size: 42px;
     color: rgb(255, 255, 255);
 }
 
 .primary-button {
-    background-color: rgb(48, 48, 48);
+    background-color: rgba(48, 48, 48, 0);
     -unity-text-outline-color: rgba(0, 0, 0, 0);
     color: rgb(255, 255, 255);
     font-size: 24px;
-    transition-duration: 0.15s;
-    transition-timing-function: ease-in-out;
 }
 
 .primary-button:hover {
@@ -92,4 +83,62 @@
 .primary-button:focus {
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
+}
+
+#MedalTimes > VisualElement > Label {
+    font-size: 32px;
+}
+
+.star-filled {
+    background-image: url("project://database/Assets/Art/Icons/star_fill.png?fileID=2800000&guid=622ca66f5d1e95b149f18f94dbdef37f&type=3#star_fill");
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    align-items: auto;
+    align-self: auto;
+}
+
+.star_container {
+    flex-grow: 0;
+    flex-direction: row;
+    align-items: auto;
+    align-content: auto;
+    align-self: center;
+    justify-content: flex-start;
+    flex-shrink: 0;
+}
+
+.star-stroke {
+    background-image: url("project://database/Assets/Art/Icons/star_stroke.png?fileID=2800000&guid=e5fa2f6707faa5ec99ac1c2a8713d641&type=3#star_stroke");
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    align-items: auto;
+    align-self: auto;
+    opacity: 0.5;
+}
+
+.user-icon {
+    background-image: url("project://database/Assets/Art/Icons/user_icon.png?fileID=2800000&guid=2410656df3feacd60a92c1733ec13cd4&type=3#user_icon");
+    width: 75px;
+    height: 75px;
+    flex-shrink: 0;
+}
+
+.text {
+    font-size: 42px;
+    color: rgb(255, 255, 255);
+}
+
+.secondary-button {
+}
+
+.star_container {
+    flex-grow: 0;
+    flex-direction: row;
+    align-items: auto;
+    align-content: auto;
+    align-self: center;
+    justify-content: flex-start;
+    flex-shrink: 0;
 }
