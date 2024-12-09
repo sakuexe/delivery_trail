@@ -495,6 +495,8 @@ MonoBehaviour:
   idle: {fileID: 471186240907227108}
   med_on: {fileID: 4016892118369891053}
   high_on: {fileID: 3045206481174774722}
+  minPitch: 1
+  maxPitch: 2.5
 --- !u!82 &471186240907227108
 AudioSource:
   m_ObjectHideFlags: 0
@@ -505,7 +507,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c502041826854664683f9914f63427b0, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: c502041826854664683f9914f63427b0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.102
@@ -602,7 +604,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 22cd46996da3b624bb08935264560d8c, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 22cd46996da3b624bb08935264560d8c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.104
@@ -699,7 +701,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e9643d8581d235f45a62997cba851988, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e9643d8581d235f45a62997cba851988, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.098
@@ -1197,12 +1199,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 1.0622879
+      outSlope: 1.0622879
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.14978994
     - serializedVersion: 3
       time: 0.7046818
       value: 0.90715176

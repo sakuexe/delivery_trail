@@ -43,6 +43,9 @@ public class GameManager : MonoBehaviour
         onLevelStarted += StartLevelTimer;
         Checkpoint initialCheckpoint = new (player.rigidBody);
         checkpoints.Add(initialCheckpoint);
+
+        // enable vsync
+        QualitySettings.vSyncCount = 1;
     }
 
     private void OnDisable()
