@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -26,7 +24,6 @@ public class GoalController : MonoBehaviour
     // ui elements
     private VisualElement mainContainer;
     private VisualElement reviewStars;
-    private GroupBox levelDetails;
     private GroupBox medalDetails;
     private Label timeTakenLabel;
     private Label countdownValue;
@@ -93,14 +90,14 @@ public class GoalController : MonoBehaviour
     {
         mainContainer.SetEnabled(true);
         float timeTaken = Time.time - GameManager.Instance.startTime;
+        UpdateReview(timeTaken);
+
         timeTakenLabel.text = GameManager.Instance.FormatTime(timeTaken); 
         mainContainer.style.opacity = 1f;
         medalDetails.RemoveFromClassList("hidden");
-
-        UpdateReviewStars(timeTaken);
     }
 
-    private void UpdateReviewStars(float timeTaken)
+    private void UpdateReview(float timeTaken)
     {
         int starsAchieved = 0;
         if (timeTaken <= goldTime)
@@ -109,16 +106,13 @@ public class GoalController : MonoBehaviour
             starsAchieved = 2;
         else if (timeTaken <= bronzeTime)
             starsAchieved = 1;
-
         List<VisualElement> stars = reviewStars.Query<VisualElement>(className:"star-stroke").ToList();
-        foreach (var (index, star) in stars.Select((value, i) => (i, value)))
-        {
-            if (index >= starsAchieved)
-                return;
+        ReviewGenerator.UpdateStars(stars, starsAchieved);
 
-            star.AddToClassList("star-filled");
-            star.RemoveFromClassList("star-stroke");
-        }
+        // get the customer data
+        Review review = ReviewGenerator.GenerateReview(starsAchieved);
+        mainContainer.Q<Label>("CustomerName").text = review.name;
+        mainContainer.Q<Label>("CustomerReview").text = review.review;
     }
 
     private void UpdateStartCountdown(int value)
