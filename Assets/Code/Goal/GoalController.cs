@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -23,7 +23,7 @@ public class GoalController : MonoBehaviour
 
     // ui elements
     private VisualElement mainContainer;
-    private GroupBox levelDetails;
+    private VisualElement reviewStars;
     private GroupBox medalDetails;
     private Label timeTakenLabel;
     private Label countdownValue;
@@ -31,26 +31,17 @@ public class GoalController : MonoBehaviour
     // states
     private bool _levelFinished = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnEnable()
     {
-        if (!GameManager.Instance)
-        {
-            Debug.Log("Please add an empty gameObject to the scene and add the GameManager-script to it (Assets/Code/GameManager.cs)");
-            throw new Exception("GameManager not found");
-        }
-
         // fetch the ui elements
         timeTakenLabel = resultDocument.rootVisualElement.Q("Time_value") as Label;
         mainContainer = resultDocument.rootVisualElement.Q("Background") as VisualElement;
-        levelDetails = resultDocument.rootVisualElement.Q("LevelDetails") as GroupBox;
         medalDetails = resultDocument.rootVisualElement.Q("MedalTimes") as GroupBox;
+        reviewStars = resultDocument.rootVisualElement.Q("ReviewStars") as VisualElement;
 
         countdownValue = countdownDocument.rootVisualElement.Q("Countdown") as Label;
 
         mainContainer.style.opacity = 0;
-        levelDetails.AddToClassList("hidden");
-        medalDetails.AddToClassList("hidden");
         mainContainer.SetEnabled(false);
 
         SetupMedalTimes();
@@ -99,10 +90,29 @@ public class GoalController : MonoBehaviour
     {
         mainContainer.SetEnabled(true);
         float timeTaken = Time.time - GameManager.Instance.startTime;
+        UpdateReview(timeTaken);
+
         timeTakenLabel.text = GameManager.Instance.FormatTime(timeTaken); 
         mainContainer.style.opacity = 1f;
-        levelDetails.RemoveFromClassList("hidden");
         medalDetails.RemoveFromClassList("hidden");
+    }
+
+    private void UpdateReview(float timeTaken)
+    {
+        int starsAchieved = 0;
+        if (timeTaken <= goldTime)
+            starsAchieved = 3;
+        else if (timeTaken <= silverTime)
+            starsAchieved = 2;
+        else if (timeTaken <= bronzeTime)
+            starsAchieved = 1;
+        List<VisualElement> stars = reviewStars.Query<VisualElement>(className:"star-stroke").ToList();
+        ReviewGenerator.UpdateStars(stars, starsAchieved);
+
+        // get the customer data
+        Review review = ReviewGenerator.GenerateReview(starsAchieved);
+        mainContainer.Q<Label>("CustomerName").text = review.name;
+        mainContainer.Q<Label>("CustomerReview").text = review.review;
     }
 
     private void UpdateStartCountdown(int value)

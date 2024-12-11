@@ -1,0 +1,14 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scenes/UI/UIStyle.uss?fileID=7433441132597879392&amp;guid=f9ffdf9af0c324d1cb3ae1950edfa078&amp;type=3#UIStyle" />
+    <engine:VisualElement name="EscapeMenuContainer" class="container" style="flex-grow: 1; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.76); transition-duration: 0.25s; transition-timing-function: ease-in-out; opacity: 0;">
+        <engine:VisualElement name="MenuHeader" style="flex-grow: 0;">
+            <engine:Label text="Pause Menu" class="text" style="-unity-font-style: bold; -unity-text-align: upper-center;" />
+        </engine:VisualElement>
+        <engine:GroupBox name="MenuButtons" style="min-width: 300px; min-height: 140px; max-width: 400px; max-height: none;">
+            <engine:Button text="Retry Level" class="primary-button" />
+            <engine:Button text="Next Level" class="primary-button" />
+            <engine:Button text="Main Menu" class="primary-button" />
+            <engine:Button text="Exit" name="ExitButton" class="primary-button" />
+        </engine:GroupBox>
+    </engine:VisualElement>
+</engine:UXML>

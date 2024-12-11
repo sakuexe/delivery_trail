@@ -32,6 +32,15 @@ public class InputManager : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
     }
 
+    void Start()
+    {
+        GameManager.Instance.onLevelStarted += LockCursor;
+        GameManager.Instance.onLevelFinished += UnlockCursor;
+    }
+
+    private void LockCursor() => Cursor.lockState = CursorLockMode.Locked;
+    private void UnlockCursor() => Cursor.lockState = CursorLockMode.None;
+
     /// <summary>
     /// Coroutine for invoking the controlSchemeChange function
     /// at the start of the game.
@@ -56,10 +65,19 @@ public class InputManager : MonoBehaviour
 
     public void OnRespawn(InputValue value) => onRespawn?.Invoke();
 
-    public void OnPause(InputValue value) => onPause?.Invoke();
+    public void OnPause(InputValue value)
+    {
+        onPause?.Invoke();
+        UnlockCursor();
+    }
 
     public void OnControlsChanged(PlayerInput playerInput) => StartCoroutine(InvokeControlSchemeChange(playerInput));
 
     // UI inputs
-    public void OnCancel(InputValue value) => onPause?.Invoke();
+    /*public void OnCancel(InputValue value)*/
+    /*{*/
+    /*    Debug.Log("Cancel Pressed");*/
+    /*    onPause?.Invoke();*/
+    /*    LockCursor();*/
+    /*}*/
 }

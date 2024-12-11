@@ -1,0 +1,54 @@
+{
+  "reviews": [
+    {
+      "name": "Pirkka-Pekka",
+      "review": "It was okay, I guess",
+      "stars": 3
+    },
+    {
+      "name": "Matt",
+      "review": "Good pizza, fast enough delivery.",
+      "stars": 3
+    },
+    {
+      "name": "Grumpy Grandma",
+      "review": "I could have walked over there and gotten the pizza myself faster than that",
+      "stars": 2
+    },
+    {
+      "name": "Seppo Taalasmaa",
+      "review": "Pizza was cold but at least it was not moldy",
+      "stars": 2
+    },
+    {
+      "name": "Philip J. Fry",
+      "review": "I wish I had a time machine for all the waiting I had to endure",
+      "stars": 2
+    },
+    {
+      "name": "Mario",
+      "review": "This delivery was even worse than the pizza itself!",
+      "stars": 1
+    },
+    {
+      "name": "Luigi",
+      "review": "Mama mia!",
+      "stars": 1
+    },
+    {
+      "name": "Ryan",
+      "review": "How did the delivery even take that long? Did the driver die in the middle?",
+      "stars": 0
+    },
+    {
+      "name": "Sauli",
+      "review": "I could have died, reincarnated, and the pizza would still not gotten here in time",
+      "stars": 0
+    },
+    {
+      "name": "Groovy Gamer",
+      "review": "Awful delivery, awful pizza, 0/3",
+      "stars": 0
+    }
+  ]
+}

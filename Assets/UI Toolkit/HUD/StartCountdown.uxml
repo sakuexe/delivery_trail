@@ -1,0 +1,6 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scenes/UI/UIStyle.uss?fileID=7433441132597879392&amp;guid=f9ffdf9af0c324d1cb3ae1950edfa078&amp;type=3#UIStyle" />
+    <engine:VisualElement style="flex-grow: 1; justify-content: center; align-items: center;">
+        <engine:Label text="0" name="Countdown" class="text" style="-unity-font-style: bold; font-size: 82px; transition-duration: 0.5s; transition-timing-function: ease-in-out; transition-delay: 0.5s; align-self: auto; align-content: auto; justify-content: flex-end; align-items: auto;" />
+    </engine:VisualElement>
+</engine:UXML>
