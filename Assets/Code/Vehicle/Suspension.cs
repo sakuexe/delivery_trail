@@ -130,9 +130,8 @@ public class Suspension : MonoBehaviour
 
             // if the tire can reach the ground
             Physics.Raycast(currentTire.transform.position, Vector3.down, out hit, maxLength, car.driveableLayer);
-
             yTransform = hit.point.y + currentTire.radius;
-            yTransform = Mathf.Clamp(yTransform, 0.2f, maxLength);
+            yTransform = Mathf.Max(yTransform, tires[index].transform.position.y - maxLength);
 
             // only move on the y axis (up and down)
             Vector3 desiredPosition = new Vector3(
@@ -140,7 +139,7 @@ public class Suspension : MonoBehaviour
                     yTransform,
                     tires[index].transform.position.z);
 
-            tireModel.position = Vector3.MoveTowards(tireModel.position, desiredPosition, 3f * Time.deltaTime);
+            tireModel.position = Vector3.MoveTowards(tireModel.position, desiredPosition, 4f * Time.deltaTime);
 
             // handle tire rotation - don't rotate the tires as much as the body
             Quaternion carRotation = car.transform.rotation;

@@ -1175,8 +1175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   springStiffness: 35000
-  restLength: 2
-  springTravel: 0.35
+  restLength: 1.25
+  springTravel: 0.5
   damperStiffnessZeta: 0.65
 --- !u!114 &7595524197783005222
 MonoBehaviour:
