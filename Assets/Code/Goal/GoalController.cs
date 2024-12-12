@@ -41,8 +41,7 @@ public class GoalController : MonoBehaviour
 
         countdownValue = countdownDocument.rootVisualElement.Q("Countdown") as Label;
 
-        mainContainer.style.opacity = 0;
-        mainContainer.SetEnabled(false);
+        resultDocument.rootVisualElement.SetEnabled(false);
 
         SetupMedalTimes();
 
@@ -88,12 +87,13 @@ public class GoalController : MonoBehaviour
 
     private void ShowGoalScreen()
     {
-        mainContainer.SetEnabled(true);
+        resultDocument.rootVisualElement.SetEnabled(true);
+        mainContainer.style.opacity = 1f;
         float timeTaken = Time.time - GameManager.Instance.startTime;
         UpdateReview(timeTaken);
 
         timeTakenLabel.text = GameManager.Instance.FormatTime(timeTaken); 
-        mainContainer.style.opacity = 1f;
+        mainContainer.Q<VisualElement>("FinishContainer").RemoveFromClassList("hidden");
         medalDetails.RemoveFromClassList("hidden");
     }
 
