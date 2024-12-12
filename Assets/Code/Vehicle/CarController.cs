@@ -51,12 +51,12 @@ public class CarController : MonoBehaviour
         powertrain = GetComponent<Powertrain>();
         steering = GetComponent<Steering>();
         braking = GetComponent<Braking>();
+        // turn off the motor at the start of the level (no moving!)
+        powertrain.enabled = false;
     }
 
-    void Start()
+    void OnEnable()
     {
-        // turn off the motor when the start countdown has not started
-        powertrain.enabled = false;
         GameManager.Instance.onLevelStarted += () => powertrain.enabled = true;
         InputManager.Instance.onAccelerator += Accelerate;
         InputManager.Instance.onBrake += Brake;

@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
         else
             Destroy(Instance);
 
-        player = GameObject.FindWithTag("Player").GetComponent<CarController>();
+        CarController player = GameObject.FindWithTag("Player").GetComponent<CarController>();
     }
 
     void Start()
