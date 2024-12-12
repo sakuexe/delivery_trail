@@ -495,8 +495,9 @@ MonoBehaviour:
   idle: {fileID: 471186240907227108}
   med_on: {fileID: 4016892118369891053}
   high_on: {fileID: 3045206481174774722}
+  volume: 0.05
   minPitch: 1
-  maxPitch: 2.5
+  maxPitch: 1.79
 --- !u!82 &471186240907227108
 AudioSource:
   m_ObjectHideFlags: 0
@@ -510,7 +511,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 22a4bcfcfaf2349419e5f121ea4cc3fd, type: 3}
   m_Resource: {fileID: 8300000, guid: 22a4bcfcfaf2349419e5f121ea4cc3fd, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.102
+  m_Volume: 0.001
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -607,7 +608,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 94b52e8ed9b0c664faa840982749c0b0, type: 3}
   m_Resource: {fileID: 8300000, guid: 94b52e8ed9b0c664faa840982749c0b0, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.104
+  m_Volume: 0.001
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -704,7 +705,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 43b756a9ef9df8249896cfdcbb4ea424, type: 3}
   m_Resource: {fileID: 8300000, guid: 43b756a9ef9df8249896cfdcbb4ea424, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.098
+  m_Volume: 0.001
   m_Pitch: 1
   Loop: 0
   Mute: 0

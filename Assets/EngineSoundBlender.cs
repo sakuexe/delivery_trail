@@ -9,6 +9,9 @@ public class EngineSoundBlender : MonoBehaviour
     public AudioSource med_on;  // AudioSource for mid-range sound
     public AudioSource high_on; // AudioSource for high RPM sound
 
+    [Header("Volume")]
+    [Range(0.01f, 1f)]
+    public float volume = 0.06f;
     [Header("Pitches")]
     [Range(0.1f, 1f)]
     public float minPitch = 1f;
@@ -40,6 +43,11 @@ public class EngineSoundBlender : MonoBehaviour
             med_on.volume = Mathf.Lerp(1.0f, 0.0f, (normalizedRPM - 0.5f) * 2.0f);
             high_on.volume = Mathf.Lerp(0.0f, 1.0f, (normalizedRPM - 0.5f) * 2.0f);
         }
+
+        // make the volume a bit quieter overall
+        idle.volume *= volume;
+        med_on.volume *= volume;
+        high_on.volume *= volume;
 
         // Adjust pitch based on normalized RPM for realism
         float pitch = Mathf.Lerp(minPitch, maxPitch, normalizedRPM);
