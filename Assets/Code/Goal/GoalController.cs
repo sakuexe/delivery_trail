@@ -21,6 +21,8 @@ public class GoalController : MonoBehaviour
     [SerializeField]
     private float bronzeTime;
 
+    private BoxCollider goalTrigger;
+
     // ui elements
     private VisualElement mainContainer;
     private VisualElement reviewStars;
@@ -30,6 +32,13 @@ public class GoalController : MonoBehaviour
 
     // states
     private bool _levelFinished = false;
+
+    private void Start()
+    {
+        // disable the goal trigger by default
+        goalTrigger = GetComponent<BoxCollider>();
+        goalTrigger.enabled = false;
+    }
 
     private void OnEnable()
     {
@@ -49,12 +58,14 @@ public class GoalController : MonoBehaviour
         GameManager.Instance.onStartCountdownChanged += UpdateStartCountdown;
         GameManager.Instance.onLevelStarted += HideStartCountdown;
         UpdateStartCountdown(GameManager.Instance.startCountdownTime);
+        GameManager.Instance.onAllCheckpointsCleared += EnableGoal;
     }
 
     private void OnDisable()
     {
         GameManager.Instance.onStartCountdownChanged -= UpdateStartCountdown;
         GameManager.Instance.onLevelStarted -= () => resultDocument.enabled = true;
+        GameManager.Instance.onAllCheckpointsCleared -= EnableGoal;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -128,5 +139,11 @@ public class GoalController : MonoBehaviour
     private void HideStartCountdown()
     {
         countdownValue.AddToClassList("hidden");
+    }
+
+    private void EnableGoal()
+    {
+        // TODO: add visual clarity for if the goal is ready to be reached
+        goalTrigger.enabled = true;
     }
 }

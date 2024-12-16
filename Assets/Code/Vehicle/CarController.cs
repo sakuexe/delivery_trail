@@ -143,7 +143,7 @@ public class CarController : MonoBehaviour
         if (!canRespawn) return;
         lastRespawnPress = Time.time;
 
-        if (GameManager.Instance.checkpoints.Count == 0)
+        if (GameManager.Instance.checkpointsCleared.Count == 0)
         {
             Debug.LogError("No checkpoints found in GameManager.checkpoints (length is 0)");
             return;
@@ -151,12 +151,12 @@ public class CarController : MonoBehaviour
 
         // if the there is only one checkpoint, also restart the level timer
         // this way it is easy to restart runs
-        if (GameManager.Instance.checkpoints.Count == 1)
+        if (GameManager.Instance.checkpointsCleared.Count == 1)
             GameManager.Instance.onLevelStarted.Invoke();
 
         GameManager.Instance.onPlayerRespawn.Invoke();
 
-        Checkpoint lastCheckpoint = GameManager.Instance.checkpoints.LastOrDefault();
+        Checkpoint lastCheckpoint = GameManager.Instance.checkpointsCleared.LastOrDefault();
 
         StartCoroutine(lastCheckpoint.ApplyToRigidbody(rigidBody));
         powertrain.SetCurrentRpm(lastCheckpoint.rpm);
