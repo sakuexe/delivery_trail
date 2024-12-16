@@ -17,12 +17,15 @@ public class GameManager : MonoBehaviour
     public Action onLevelStarted;
     public Action onLevelFinished;
     public Action onPlayerRespawn;
+    public Action onCheckpointCleared;
+    public Action onAllCheckpointsCleared;
     public Action<int> onStartCountdownChanged;
     public Action<string> onControlSchemeChanged;
 
     public int startCountdownTime { get; private set; } = 3;
     public float startTime { get; private set; }
-    public List<Checkpoint> checkpoints = new();
+    public GameObject[] checkpoints;
+    public List<Checkpoint> checkpointsCleared = new();
 
     private int _startCountdown;
 
@@ -41,15 +44,25 @@ public class GameManager : MonoBehaviour
         onLevelStarted += StartLevelTimer;
         player = GameObject.FindWithTag("Player").GetComponent<CarController>();
         Checkpoint initialCheckpoint = new (player.rigidBody);
-        checkpoints.Add(initialCheckpoint);
+        checkpointsCleared.Add(initialCheckpoint);
 
         // enable vsync
         QualitySettings.vSyncCount = 1;
+        
+        // get all the checkpoints on the level
+        checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        Debug.Log(checkpoints.Length);
+    }
+
+    void OnEnable()
+    {
+        onCheckpointCleared += CheckpointCleared;
     }
 
     private void OnDisable()
     {
         onLevelStarted -= StartLevelTimer;
+        onCheckpointCleared -= CheckpointCleared;
     }
 
     /// <summary>
@@ -73,6 +86,14 @@ public class GameManager : MonoBehaviour
     }
 
     private void StartLevelTimer() => startTime = Time.time;
+
+    private void CheckpointCleared()
+    {
+        // check if all checkpoints have been cleared (do not include the spawn)
+        if (checkpoints.Length > checkpointsCleared.Count - 1)
+            return;
+        onAllCheckpointsCleared?.Invoke();
+    }
 
     /// <summary>
     /// Converts time in seconds to 00:00:00 format

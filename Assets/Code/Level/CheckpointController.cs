@@ -24,6 +24,7 @@ public class CheckpointController : MonoBehaviour
         CarController playerCar = other.transform.parent.gameObject.GetComponent<CarController>();
         Checkpoint checkpoint = new(playerCar.rigidBody, playerCar.powertrain.GetCurrentRpm());
 
-        GameManager.Instance.checkpoints.Add(checkpoint);
+        GameManager.Instance.checkpointsCleared.Add(checkpoint);
+        GameManager.Instance.onCheckpointCleared?.Invoke();
     }
 }
