@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
         
         // get all the checkpoints on the level
         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
-        Debug.Log(checkpoints.Length);
+        checkpoints = checkpoints.OrderBy(go => go.transform.GetSiblingIndex()).ToArray();
     }
 
     void OnEnable()
