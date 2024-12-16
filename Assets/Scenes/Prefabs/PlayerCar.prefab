@@ -453,10 +453,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5400618162060431505}
-  - component: {fileID: 2393330348592588338}
   - component: {fileID: 471186240907227108}
   - component: {fileID: 4016892118369891053}
   - component: {fileID: 3045206481174774722}
+  - component: {fileID: 8850890356910874015}
   m_Layer: 0
   m_Name: MotorSounds
   m_TagString: Untagged
@@ -479,25 +479,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7751329039884111462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2393330348592588338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3276103180999909161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcad38eb69ae1734aacde8643bcb7627, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powertrain: {fileID: 7595524197783005222}
-  idle: {fileID: 471186240907227108}
-  med_on: {fileID: 4016892118369891053}
-  high_on: {fileID: 3045206481174774722}
-  volume: 0.05
-  minPitch: 1
-  maxPitch: 1.79
 --- !u!82 &471186240907227108
 AudioSource:
   m_ObjectHideFlags: 0
@@ -789,6 +770,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8850890356910874015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3276103180999909161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcad38eb69ae1734aacde8643bcb7627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powertrain: {fileID: 7595524197783005222}
+  idle: {fileID: 471186240907227108}
+  med_on: {fileID: 4016892118369891053}
+  high_on: {fileID: 3045206481174774722}
+  volume: 0.06
+  minPitch: 1
+  maxPitch: 2.5
 --- !u!1 &3654013782818876876
 GameObject:
   m_ObjectHideFlags: 0
