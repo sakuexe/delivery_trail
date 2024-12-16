@@ -134,7 +134,7 @@ public class Powertrain : MonoBehaviour
         if (gasPedalAmount <= 0) 
             _pressingAccelerator = false;
         // how much can the _rpm change in a second
-        float rpmChangeRate = gasPedalAmount > 0.2f ? 800 : maxRpm / 2;
+        float rpmChangeRate = gasPedalAmount > 0.2f ? 500 : maxRpm / 2;
 
         float desiredRpm = maxRpm * gasPedalAmount;
         float currentRpm = Mathf.MoveTowards(_rpm, desiredRpm, rpmChangeRate * Time.deltaTime);
