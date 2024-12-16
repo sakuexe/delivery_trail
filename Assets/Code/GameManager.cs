@@ -33,14 +33,13 @@ public class GameManager : MonoBehaviour
             Instance = this;
         else
             Destroy(Instance);
-
-        CarController player = GameObject.FindWithTag("Player").GetComponent<CarController>();
     }
 
     void Start()
     {
         StartCoroutine(StartCountdown());
         onLevelStarted += StartLevelTimer;
+        player = GameObject.FindWithTag("Player").GetComponent<CarController>();
         Checkpoint initialCheckpoint = new (player.rigidBody);
         checkpoints.Add(initialCheckpoint);
 
