@@ -29,6 +29,9 @@ public class GoalController : MonoBehaviour
     private GroupBox medalDetails;
     private Label timeTakenLabel;
     private Label countdownValue;
+    private VisualElement finishContainer;
+    private Label customerName;
+    private Label customerReview;
 
     // states
     private bool _levelFinished = false;
@@ -49,7 +52,12 @@ public class GoalController : MonoBehaviour
         reviewStars = resultDocument.rootVisualElement.Q("ReviewStars") as VisualElement;
 
         countdownValue = countdownDocument.rootVisualElement.Q("Countdown") as Label;
+        finishContainer = mainContainer.Q<VisualElement>("FinishContainer");
+        customerName = mainContainer.Q<Label>("CustomerName");
+        customerReview = mainContainer.Q<Label>("CustomerReview");
 
+        /*finishContainer.AddToClassList("hidden");*/
+        mainContainer.style.opacity = 0;
         resultDocument.rootVisualElement.SetEnabled(false);
 
         SetupMedalTimes();
@@ -104,7 +112,7 @@ public class GoalController : MonoBehaviour
         UpdateReview(timeTaken);
 
         timeTakenLabel.text = GameManager.Instance.FormatTime(timeTaken); 
-        mainContainer.Q<VisualElement>("FinishContainer").RemoveFromClassList("hidden");
+        finishContainer.RemoveFromClassList("hidden");
         medalDetails.RemoveFromClassList("hidden");
     }
 
@@ -117,13 +125,13 @@ public class GoalController : MonoBehaviour
             starsAchieved = 2;
         else if (timeTaken <= bronzeTime)
             starsAchieved = 1;
-        List<VisualElement> stars = reviewStars.Query<VisualElement>(className:"star-stroke").ToList();
+        List<VisualElement> stars = reviewStars.Query<VisualElement>(className: "star-stroke").ToList();
         ReviewGenerator.UpdateStars(stars, starsAchieved);
 
         // get the customer data
         Review review = ReviewGenerator.GenerateReview(starsAchieved);
-        mainContainer.Q<Label>("CustomerName").text = review.name;
-        mainContainer.Q<Label>("CustomerReview").text = review.review;
+        customerName.text = review.name;
+        customerReview.text = review.review;
     }
 
     private void UpdateStartCountdown(int value)
