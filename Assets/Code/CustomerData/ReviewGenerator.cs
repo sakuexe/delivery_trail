@@ -20,7 +20,10 @@ public class ReviewList
 
 public static class ReviewGenerator
 {
-    private static string reviewFilePath = "Assets/Code/CustomerData/reviews.json";
+    private static string reviewFilePath = System.IO.Path.Combine(
+            Application.streamingAssetsPath,
+            "reviews.json"
+            );
 
     public static void UpdateStars(List<VisualElement> stars, int starsAchieved)
     {
