@@ -140,10 +140,6 @@ public class Suspension : MonoBehaviour
                     tires[index].transform.position.z);
 
             tireModel.position = Vector3.MoveTowards(tireModel.position, desiredPosition, 4f * Time.deltaTime);
-
-            // handle tire rotation - don't rotate the tires as much as the body
-            Quaternion carRotation = car.transform.rotation;
-            tireModel.localRotation = Quaternion.Euler(carRotation.x, carRotation.y, carRotation.z / 4);
         }
     }
 }
