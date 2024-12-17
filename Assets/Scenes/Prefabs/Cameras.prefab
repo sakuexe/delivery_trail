@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1535362011034901833}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09247334, y: -0.000000001852382, z: 1.7203307e-10, w: 0.9957152}
-  m_LocalPosition: {x: -0.3573827, y: 0.88182855, z: -10.861666}
+  m_LocalRotation: {x: 0.04362842, y: 0.011078355, z: -0.00048382155, w: 0.9989863}
+  m_LocalPosition: {x: -0.3117482, y: 1.9568286, z: -10.975739}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -413,7 +413,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 80
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -560,7 +560,7 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 1.86, z: 0}
-  Damping: {x: 0.1, y: 1}
+  Damping: {x: 0.1, y: 0.5}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -735,7 +735,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 50
+  far clip plane: 20
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -821,6 +821,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4914000581262817609}
+  - component: {fileID: 590982539046242798}
   m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
@@ -847,6 +848,19 @@ Transform:
   - {fileID: 4656007729662811574}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &590982539046242798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527673257353101266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d6a0330312c59743babdcc02eff7efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chaseCam: {fileID: 8772333536623741771}
 --- !u!1001 &7152540362107861203
 PrefabInstance:
   m_ObjectHideFlags: 0
