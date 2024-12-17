@@ -82,7 +82,7 @@ public class Steering : MonoBehaviour
         foreach (var (tire, index) in car.frontTires.Select((v, i) => (v, i)))
         {
             // get the amount that the tires should be rotating
-            float steeringAmount = steeringCurve.Evaluate(speed / 120) * rawSteeringAmount.x;
+            float steeringAmount = steeringCurve.Evaluate(speed / 200) * rawSteeringAmount.x;
             // convert the degrees to a quaternion
             Quaternion targetRotation = Quaternion.Euler(0, steeringAmount * maxSteeringAngle, 0);
             Quaternion currentRotation = Quaternion.Slerp(tire.transform.localRotation, targetRotation, 4f * Time.fixedDeltaTime);
