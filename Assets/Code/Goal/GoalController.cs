@@ -56,9 +56,8 @@ public class GoalController : MonoBehaviour
         customerName = mainContainer.Q<Label>("CustomerName");
         customerReview = mainContainer.Q<Label>("CustomerReview");
 
-        /*finishContainer.AddToClassList("hidden");*/
+        finishContainer.AddToClassList("hidden");
         mainContainer.style.opacity = 0;
-        resultDocument.rootVisualElement.SetEnabled(false);
 
         SetupMedalTimes();
 
@@ -72,7 +71,6 @@ public class GoalController : MonoBehaviour
     private void OnDisable()
     {
         GameManager.Instance.onStartCountdownChanged -= UpdateStartCountdown;
-        GameManager.Instance.onLevelStarted -= () => resultDocument.enabled = true;
         GameManager.Instance.onAllCheckpointsCleared -= EnableGoal;
     }
 
@@ -106,7 +104,7 @@ public class GoalController : MonoBehaviour
 
     private void ShowGoalScreen()
     {
-        resultDocument.rootVisualElement.SetEnabled(true);
+        resultDocument.sortingOrder = 20;
         mainContainer.style.opacity = 1f;
         float timeTaken = Time.time - GameManager.Instance.startTime;
         UpdateReview(timeTaken);
