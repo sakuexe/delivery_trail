@@ -63,7 +63,7 @@ Post mortem video for the project:
 
 [Delivery Trail - Post Mortem | Youtube](https://youtu.be/-xmZA3hZeDE)
 
-## Other material
+## Other course material
 
 ### Script showcase
 
