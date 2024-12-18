@@ -1,18 +1,58 @@
 {
   "reviews": [
     {
-      "name": "Pirkka-Pekka",
+      "name": "NOT Pizza Peku",
+      "review": "The best pizza in the business.",
+      "stars": 3
+    },
+    {
+      "name": "Pirkka-Pekka P.",
       "review": "It was okay, I guess",
       "stars": 3
     },
     {
-      "name": "Matt",
+      "name": "Matt W.",
       "review": "Good pizza, fast enough delivery.",
       "stars": 3
     },
     {
+      "name": "E. Macs",
+      "review": "Not bad for a minimum wage worker! Vai mitä? Täh?",
+      "stars": 3
+    },
+    {
+      "name": "Glontzu the Magnificent",
+      "review": "The pizza was fine, but the delivery person drove straight into my house!",
+      "stars": 3
+    },
+    {
+      "name": "John Doe",
+      "review": "Pizza was decent, not the best but not the worst either. Delivery was on time, though.",
+      "stars": 3
+    },
+    {
+      "name": "Kaanic",
+      "review": "I'm pretty sure that the delivery guy killed someone on their way here... Fast delivery!",
+      "stars": 3
+    },
+    {
+      "name": "Janika S.",
+      "review": "Kössi the cat did not approve of the pizza.",
+      "stars": 2
+    },
+    {
+      "name": "Petri Kuittinen",
+      "review": "I could have scripted my Emacs to fetch this pizza faster!",
+      "stars": 2
+    },
+    {
       "name": "Grumpy Grandma",
       "review": "I could have walked over there and gotten the pizza myself faster than that",
+      "stars": 2
+    },
+    {
+      "name": "Leevi P. Pulla",
+      "review": "The pizza was handed to me without a word. Terrible service!",
       "stars": 2
     },
     {
@@ -26,8 +66,23 @@
       "stars": 2
     },
     {
+      "name": "Benjames B.",
+      "review": "When the pizza finally came, it looked like it had been thrown around. Terrible care in handling the order.",
+      "stars": 1
+    },
+    {
+      "name": "Veeti Chang",
+      "review": "The pizza was dropped at my door with no knock or ring. I had to go outside to find it! Terrible!",
+      "stars": 1
+    },
+    {
       "name": "Mario",
       "review": "This delivery was even worse than the pizza itself!",
+      "stars": 1
+    },
+    {
+      "name": "' OR 1=1; --",
+      "review": "I’d rather starve than deal with this joke of a delivery service again.",
       "stars": 1
     },
     {
@@ -36,8 +91,23 @@
       "stars": 1
     },
     {
+      "name": "Skeptical Sam",
+      "review": "Is this pizza even edible? I’ve had better meals from my microwave.",
+      "stars": 1
+    },
+    {
+      "name": "Jope R.",
+      "review": "Garlic was not even included in the price...",
+      "stars": 0
+    },
+    {
       "name": "Ryan",
       "review": "How did the delivery even take that long? Did the driver die in the middle?",
+      "stars": 0
+    },
+    {
+      "name": "Makapaka",
+      "review": "I ordered a large pizza, but they sent me a tiny one that was barely warm. I’m not paying for this!",
       "stars": 0
     },
     {
