@@ -11,8 +11,18 @@
 - [Json data](./Assets/StreamingAssets/)
 - [UI Toolkit](./Assets/UI%20Toolkit/)
 
-## Builds and Videos
 
+## Game Design Document
+
+The project also has a **Game Design Document**. This document includes the 
+entire plan for the game and a lot more potential additions that we did not have
+time to include.
+
+[Game Design Document](https://github.com/sakuexe/delivery_trail/wiki/Design-Document)
+can be found from the repo's wiki.
+
+
+## Builds and Videos
 
 ### Prototype
 
@@ -62,6 +72,7 @@ never with these things.
 Post mortem video for the project:
 
 [Delivery Trail - Post Mortem | Youtube](https://youtu.be/-xmZA3hZeDE)
+
 
 ## Other course material
 
@@ -113,6 +124,7 @@ other students might learn something from.
         </li>
     </ul>
 </details>
+
 
 ### Mega Man Maker -levels
 
