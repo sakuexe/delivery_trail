@@ -114,6 +114,21 @@ other students might learn something from.
     </ul>
 </details>
 
+### Mega Man Maker -levels
+
+Level 1-1 - _Helppo Peli_
+
+**573255** - [https://megamanmaker.com/?level=573255](https://megamanmaker.com/?level=573255)
+
+Level 1-2 - _Ship It_
+
+**573254** - [https://megamanmaker.com/?level=573254](https://megamanmaker.com/?level=573254)
+
+Walkthrough videos of the levels:
+
+- [Megaman Maker Level Walkthroughs - Team Napoleon](https://youtu.be/YZ7ESz05aHI)
+- [Megaman Maker Level Speedruns - Team Napoleon](https://youtu.be/rE-ZVX1XP3I)
+
 ## Credits
 
 **Police Car Siren -sound effect**
