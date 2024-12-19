@@ -143,6 +143,54 @@ Walkthrough videos of the levels:
 - [Megaman Maker Level Walkthroughs - Team Napoleon](https://youtu.be/YZ7ESz05aHI)
 - [Megaman Maker Level Speedruns - Team Napoleon](https://youtu.be/rE-ZVX1XP3I)
 
+<details>
+  <summary><b>📣&nbsp;The Assigment - Level Design for Mega Man Maker</b></summary>
+    <p>
+        In this assignment you will practice both level design skills and play
+        testing.
+    </p>
+    <p>
+        The target is a free PC game called Mega Man Maker. It allows to create
+        levels for Mega Man series. The editor is very easy to use, but has one
+        caveat. To exit your level, you should have bound a key to pause the 
+        level (I use P button for this), then use arrow keys and Z button to 
+        select exit and then mouse to select confirm.
+    </p>
+    <p>
+        Your task is to make together a game level, which consists of 6 to 12
+        screens, has at least 2 different enemies and the final screen of the 
+        level must feature one relatively easy boss. If you use any special 
+        mechanics or require player to use them to advance, teach those 
+        mechanics first. You can only assume that the player first knows how to
+        move to basic directions, jump, shoot and change weapon. In other words
+        you should not assume that the player knows sliding or double jump.
+    </p>
+    <p>
+        Try to aim for a level, which is fun for the player, rewarding for the 
+        player. The end result should also be audio visually good e.g. music 
+        and background both suit the level.
+    </p>
+    <p>
+        <strong>The difficulty level of the level should be easy</strong>. In 
+        other words, pretty much anybody should be able to pass it in 1-2
+        attempts in a duration of maximum of 5 minutes. You can fail the 
+        difficulty level easily by having more than 2 enemies in one screen,
+        requiring the player to do difficult jumps or jump and shoot same time,
+        setting up a boss, which is hard to defeat.
+    </p>
+    <p>
+        <strong>
+            For more information, please check out:
+        </strong>
+    </p>
+    <p>
+        Mega Man Maker wiki: <a href="https://wiki.megamanmaker.com/index.php/Main_Page" target="_blank">Mega Man Maker wiki</a>
+    </p>
+    <p>
+        Mega Man Maker download: <a href="https://megamanmaker.com/" target="_blank">Mega Man Maker</a>
+    </p>
+</details>
+
 ## Credits
 
 **Police Car Siren -sound effect**
