@@ -61,7 +61,7 @@ HAMK Riihimäki. Because of that we were able to get some nice and diverse feedb
 for our game. The feedback gathered from the day are scanned and documented in
 this repository.
 
-[School presentation reviews](./Assets/Docs/Reviews/)
+[School presentation reviews](https://github.com/sakuexe/delivery_trail/wiki/Final-version-reviews)
 
 For now this will be the last version of the game we will develop. But the game
 still has lots of potential with already planned features and ideas.
