@@ -73,7 +73,7 @@ success, due to it's fun gameplay and theming.
 
 Post mortem video for the project:
 
-[Delivery Trail - Post Mortem | Youtube](https://youtu.be/-xmZA3hZeDE)
+[Delivery Trail - Post Mortem | Youtube](https://youtu.be/VpGvI_bvkoY)
 
 
 ## Other course material
