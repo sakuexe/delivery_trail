@@ -61,11 +61,13 @@ HAMK Riihimäki. Because of that we were able to get some nice and diverse feedb
 for our game. The feedback gathered from the day are scanned and documented in
 this repository.
 
-For now this will be the last version of the game we will develop. But never say
-never with these things.
+[School presentation reviews](./Assets/Docs/Reviews/)
 
-> [!NOTE]
-> Remember to add the images actually and don't just forget to do it ffs.
+For now this will be the last version of the game we will develop. But the game
+still has lots of potential with already planned features and ideas.
+
+We believe that given more time with the project, the game could become a
+success, due to it's fun gameplay and theming.
 
 [v1.0.0 | Releases](https://github.com/sakuexe/delivery_trail/releases/tag/v1.0.0)
 
