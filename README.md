@@ -59,6 +59,8 @@ the Releases page.
 
 Prototype showcase video:
 
+[<img src="./Assets/Docs/Images/prototype_thumbnail.jpg">](https://youtu.be/dlTUYQcoQ-8?si=0jdafSI4u19v-hM2)
+
 [Game Prototype - Team Napoleon | Youtube](https://youtu.be/dlTUYQcoQ-8?si=0jdafSI4u19v-hM2)
 
 
@@ -98,6 +100,8 @@ success, due to it's fun gameplay and theming.
 
 Post mortem video for the project:
 
+[<img src="./Assets/Docs/Images/post_mortem_thumbnail.jpg">](https://youtu.be/VpGvI_bvkoY)
+
 [Delivery Trail - Post Mortem | Youtube](https://youtu.be/VpGvI_bvkoY)
 
 
@@ -108,6 +112,8 @@ Post mortem video for the project:
 As part of the module's Game Programming course. We had to create a video that
 showcased a script that we enjoyed particularily and one that we thought the
 other students might learn something from.
+
+[<img src="./Assets/Docs/Images/showcase_thumbnail.jpg">](https://youtu.be/9b1-6uZI4ZA)
 
 [Script Showcase - Delivery Trail](https://youtu.be/9b1-6uZI4ZA)
 
