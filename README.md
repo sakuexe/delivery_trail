@@ -1,4 +1,27 @@
-# Delivery Peli
+# Delivery Trail
+
+A delivery game that is also lovingly referred to as the "Pizza Peku Game".
+It was created for HAMK's Game Production 2024 module. The development spanned
+6 weeks.
+
+Delivery trail is a delivery based driving game that was inspired by classic 
+games like Trackmania and Crazy Taxi. The aim of the game is to deliver pizzas
+to customers through challenging roads.
+
+The levels are short and sweet, but include lots of replay potential due to the
+timing and customer satisfaction systems of the game. The goal of the project
+was to create a game that was fun to play and difficult to master. We tried to
+make it as replayable as possible and most importantly fun. More information
+about the game design of the project can be found from the 
+[Game Design Document](https://github.com/sakuexe/delivery_trail/wiki/Design-Document).
+
+![screenshot collage of the game](./Assets/Docs/Images/game_banner.jpg)
+
+**Game created by**: [Aleksi Halttunen](https://github.com/hattuonjumala),
+[Arttu Saarela](https://github.com/ArttuSaarela),
+[Janne Kinnunen](https://github.com/jannekin),
+[Joona Laaksonen](https://github.com/JoonaLaa),
+[Saku Karttunen](https://github.com/sakuexe)
 
 ## `Assets` Folder Structure
 
@@ -14,9 +37,11 @@
 
 ## Game Design Document
 
-The project also has a **Game Design Document**. This document includes the 
-entire plan for the game and a lot more potential additions that we did not have
-time to include.
+![Game Design Document preview](./Assets/Docs/Images/game_design_document_preview.jpg)
+
+As mentioned previously, the project also has a **Game Design Document**. This
+document includes the entire plan for the game and a lot more potential
+additions that we did not have time to include.
 
 [Game Design Document](https://github.com/sakuexe/delivery_trail/wiki/Design-Document)
 can be found from the repo's wiki.
@@ -198,3 +223,8 @@ Walkthrough videos of the levels:
 VEHSirn_Police Car Siren.Synthesized.Dry 1_EM.wav by newlocknew -- 
 [https://freesound.org/s/692524/](https://freesound.org/s/692524/) --
 License: Attribution 4.0
+
+## Thank you
+
+Thank you to the team for a very succesful project and for the fun times had
+during the development process. It has been a pleasure to work together on this!
